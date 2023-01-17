@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Core/KeyInput.h"
+#include "Core/KeyInput_Base.h"
+
 #include <map>
 #include <vector>
 
@@ -8,25 +9,30 @@ struct GLFWwindow;
 
 namespace ThunderEngine
 {
-	class GLFWKeyInput : public KeyInput
+	class GLFWKeyInput : public KeyInput_Base<GLFWKeyInput>
 	{
 	private:
-		std::map<KeyCode, bool> keys_downs_;
+		std::map<KeyCode, bool> keys_down_;
 		std::map<KeyCode, bool> keys_press_;
 		bool is_enabled_;
 		bool update_presses_ = false;
 
 	public:
 		GLFWKeyInput(std::vector<KeyCode> keys_to_monitor);
-		virtual ~GLFWKeyInput() override;
+		~GLFWKeyInput();
 
-		virtual bool GetIsKeyDown(KeyCode key) override;
+		static Ref<GLFWKeyInput> Create(std::vector<KeyCode> keys_to_monitor)
+		{
+			return CreateRef<GLFWKeyInput>(keys_to_monitor);
+		}
 
-		virtual bool GetIsKeyPress(KeyCode key) override;
+		bool GetIsKeyDown(KeyCode key);
+
+		bool GetIsKeyPress(KeyCode key);
 
 
-		virtual bool GetIsEnabled() override { return is_enabled_; }
-		virtual void SetIsEnabled(bool enabled) override { is_enabled_ = enabled; }
+		bool GetIsEnabled() { return is_enabled_; }
+		void SetIsEnabled(bool enabled) { is_enabled_ = enabled; }
 	private:
 		void SetIsKeyDown(KeyCode key, bool is_down);
 		void SetIsKeyPress(KeyCode key, bool is_press);

@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 
-#include "Renderer/Shader.h"
+#include "Renderer/Shader_Base.h"
 
 namespace ThunderEngine
 {
@@ -12,7 +12,7 @@ namespace ThunderEngine
 		std::string FragmentSource;
 	};
 
-	class OpenGLShader : public Shader {
+	class OpenGLShader : public Shader_Base<OpenGLShader> {
 	private:
 		uint32_t renderer_id_;
 		std::unordered_map<std::string, int32_t> uniform_location_cache_;
@@ -21,21 +21,31 @@ namespace ThunderEngine
 		// Compiles a shader from specified path that uses the #shader directive to separate shader types
 		OpenGLShader(const std::string& shader_path);
 		OpenGLShader(const std::string& name, const std::string& vertex_path, const std::string& fragment_path);
-		virtual ~OpenGLShader();
+		~OpenGLShader();
 
-		virtual void Bind() const override;   // Activates the shader program
-		virtual void Unbind() const override; // Deactivates the shader program
+		static Ref<OpenGLShader> Create(const std::string& filepath)
+		{
+			return CreateRef<OpenGLShader>(filepath);
+		}
 
-		virtual const std::string& GetName() const override { return name_; }
+		static Ref<OpenGLShader> Create(const std::string& name, const std::string& vertex_path, const std::string& fragment_path)
+		{
+			return CreateRef<OpenGLShader>(name, vertex_path, fragment_path);
+		}
 
-		virtual void SetBool(const std::string& name, uint8_t value) override;
-		virtual void SetInt(const std::string& name, int value) override;
-		virtual void SetIntArray(const std::string& name, int* values, uint32_t count) override;
-		virtual void SetFloat(const std::string& name, float value) override;
-		virtual void SetFloat2(const std::string& name, const glm::vec2& value) override;
-		virtual void SetFloat3(const std::string& name, const glm::vec3& value) override;
-		virtual void SetFloat4(const std::string& name, const glm::vec4& value) override;
-		virtual void SetMat4(const std::string& name, const glm::mat4& matrix) override;
+		void Bind() const;   // Activates the shader program
+		void Unbind() const; // Deactivates the shader program
+
+		const std::string& GetName() const { return name_; }
+
+		void SetBool(const std::string& name, uint8_t value);
+		void SetInt(const std::string& name, int value);
+		void SetIntArray(const std::string& name, int* values, uint32_t count);
+		void SetFloat(const std::string& name, float value);
+		void SetFloat2(const std::string& name, const glm::vec2& value);
+		void SetFloat3(const std::string& name, const glm::vec3& value);
+		void SetFloat4(const std::string& name, const glm::vec4& value);
+		void SetMat4(const std::string& name, const glm::mat4& matrix);
 
 	private:
 		int GetUniformLocation(const std::string& name);

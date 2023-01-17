@@ -79,6 +79,12 @@ int Main()
 {
     App app("OpenGL", 1280, 720);
 
+    // Testing CRTP
+
+    SoundP x;
+    x.implementation();
+
+
     //Testing sound system
     SoundPlayer::Init();
     SoundPlayer::LoadSound("res/audio/breakout.mp3", "breakout");

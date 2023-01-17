@@ -1,20 +1,19 @@
 #pragma once
 
-#include "Core/Window.h"
+#include "Core/Window_Base.h"
 
 #include <GLFW/glfw3.h>
 #include <Renderer/GraphicsContext.h>
 
 namespace ThunderEngine
 {
-	class GLFWWindow : public Window
+	class GLFWWindow : public Window_Base<GLFWWindow>
 	{
 	private:
 		GLFWwindow* window_;
 		WindowProps window_props_;
 		Ref<GraphicsContext> graphics_context_;
 		bool vsync_enabled_;
-
 
 		// A pointer to this data is stored inside GLFW to be used in callbacks
 		struct WindowData
@@ -25,22 +24,27 @@ namespace ThunderEngine
 
 	public:
 		GLFWWindow(const WindowProps& props);
-		virtual ~GLFWWindow();
+		~GLFWWindow();
 
-		virtual void OnUpdate() override;
+		static Ref<GLFWWindow> Create(const WindowProps& props = WindowProps())
+		{
+			return CreateRef<GLFWWindow>(props);
+		}
 
-		virtual uint32_t GetWidth() const override { return window_props_.width; }
-		virtual uint32_t GetHeight() const override { return window_props_.height; }
+		void OnUpdate();
+
+		uint32_t GetWidth() const { return window_props_.width; }
+		uint32_t GetHeight() const { return window_props_.height; }
 
 		// FUTURE An event system would exploit this type of code
 		// Window attributes
 		// 		using EventCallbackFn = std::function<void(Event&)>;
-		virtual void SetWindowCloseCallback(std::function<void()>) override;
+		void SetWindowCloseCallback(std::function<void()>);
 
-		virtual void SetVSync(bool enabled) override;
-		virtual bool IsVSync() const override { return vsync_enabled_; }
+		void SetVSync(bool enabled);
+		bool IsVSync() const { return vsync_enabled_; }
 
-		virtual void* GetNativeWindow() const override { return window_; }
-		virtual GraphicsContext& GetGraphicsContext() const override { return *graphics_context_; }
+		void* GetNativeWindow() const { return window_; }
+		GraphicsContext& GetGraphicsContext() const { return *graphics_context_; }
 	};
 }

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Renderer/VertexArray.h"
+#include "Renderer/VertexArray_Base.h"
 
 namespace ThunderEngine
 {
-	class OpenGLVertexArray : public VertexArray
+	class OpenGLVertexArray : public VertexArray_Base<OpenGLVertexArray>
 	{
 	private:
 		uint32_t renderer_id_;
@@ -14,17 +14,17 @@ namespace ThunderEngine
 
 	public:
 		OpenGLVertexArray();
-		virtual ~OpenGLVertexArray();
+		~OpenGLVertexArray();
+		static Ref<OpenGLVertexArray> Create() { return CreateRef<OpenGLVertexArray>(); }
 
-		virtual void Bind() const override;
-		virtual void Unbind() const override;
+		void Bind() const;
+		void Unbind() const;
 
-		virtual void AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) override;
-		virtual void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override;
+		void AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer);
+		void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer);
 
-		virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const { return vertex_buffers_; }
-		virtual const Ref<IndexBuffer> GetIndexBuffer() const { return index_buffer_; }
-
+		const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const { return vertex_buffers_; }
+		const Ref<IndexBuffer> GetIndexBuffer() const { return index_buffer_; }
 	};
 }
 

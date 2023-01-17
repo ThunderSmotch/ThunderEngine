@@ -8,6 +8,8 @@
 
 #include "Utils/Logger.h"
 
+#define TE_DERIVED(func, ...) static_cast<Derived*>(this)->func(__VA_ARGS__)
+
 namespace ThunderEngine
 {
 	template<typename T>

@@ -1,30 +1,41 @@
 #pragma once
 
-#include "Renderer/Texture.h"
+#include "Renderer/Texture_Base.h"
 
 #include <glad/gl.h>
 
 namespace ThunderEngine
 {
-	class OpenGLTexture2D : public Texture2D
+	class OpenGLTexture2D : public Texture_Base<OpenGLTexture2D>
 	{
 	public:
 		OpenGLTexture2D(uint32_t width, uint32_t height, uint32_t number_channels);
 		OpenGLTexture2D(const std::string& path);
-		virtual ~OpenGLTexture2D();
+		~OpenGLTexture2D();
 
-		virtual uint32_t GetWidth() const override { return width_; }
-		virtual uint32_t GetHeight() const override { return height_; }
-		virtual uint32_t GetRendererID() const override { return renderer_id_; }
-		virtual const std::string& GetPath() const override { return path_; }
+		static Ref<OpenGLTexture2D> Create(uint32_t width, uint32_t height, uint32_t number_channels = 4)
+		{
+			return CreateRef<OpenGLTexture2D>(width, height, number_channels);
+		}
 
-		virtual void SetData(void* data, uint32_t size) override;
+		static Ref<OpenGLTexture2D> Create(const std::string& path)
+		{
+			return CreateRef<OpenGLTexture2D>(path);
+		}
 
-		virtual void Bind(uint32_t slot = 0) const override;
+		uint32_t GetWidth() const { return width_; }
+		uint32_t GetHeight() const { return height_; }
+		uint32_t GetRendererID() const { return renderer_id_; }
+		const std::string& GetPath() const { return path_; }
 
-		virtual bool IsLoaded() const override { return is_loaded_; }
+		void SetData(void* data, uint32_t size);
 
-		virtual bool operator==(const Texture& other) const override { return renderer_id_ == other.GetRendererID(); }
+		void Bind(uint32_t slot = 0) const;
+
+		bool IsLoaded() const { return is_loaded_; }
+
+		bool operator==(const OpenGLTexture2D& other) const { return renderer_id_ == other.GetRendererID(); }
+
 		
 	private:
 		std::string path_;

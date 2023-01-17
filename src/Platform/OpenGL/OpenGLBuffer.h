@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Renderer/Buffer.h"
+#include "Renderer/Buffer_Base.h"
 
 namespace ThunderEngine
 {
-	class OpenGLVertexBuffer : public VertexBuffer
+	class OpenGLVertexBuffer : public VertexBuffer_Base<OpenGLVertexBuffer>
 	{
 	private:
 		uint32_t renderer_id_;
@@ -13,19 +13,28 @@ namespace ThunderEngine
 	public:
 		OpenGLVertexBuffer(uint32_t size);
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
-		virtual ~OpenGLVertexBuffer();
+		~OpenGLVertexBuffer();
 
-		virtual void Bind() const override;
-		virtual void Unbind() const override;
+		static Ref<OpenGLVertexBuffer> Create(uint32_t size) 
+		{ 
+			return CreateRef<OpenGLVertexBuffer>(size);
+		}
+		static Ref<OpenGLVertexBuffer> Create(float* vertices, uint32_t size)
+		{
+			return CreateRef<OpenGLVertexBuffer>(vertices, size);
+		}
 
-		virtual void SetData(const void* data, uint32_t size) override;
+		void Bind() const;
+		void Unbind() const;
 
-		virtual const BufferLayout& GetLayout() const override { return layout_; }
-		virtual void SetLayout(const BufferLayout& layout) override { layout_ = layout; }
+		void SetData(const void* data, uint32_t size);
+
+		const BufferLayout& GetLayout() const { return layout_; }
+		void SetLayout(const BufferLayout& layout) { layout_ = layout; }
 
 	};
 
-	class OpenGLIndexBuffer : public IndexBuffer
+	class OpenGLIndexBuffer : public VertexBuffer_Base<OpenGLIndexBuffer>
 	{
 	private:
 		uint32_t renderer_id_;
@@ -33,11 +42,16 @@ namespace ThunderEngine
 
 	public:
 		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
-		virtual ~OpenGLIndexBuffer();
+		~OpenGLIndexBuffer();
 
-		virtual void Bind() const;
-		virtual void Unbind() const;
+		static Ref<OpenGLIndexBuffer> Create(uint32_t* indices, uint32_t count)
+		{
+			return CreateRef<OpenGLIndexBuffer>(indices, count);
+		}
 
-		virtual uint32_t GetCount() const { return count_; }
+		void Bind() const;
+		void Unbind() const;
+
+		uint32_t GetCount() const { return count_; }
 	};
 }

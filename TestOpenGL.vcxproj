@@ -143,11 +143,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\lib\glad\src\gl.c" />
-    <ClCompile Include="src\Core\KeyInput.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Renderer\RendererText.cpp" />
-    <ClCompile Include="src\Renderer\Texture.cpp" />
     <ClCompile Include="src\Sound\SoundPlayer.cpp" />
     <ClCompile Include="src\Utils\Logger.cpp" />
     <ClCompile Include="src\Core\Timer.cpp" />
@@ -160,24 +158,28 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Core\App.cpp" />
-    <ClCompile Include="src\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="ThunderEngine.cpp" />
-    <ClCompile Include="src\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Core\Window.cpp" />
     <ClCompile Include="vendor\miniaudio\miniaudio.cpp" />
     <ClCompile Include="vendor\stb\stb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\KeyInput.h" />
+    <ClInclude Include="src\Core\KeyInput_Base.h" />
+    <ClInclude Include="src\Core\Window_Base.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h" />
+    <ClInclude Include="src\Renderer\Buffer_Base.h" />
     <ClInclude Include="src\Renderer\Camera.h" />
+    <ClInclude Include="src\Renderer\GraphicsContext_Base.h" />
+    <ClInclude Include="src\Renderer\RendererAPI_Base.h" />
+    <ClInclude Include="src\Renderer\Shader_Base.h" />
+    <ClInclude Include="src\Renderer\Texture_Base.h" />
     <ClInclude Include="src\Renderer\RendererText.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
+    <ClInclude Include="src\Renderer\Texture_Base.h" />
+    <ClInclude Include="src\Renderer\VertexArray_Base.h" />
     <ClInclude Include="src\Sound\SoundPlayer.h" />
     <ClInclude Include="src\Utils\Logger.h" />
     <ClInclude Include="src\Core\Timer.h" />

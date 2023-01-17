@@ -13,7 +13,7 @@ namespace ThunderEngine
     {
         for (KeyCode key : keys_to_monitor)
         {
-            keys_downs_[key] = false;
+            keys_down_[key] = false;
             keys_press_[key] = false;
         }
         GLFWKeyInput::instances_.push_back(this);
@@ -28,9 +28,9 @@ namespace ThunderEngine
     {
         bool result = false;
         if (is_enabled_) {
-            std::map<KeyCode, bool>::iterator it = keys_downs_.find(key);
-            if (it != keys_downs_.end()) {
-                result = keys_downs_[key];
+            std::map<KeyCode, bool>::iterator it = keys_down_.find(key);
+            if (it != keys_down_.end()) {
+                result = keys_down_[key];
             }
         }
         return result;
@@ -50,9 +50,9 @@ namespace ThunderEngine
 
     void GLFWKeyInput::SetIsKeyDown(KeyCode key, bool is_down)
     {
-        std::map<KeyCode, bool>::iterator it = keys_downs_.find(key);
-        if (it != keys_downs_.end()) {
-            keys_downs_[key] = is_down;
+        std::map<KeyCode, bool>::iterator it = keys_down_.find(key);
+        if (it != keys_down_.end()) {
+            keys_down_[key] = is_down;
         }
     }
 
