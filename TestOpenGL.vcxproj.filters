@@ -197,6 +197,12 @@
     <ClInclude Include="src\Core\KeyInput_Base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\stb\stb_rect_pack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb\stb_image_write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader.frag">
@@ -208,5 +214,7 @@
     <None Include="res\shaders\Shader.shader" />
     <None Include="res\shaders\QuadFragment.glsl" />
     <None Include="res\shaders\QuadVertex.glsl" />
+    <None Include="res\shaders\Text2DFragment.glsl" />
+    <None Include="res\shaders\Text2DVertex.glsl" />
   </ItemGroup>
 </Project>

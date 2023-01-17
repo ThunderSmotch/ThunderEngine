@@ -28,6 +28,7 @@ namespace ThunderEngine
 			return CreateRef<OpenGLShader>(filepath);
 		}
 
+		// BUG Not checking if files exist!!!
 		static Ref<OpenGLShader> Create(const std::string& name, const std::string& vertex_path, const std::string& fragment_path)
 		{
 			return CreateRef<OpenGLShader>(name, vertex_path, fragment_path);

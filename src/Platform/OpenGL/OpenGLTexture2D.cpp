@@ -10,7 +10,7 @@ namespace ThunderEngine
 		switch (number_channels)
 		{
 		case 1:
-			data_format_ = GL_ALPHA;
+			data_format_ = GL_RED;
 			internal_format_ = GL_R8;
 			break;
 		case 3:
@@ -97,7 +97,7 @@ namespace ThunderEngine
 		
 		switch (data_format_)
 		{
-			case GL_ALPHA:
+			case GL_RED:
 				channels = 1;
 				break;
 			case GL_RGB:

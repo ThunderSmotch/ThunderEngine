@@ -3,6 +3,7 @@
 #include "ThunderEngine.h"
 
 #include "Texture.h"
+#include "Camera.h"
 
 #include <stb/stb_truetype.h>
 
@@ -17,7 +18,21 @@ namespace ThunderEngine
 
 	public:
 		static void Init();
-		static void Test(float x, float y, const char* text);
+		static void Shutdown();
+
+		static void LoadFont(const std::string& font_path);
+		static void LoadFont2(const std::string& font_path);
+
+
+		static void StartScene(const OrthographicCamera& camera);
+		static void EndScene();
+
+		static void DrawString(float x, float y, const char* string);
+
+	private:
+		static void Flush();
+		static void StartBatch();
+		static void NextBatch();
 	};
 }
 

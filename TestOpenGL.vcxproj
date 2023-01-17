@@ -202,12 +202,16 @@
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\ThunderEngine.h" />
     <ClInclude Include="vendor\stb\stb_image.h" />
+    <ClInclude Include="vendor\stb\stb_image_write.h" />
+    <ClInclude Include="vendor\stb\stb_rect_pack.h" />
     <ClInclude Include="vendor\stb\stb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\QuadFragment.glsl" />
     <None Include="res\shaders\QuadVertex.glsl" />
     <None Include="res\shaders\Shader.shader" />
+    <None Include="res\shaders\Text2DFragment.glsl" />
+    <None Include="res\shaders\Text2DVertex.glsl" />
     <None Include="shaders\shader.frag" />
     <None Include="shaders\shader.vert" />
   </ItemGroup>
