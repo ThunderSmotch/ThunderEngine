@@ -162,6 +162,13 @@
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Core\App.cpp" />
     <ClCompile Include="ThunderEngine.cpp" />
+    <ClCompile Include="vendor\imgui\imgui.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_tables.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
     <ClCompile Include="vendor\miniaudio\miniaudio.cpp" />
     <ClCompile Include="vendor\stb\stb.cpp" />
   </ItemGroup>
@@ -175,7 +182,6 @@
     <ClInclude Include="src\Renderer\GraphicsContext_Base.h" />
     <ClInclude Include="src\Renderer\RendererAPI_Base.h" />
     <ClInclude Include="src\Renderer\Shader_Base.h" />
-    <ClInclude Include="src\Renderer\Texture_Base.h" />
     <ClInclude Include="src\Renderer\RendererText.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
     <ClInclude Include="src\Renderer\Texture_Base.h" />
@@ -201,6 +207,15 @@
     <ClInclude Include="src\Renderer\VertexArray.h" />
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\ThunderEngine.h" />
+    <ClInclude Include="vendor\imgui\imconfig.h" />
+    <ClInclude Include="vendor\imgui\imgui.h" />
+    <ClInclude Include="vendor\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="vendor\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="vendor\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="vendor\imgui\imgui_internal.h" />
+    <ClInclude Include="vendor\imgui\imstb_rectpack.h" />
+    <ClInclude Include="vendor\imgui\imstb_textedit.h" />
+    <ClInclude Include="vendor\imgui\imstb_truetype.h" />
     <ClInclude Include="vendor\stb\stb_image.h" />
     <ClInclude Include="vendor\stb\stb_image_write.h" />
     <ClInclude Include="vendor\stb\stb_rect_pack.h" />

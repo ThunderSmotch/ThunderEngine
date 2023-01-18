@@ -1,13 +1,17 @@
-#include "GLFWWindow.h"
 #pragma once
 
+#include "GLFWWindow.h"
+
 #include <iostream>
+
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
 #include "Renderer/RendererAPI.h"
-
 #include "GLFWInput.h"
 
 namespace ThunderEngine
@@ -58,17 +62,45 @@ namespace ThunderEngine
 
 		graphics_context_ = GraphicsContext::Create(window_);
 		SetVSync(true);
+
+		// ImGui Initialization
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+		ImGui::StyleColorsDark();
+		ImGui_ImplGlfw_InitForOpenGL(window_, true);
+		ImGui_ImplOpenGL3_Init("#version 450");
 	}
 
 	GLFWWindow::~GLFWWindow()
 	{
+		// ImGui Shutdown
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
+
 		glfwDestroyWindow(window_);
 		glfwTerminate();
 	}
 
+	void GLFWWindow::OnPreUpdate()
+	{
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+	}
+
 	void GLFWWindow::OnUpdate()
 	{
+		// ImGui Render
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		ImGui::EndFrame();
+
+		// Swap framebuffers
 		graphics_context_->SwapBuffers();
+
+		// TODO Assess if input should be processed here and in this order!
 		GLFWKeyInput::UpdateKeyPresses();
 		glfwPollEvents();
 	}

@@ -7,6 +7,8 @@
 
 struct GLFWwindow;
 
+// PERF Switch to a bitfield approach, less data is being stored that way and keys_press_ is as easy as &ing both fields.
+
 namespace ThunderEngine
 {
 	class GLFWKeyInput : public KeyInput_Base<GLFWKeyInput>

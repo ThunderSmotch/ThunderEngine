@@ -31,6 +31,7 @@ namespace ThunderEngine
     {
         while (running_)
         {
+            window_->OnPreUpdate();
             for (auto& callback : callbacks_)
             {
                 callback();

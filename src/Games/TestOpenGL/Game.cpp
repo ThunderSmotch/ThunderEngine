@@ -12,6 +12,8 @@
 #include "Sound/SoundPlayer.h"
 #include <algorithm>
 
+#include <imgui/imgui.h>
+
 using namespace ThunderEngine;
 
 Ref<Texture2D> container, awesome_face;
@@ -60,6 +62,11 @@ void Update()
 
 void Render()
 {
+    // Testing ImGui
+    ImGui::Begin("Debug");
+    ImGui::Text("Debug Window ;)");
+    ImGui::End();
+
     // Clear screen
     RendererCommand::SetClearColor({ 0.3f, 0.3f, 0.7f, 1.0f });
     RendererCommand::Clear();

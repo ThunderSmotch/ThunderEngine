@@ -27,6 +27,7 @@ namespace ThunderEngine
 		}
 
 		void OnUpdate() { TE_DERIVED(OnUpdate); }
+		void OnPreUpdate() { TE_DERIVED(OnPreUpdate); }
 
 		uint32_t GetWidth() const { return TE_DERIVED(GetWidth); }
 		uint32_t GetHeight() const { return TE_DERIVED(GetHeight); }

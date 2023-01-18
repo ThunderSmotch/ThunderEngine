@@ -31,6 +31,7 @@ namespace ThunderEngine
 			return CreateRef<GLFWWindow>(props);
 		}
 
+		void OnPreUpdate();
 		void OnUpdate();
 
 		uint32_t GetWidth() const { return window_props_.width; }
