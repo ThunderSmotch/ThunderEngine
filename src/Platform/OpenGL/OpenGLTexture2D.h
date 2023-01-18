@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Texture_Base.h"
+#include "ThunderEngine/Renderer/Texture_Base.h"
 
 #include <glad/gl.h>
 

@@ -1,3 +1,4 @@
+#include "tepch.h"
 #include "OpenGLBuffer.h"
 
 #include <glad/gl.h>

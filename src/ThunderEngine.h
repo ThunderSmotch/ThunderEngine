@@ -1,34 +1,21 @@
 #pragma once
 
-#include <stdint.h>
-#include <string>
-#include <memory>
+#include "ThunderEngine/Core/Base.h"
 
-#include <vector>
+#include "ThunderEngine/Core/App.h"
+#include "ThunderEngine/Core/KeyInput.h"
+#include "ThunderEngine/Core/Timer.h"
 
-#include "Utils/Logger.h"
+#include "ThunderEngine/Renderer/Renderer.h"
+#include "ThunderEngine/Renderer/RendererAPI.h"
+#include "ThunderEngine/Renderer/Renderer2D.h"
+#include "ThunderEngine/Renderer/RendererText.h"
 
-#define TE_DERIVED(func, ...) static_cast<Derived*>(this)->func(__VA_ARGS__)
+#include "ThunderEngine/Renderer/Buffer.h"
+#include "ThunderEngine/Renderer/Shader.h"
+#include "ThunderEngine/Renderer/Texture.h"
+#include "ThunderEngine/Renderer/VertexArray.h"
 
-namespace ThunderEngine
-{
-	template<typename T>
-	using Ref = std::shared_ptr<T>;
+#include "ThunderEngine/Renderer/Camera.h"
 
-	template<typename T, typename ... Args>
-	constexpr Ref<T> CreateRef(Args&& ... args)
-	{
-		return std::make_shared<T>(std::forward<Args>(args)...);
-	}
-
-	template<typename T>
-	using UniqueRef = std::unique_ptr<T>;
-
-	template<typename T, typename ... Args>
-	constexpr UniqueRef<T> CreateUniqueRef(Args&& ... args)
-	{
-		return std::make_unique<T>(std::forward<Args>(args)...);
-	}
-}
-
-
+#include "ThunderEngine/Sound/SoundPlayer.h"

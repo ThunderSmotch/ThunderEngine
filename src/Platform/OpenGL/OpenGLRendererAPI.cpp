@@ -1,3 +1,4 @@
+#include "tepch.h"
 #include "OpenGLRendererAPI.h"
 
 #include <glad/gl.h>
@@ -46,6 +47,11 @@ namespace ThunderEngine
 	{
 		vertex_array->Bind();
 		glDrawArrays(GL_LINES, 0, vertex_count);
+	}
+
+	void OpenGLRendererAPI::SetLineWidth(float width)
+	{
+		glLineWidth(width);
 	}
 
 	void OpenGLRendererAPI::SetWireframeMode(bool enabled)

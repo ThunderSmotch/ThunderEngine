@@ -1,8 +1,7 @@
 #pragma once
+#include "tepch.h"
 
 #include "GLFWWindow.h"
-
-#include <iostream>
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
@@ -11,8 +10,9 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
-#include "Renderer/RendererAPI.h"
 #include "GLFWInput.h"
+
+#include "ThunderEngine/Renderer/RendererAPI.h"
 
 namespace ThunderEngine
 {
@@ -88,6 +88,10 @@ namespace ThunderEngine
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+
+		// FUTURE Assess if input should be processed here and in this order!
+		glfwPollEvents();
+		GLFWKeyInput::UpdateKeyPresses();
 	}
 
 	void GLFWWindow::OnUpdate()
@@ -99,10 +103,6 @@ namespace ThunderEngine
 
 		// Swap framebuffers
 		graphics_context_->SwapBuffers();
-
-		// TODO Assess if input should be processed here and in this order!
-		GLFWKeyInput::UpdateKeyPresses();
-		glfwPollEvents();
 	}
 
 	void GLFWWindow::SetWindowCloseCallback(std::function<void()> func)

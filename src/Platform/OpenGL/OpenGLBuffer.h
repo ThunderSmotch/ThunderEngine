@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Buffer_Base.h"
+#include "ThunderEngine/Renderer/Buffer_Base.h"
 
 namespace ThunderEngine
 {

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Core/Window_Base.h"
-
 #include <GLFW/glfw3.h>
-#include <Renderer/GraphicsContext.h>
+
+#include "ThunderEngine/Core/Window_Base.h"
+#include "ThunderEngine/Renderer/GraphicsContext.h"
+
 
 namespace ThunderEngine
 {

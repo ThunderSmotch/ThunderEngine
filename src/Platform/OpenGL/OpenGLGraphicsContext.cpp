@@ -1,6 +1,5 @@
+#include "tepch.h"
 #include "OpenGLGraphicsContext.h"
-
-#include "ThunderEngine.h"
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>

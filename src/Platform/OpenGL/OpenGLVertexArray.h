@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/VertexArray_Base.h"
+#include "ThunderEngine/Renderer/VertexArray_Base.h"
 
 namespace ThunderEngine
 {

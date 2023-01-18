@@ -1,8 +1,9 @@
+#include "tepch.h"
 #include "GLFWInput.h"
 
 #include <GLFW/glfw3.h>
 
-#include "Core/App.h"
+#include "ThunderEngine/Core/App.h"
 
 namespace ThunderEngine
 {

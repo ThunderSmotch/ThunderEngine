@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/RendererAPI_Base.h"
+#include "ThunderEngine/Renderer/RendererAPI_Base.h"
 
 namespace ThunderEngine
 {
@@ -11,6 +11,8 @@ namespace ThunderEngine
 
 		static void DrawIndexed(const Ref<VertexArray>& vertex_array, uint32_t index_count = 0);
 		static void DrawLines(const Ref<VertexArray>& vertex_array, uint32_t vertex_count);
+
+		static void SetLineWidth(float width);
 
 		static void SetWireframeMode(bool enabled);
 
