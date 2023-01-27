@@ -46,6 +46,6 @@ namespace ThunderEngine
 		GLenum internal_format_;
 		GLenum data_format_;
 
-		uint32_t renderer_id_;
+		uint32_t renderer_id_ = 0;
 	};
 }

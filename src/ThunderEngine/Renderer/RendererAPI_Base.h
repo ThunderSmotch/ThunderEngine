@@ -11,8 +11,6 @@ namespace ThunderEngine
 	template <typename Derived>
 	struct RendererAPI_Base
 	{
-		//static UniqueRef<Derived> Create() { return Derived::Create(); }
-
 		static void Init() { Derived::Init(); }
 
 		static void DrawIndexed(const Ref<VertexArray>& vertex_array, uint32_t index_count = 0)

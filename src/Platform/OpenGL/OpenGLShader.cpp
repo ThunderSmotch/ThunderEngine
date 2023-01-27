@@ -98,8 +98,8 @@ namespace ThunderEngine
 			char* message = (char*) malloc(sizeof(char)*length);
 
 			glGetShaderInfoLog(id, length, NULL, message);
-			Logger::Error("Failed to compile % shader, see attached log:", ((type == GL_VERTEX_SHADER) ? "vertex" : "fragment"));
-			Logger::Error(message);
+
+			TE_ERROR("Failed to compile % shader, see attached log: %", ((type == GL_VERTEX_SHADER) ? "vertex" : "fragment"), message);
 
 			if (message != 0)
 			{

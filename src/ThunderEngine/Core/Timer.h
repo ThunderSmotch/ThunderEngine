@@ -3,20 +3,30 @@
 #include <chrono>
 
 namespace ThunderEngine
-{
-	// A simple timer class to count time since instantiation or since the last reset.
+{	
+	/// <summary>
+	/// A simple timer class to track time
+	/// </summary>
 	class Timer
 	{
 	private:
 		std::chrono::time_point<std::chrono::high_resolution_clock> start_;
 
 	public:
+		/// <summary>
+		/// Starts tracking time since construction
+		/// </summary>
 		Timer();
 
-		// Resets the timer.
+		/// <summary>
+		/// Resets the timer
+		/// </summary>
 		void Reset();
 
-		// Returns seconds elapsed since reset or creation.
-		float Elapsed();
+		/// <summary>
+		/// Returns seconds elapsed since reset or construction
+		/// </summary>
+		/// <returns>Seconds elapsed</returns>
+		float Elapsed() const;
 	};
 }

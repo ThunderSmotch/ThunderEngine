@@ -216,6 +216,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h" />
     <ClInclude Include="src\ThunderEngine\Renderer\Buffer_Base.h" />
     <ClInclude Include="src\ThunderEngine\Renderer\Camera.h" />
+    <ClInclude Include="src\ThunderEngine\Renderer\Color.h" />
     <ClInclude Include="src\ThunderEngine\Renderer\GraphicsContext_Base.h" />
     <ClInclude Include="src\ThunderEngine\Renderer\RendererAPI_Base.h" />
     <ClInclude Include="src\ThunderEngine\Renderer\Shader_Base.h" />

@@ -2,6 +2,8 @@
 
 #include "ThunderEngine/Core/Base.h"
 
+#include "ThunderEngine/Renderer/Color.h"
+
 #include "ThunderEngine/Core/App.h"
 #include "ThunderEngine/Core/KeyInput.h"
 #include "ThunderEngine/Core/Timer.h"

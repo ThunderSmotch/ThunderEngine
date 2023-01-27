@@ -2,6 +2,9 @@
 
 #include <memory>
 
+// Same includes as tepch.h
+#include "ThunderEngine/Utils/Logger.h"
+
 #define TE_DERIVED(func, ...) static_cast<Derived*>(this)->func(__VA_ARGS__)
 
 namespace ThunderEngine
@@ -24,6 +27,3 @@ namespace ThunderEngine
 		return std::make_unique<T>(std::forward<Args>(args)...);
 	}
 }
-
-// Same includes as tepch.h
-#include "ThunderEngine/Utils/Logger.h"

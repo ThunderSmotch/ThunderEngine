@@ -3,7 +3,7 @@
 #include "ThunderEngine/Core/Base.h"
 
 #include <string>
-#include <map>
+#include <unordered_map>
 
 
 struct ma_engine;
@@ -19,7 +19,7 @@ namespace ThunderEngine
 	{
 	private:
 		static ma_engine engine_;
-		static std::map<std::string, ma_sound*> sounds_map_;
+		static std::unordered_map<std::string, ma_sound*> sounds_map_;
 
 	public:
 		static void Init();

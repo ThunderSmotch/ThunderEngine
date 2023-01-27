@@ -2,19 +2,19 @@
 #include "App.h"
 
 #include "ThunderEngine/Renderer/Renderer.h"
+#include "Timer.h"
 
 namespace ThunderEngine
 {
     App* App::instance_ = nullptr;
 
-    App::App(std::string title, uint32_t width, uint32_t height)
-        : window_(nullptr), running_(false)
+    App::App(const std::string& title, uint32_t width, uint32_t height)
+        : running_(true)
     {
         instance_ = this;
 
         window_ = Window::Create(WindowProps(title, width, height));
-        window_->SetWindowCloseCallback(std::bind(&App::OnWindowClose, this));
-        running_ = true;
+        window_->SetWindowCloseCallback([this]() { this->OnWindowClose(); });
 
         Renderer::Init();
     }
@@ -24,30 +24,41 @@ namespace ThunderEngine
         Renderer::Shutdown();
     }
 
-    void App::AddCallback(std::function<void()> callback) {
+    void App::AddCallback(const std::function<void(float)>& callback) {
         callbacks_.push_back(callback);
     }
 
     void App::Run()
     {
+        Timer timer;
+        float dt = 0.0f;
         while (running_)
-        {
+        {   
+            // Check timestep
+            dt = timer.Elapsed();
+            timer.Reset();
+
+            // TODO At some point we need to decouple the render callbacks from the physics/simulation ones
+            // Also worth reading this again https://gafferongames.com/post/fix_your_timestep/
+            // And use an accumulator based solution!
+
+            // Call callbacks with the timestep
             window_->OnPreUpdate();
-            for (auto& callback : callbacks_)
+            for (const auto& callback : callbacks_)
             {
-                callback();
+                callback(dt);
             }
             window_->OnUpdate();
         }
     }
 
-    void App::OnWindowClose()
-    {
-        Close();
-    }
-
     void App::Close()
     {
         running_ = false;
+    }
+
+    void App::OnWindowClose()
+    {
+        Close();
     }
 }

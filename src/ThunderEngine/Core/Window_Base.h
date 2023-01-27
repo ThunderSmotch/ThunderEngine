@@ -7,6 +7,9 @@
 namespace ThunderEngine
 {
 
+	/// <summary>
+	/// Window Properties
+	/// </summary>
 	struct WindowProps
 	{
 		std::string title;

@@ -7,15 +7,15 @@
 namespace ThunderEngine
 {
 	ma_engine SoundPlayer::engine_;
-	std::map<std::string, ma_sound*> SoundPlayer::sounds_map_;
+	std::unordered_map<std::string, ma_sound*> SoundPlayer::sounds_map_;
 
 	void SoundPlayer::Init()
 	{
 		ma_result result;
-		result = ma_engine_init(NULL, &engine_);
+		result = ma_engine_init(nullptr, &engine_);
 		if (result != MA_SUCCESS)
 		{
-			TE_ERROR("Failed to initialize the audio engine! Error code: %", (int)result);
+			TE_ERROR("Failed to initialize the audio engine! Error code: %", result);
 		}
 	}
 
@@ -32,7 +32,7 @@ namespace ThunderEngine
 	{
 		ma_sound* sound = new ma_sound();
 		ma_result result;
-		result = ma_sound_init_from_file(&engine_, filepath.c_str(), MA_SOUND_FLAG_DECODE, NULL, NULL, sound);
+		result = ma_sound_init_from_file(&engine_, filepath.c_str(), MA_SOUND_FLAG_DECODE, nullptr, nullptr, sound);
 		if (result != MA_SUCCESS) {
 			TE_ERROR("Failed to load sound at %. Error code: %", filepath, (int)result);
 		}

@@ -1,7 +1,6 @@
 #include "tepch.h"
 #include "Renderer2D.h"
 
-
 #include <array>
 
 #include <glad/gl.h>
@@ -10,7 +9,6 @@
 #include "Shader.h"
 #include "Buffer.h"
 #include "VertexArray.h"
-
 #include "RendererAPI.h"
 #include "Texture.h"
 
@@ -34,12 +32,14 @@ namespace ThunderEngine
     // Memory being allocated on the heap
     // Lines -> 80k vertices -> 6*4*80k = ~1.8 Mb
 
+    // TODO: Not sure if this is the best way to store these variables
+    // This is being put on the ThunderEngine namespace, everyone can access it.
     struct Renderer2DData
     {
-        static const uint32_t MaxQuads = 20000;
+        static const uint32_t MaxQuads = 10000;
         static const uint32_t MaxVertices = MaxQuads * 4;
         static const uint32_t MaxIndices = MaxQuads * 6;
-        static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
+        static const uint32_t MaxTextureSlots = 32;
 
         // Lines variables /////////////////////////////////
         Ref<Shader>       line_shader             = nullptr;
@@ -67,26 +67,27 @@ namespace ThunderEngine
         Ref<VertexBuffer> quad_vertex_buffer = nullptr;
         Ref<Texture2D> white_texture = nullptr;
 
-        glm::vec4 quad_vertex_positions[4] = {glm::vec4(), glm::vec4(), glm::vec4(), glm::vec4()};
+        std::array<glm::vec4,4> quad_vertex_positions = {glm::vec4(), glm::vec4(), glm::vec4(), glm::vec4()};
 
         std::array<Ref<Texture2D>, MaxTextureSlots> texture_slots;
         uint32_t texture_slot_index = 1; // 0 = white texture
     };
 
+    // TODO move this inside Renderer2D
     static Renderer2DData data;
 
     void Renderer2D::InitLine() {
         data.line_vertex_array = VertexArray::Create();
 
         // Create and set the Line Vertex Buffer layout
-        data.line_vertex_buffer = VertexBuffer::Create(data.MaxVertices * sizeof(LineVertex));
+        data.line_vertex_buffer = VertexBuffer::Create(ThunderEngine::Renderer2DData::MaxVertices * sizeof(LineVertex));
         data.line_vertex_buffer->SetLayout({
             {"aPos", ShaderDataType::Float2},
             {"aCol", ShaderDataType::Float4}
             });
         data.line_vertex_array->AddVertexBuffer(data.line_vertex_buffer);
 
-        data.line_vertex_buffer_base = new LineVertex[data.MaxVertices];
+        data.line_vertex_buffer_base = new LineVertex[ThunderEngine::Renderer2DData::MaxVertices];
 
         data.line_shader = Shader::Create("LineShader", "res/shaders/LineVertex.glsl", "res/shaders/LineFragment.glsl");
     }
@@ -94,14 +95,14 @@ namespace ThunderEngine
     void Renderer2D::InitTriangle() {
         data.shader_triangle = Shader::Create("res/shaders/Shader.shader");
 
-        float vertices[] =
+        std::array<float, 6> vertices =
         {
             -0.5f, -0.5f,
             0.5f, -0.5f,
             0.0f, 0.5f,
         };
 
-        Ref<VertexBuffer> vb = VertexBuffer::Create(vertices, sizeof(vertices));
+        Ref<VertexBuffer> vb = VertexBuffer::Create(vertices.data(), sizeof(vertices));
         vb->SetLayout({ BufferElement("aPos", ShaderDataType::Float2) });
 
         data.va_triangle = VertexArray::Create();
@@ -113,7 +114,7 @@ namespace ThunderEngine
         data.quad_vertex_array = VertexArray::Create();
         
         // Create Quad Vertex Buffer and its layout
-        data.quad_vertex_buffer = VertexBuffer::Create(data.MaxVertices*sizeof(QuadVertex));
+        data.quad_vertex_buffer = VertexBuffer::Create(Renderer2DData::MaxVertices*sizeof(QuadVertex));
         data.quad_vertex_buffer->SetLayout({
             {"aPos", ShaderDataType::Float3},
             {"aCol", ShaderDataType::Float4},
@@ -123,13 +124,13 @@ namespace ThunderEngine
         data.quad_vertex_array->AddVertexBuffer(data.quad_vertex_buffer);
 
         // Allocate space for max vertices
-        data.quad_vertex_buffer_base = new QuadVertex[data.MaxVertices];
+        data.quad_vertex_buffer_base = new QuadVertex[Renderer2DData::MaxVertices];
         
         // Allocate and set Index Buffer
-        uint32_t* quad_indices = new uint32_t[data.MaxIndices];
+        uint32_t* quad_indices = new uint32_t[Renderer2DData::MaxIndices];
 
         uint32_t offset = 0;
-        for (uint32_t i = 0; i < data.MaxIndices; i += 6)
+        for (uint32_t i = 0; i < Renderer2DData::MaxIndices; i += 6)
         {
             quad_indices[i + 0] = offset + 0;
             quad_indices[i + 1] = offset + 1;
@@ -142,7 +143,7 @@ namespace ThunderEngine
             offset += 4;
         }
 
-        Ref<IndexBuffer> quad_ib = IndexBuffer::Create(quad_indices, data.MaxIndices);
+        Ref<IndexBuffer> quad_ib = IndexBuffer::Create(quad_indices, Renderer2DData::MaxIndices);
         data.quad_vertex_array->SetIndexBuffer(quad_ib);
         delete[] quad_indices;
 
@@ -282,7 +283,7 @@ namespace ThunderEngine
     {
         constexpr size_t quad_vertex_count = 4;
         const float texture_index = 0.0f; // White Texture
-        constexpr glm::vec2 texture_coords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+        constexpr std::array<glm::vec2,4> texture_coords = { glm::vec2(0.0f), { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
         if (data.quad_index_count >= Renderer2DData::MaxIndices)
         {
@@ -314,7 +315,7 @@ namespace ThunderEngine
     void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& tint_color)
     {
         constexpr size_t quad_vertex_count = 4;
-        constexpr glm::vec2 texture_coords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+        constexpr std::array<glm::vec2,4> texture_coords = { glm::vec2(0.0f), {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
 
         if (data.quad_index_count >= Renderer2DData::MaxIndices)
         {

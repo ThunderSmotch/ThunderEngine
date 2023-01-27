@@ -26,7 +26,7 @@ namespace ThunderEngine
 		D_8 = 56, /* 8 */
 		D_9 = 57, /* 9 */
 
-		SEMICOLON = 59, /* ; */
+		SEMICOLON = 59, /* Semicolon ; */
 		EQUAL = 61, /* = */
 
 		A = 65,
@@ -150,8 +150,6 @@ namespace ThunderEngine
 		}
 
 		bool GetIsKeyDown(KeyCode key) { return TE_DERIVED(GetIsKeyDown, key); }
-
-		// Returns true if the key was up and now became down
 		bool GetIsKeyPress(KeyCode key) { return TE_DERIVED(GetIsKeyPress, key); }
 
 		bool GetIsEnabled() { return TE_DERIVED(GetIsEnabled); }

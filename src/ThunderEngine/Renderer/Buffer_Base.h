@@ -4,12 +4,19 @@
 
 namespace ThunderEngine
 {
+	/// <summary>
+	/// Datatypes of shader related variables
+	/// </summary>
 	enum class ShaderDataType
 	{
 		None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
 	};
 
-	// Returns the size in bytes of the ShaderDataType
+	/// <summary>
+	/// Returns the size in bytes of the ShaderDataType
+	/// </summary>
+	/// <param name="type">A valid ShaderDataType</param>
+	/// <returns>Size in bytes of the provided type</returns>
 	static uint32_t GetShaderDataTypeSize(ShaderDataType type)
 	{
 		switch (type)
@@ -25,29 +32,34 @@ namespace ThunderEngine
 		case ShaderDataType::Int3: return 4 * 3;
 		case ShaderDataType::Int4: return 4 * 4;
 		case ShaderDataType::Bool: return 1;
+		default: break;
 		}
 
 		TE_WARN("Unknown ShaderDataType! Cannot get size.");
 		return 0;
 	}
 
-
-	// Represents an element of a buffer's vertex
+	/// <summary>
+	/// Represents an element of a buffer's vertex
+	/// </summary>
 	struct BufferElement
 	{
-		std::string name;
-		ShaderDataType type;
-		uint32_t size;
-		size_t offset;
-		bool normalized;
+		ShaderDataType type; // Type of data
+		uint32_t size;       // Size in bytes of data
+		size_t offset = 0;   // Offset in bytes compared to the Vertex's base address
+		bool normalized;     // If vector, is it normalized?
+		std::string name;    // Name of element
 
 		BufferElement() = default;
 
-		BufferElement(std::string name, ShaderDataType type, bool normalized = false)
-			: name(name), type(type), size(GetShaderDataTypeSize(type)), offset(0), normalized(normalized)
+		BufferElement(const std::string& name, ShaderDataType type, bool normalized = false)
+			: type(type), size(GetShaderDataTypeSize(type)), normalized(normalized), name(name)
 		{}
 	};
 
+	/// <summary>
+	/// A description of how a Buffer's Vertex are laid out in memory
+	/// </summary>
 	class BufferLayout
 	{
 	private:
@@ -55,18 +67,33 @@ namespace ThunderEngine
 		uint32_t stride_ = 0;
 
 	public:
-		BufferLayout() {}
+		BufferLayout() = default;
 
+		/// <summary>
+		/// Creates a BufferLayout from the provided list of BufferElements
+		/// </summary>
+		/// <param name="elements">An array list of BufferElements</param>
 		BufferLayout(std::initializer_list<BufferElement> elements)
 			:elements_(elements)
 		{
 			CalculateOffsetsAndStride();
 		}
 
+		/// <summary>
+		/// Returns the stride of a Vertex with this BufferLayout
+		/// </summary>
+		/// <returns>Stride in bytes of a vertex with this layout</returns>
 		uint32_t GetStride() const { return stride_; }
+
+		/// <summary>
+		/// Returns the vector of BufferElements of this layout
+		/// </summary>
+		/// <returns>A vector of BufferElements</returns>
 		const std::vector<BufferElement>& GetElements() const { return elements_; }
 
 	private:
+		
+		// Calculates the offset of each BufferElement and the total vertex stride
 		void CalculateOffsetsAndStride();
 	};
 
@@ -85,7 +112,7 @@ namespace ThunderEngine
 		void SetLayout(const BufferLayout& layout) { TE_DERIVED(SetLayout, layout); };
 	};
 
-	// MAYBE support for other indices types (uint8_t) for smaller things.
+	// NOTE Maybe in the future we should support for other indices types (uint8_t) for smaller things.
 	template <typename Derived>
 	struct IndexBuffer_Base 
 	{

@@ -90,8 +90,9 @@ namespace ThunderEngine
 		ImGui::NewFrame();
 
 		// FUTURE Assess if input should be processed here and in this order!
-		glfwPollEvents();
+		// HAS TO BE THIS ORDER OR UPDATE KEY PRESSES DOES NOT WORK
 		GLFWKeyInput::UpdateKeyPresses();
+		glfwPollEvents();
 	}
 
 	void GLFWWindow::OnUpdate()
