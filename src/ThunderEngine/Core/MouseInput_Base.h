@@ -38,5 +38,8 @@ namespace ThunderEngine
 		void SetIsEnabled(bool enabled) { TE_DERIVED(SetIsEnabled, enabled); }
 
 		// Mouse specific functions
+		double GetScrollWheelYOffset() { return TE_DERIVED(GetScrollWheelYOffset); }
+		double GetScrollWheelXOffset() { return TE_DERIVED(GetScrollWheelXOffset); }
+
 	};
 }

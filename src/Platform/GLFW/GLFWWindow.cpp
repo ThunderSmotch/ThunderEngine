@@ -40,7 +40,7 @@ namespace ThunderEngine
 
 		// Setup callbacks
 		GLFWKeyInput::SetupGLFWKeyInputs(window_);
-		GLFWMouseInput::SetupGLFWMouseButtonInputs(window_);
+		GLFWMouseInput::SetupGLFWMouseInputs(window_);
 
 		glfwSetErrorCallback([](int error, const char* description)
 			{

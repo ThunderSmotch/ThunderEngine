@@ -67,9 +67,10 @@ namespace ThunderEngine
 
     // Static functions
 
-    void GLFWMouseInput::SetupGLFWMouseButtonInputs(GLFWwindow* window)
+    void GLFWMouseInput::SetupGLFWMouseInputs(GLFWwindow* window)
     {
         glfwSetMouseButtonCallback(window, GLFWMouseInput::MouseButtonCallback);
+        glfwSetScrollCallback(window, GLFWMouseInput::MouseScrollCallback);
     }
 
     void GLFWMouseInput::UpdateKeyPresses()
@@ -100,4 +101,16 @@ namespace ThunderEngine
             key_input->SetIsKeyDown(key_code, (action != GLFW_RELEASE));
         }
     }
+
+    void GLFWMouseInput::MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+    {
+        //TE_INFO("XOFFSET % YOFFSET %", xoffset, yoffset);
+
+        for (GLFWMouseInput* mouse_input : instances_)
+        {
+            mouse_input->x_offset = xoffset;
+            mouse_input->y_offset = yoffset;
+        }
+    }
+
 }
