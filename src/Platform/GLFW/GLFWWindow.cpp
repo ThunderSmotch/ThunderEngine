@@ -11,6 +11,7 @@
 #include <GLFW/glfw3.h>
 
 #include "GLFWInput.h"
+#include "GLFWMouseInput.h"
 
 #include "ThunderEngine/Renderer/RendererAPI.h"
 
@@ -39,6 +40,7 @@ namespace ThunderEngine
 
 		// Setup callbacks
 		GLFWKeyInput::SetupGLFWKeyInputs(window_);
+		GLFWMouseInput::SetupGLFWMouseButtonInputs(window_);
 
 		glfwSetErrorCallback([](int error, const char* description)
 			{

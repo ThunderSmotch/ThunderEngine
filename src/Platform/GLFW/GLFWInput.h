@@ -29,7 +29,6 @@ namespace ThunderEngine
 		}
 
 		bool GetIsKeyDown(KeyCode key);
-
 		bool GetIsKeyPress(KeyCode key);
 
 

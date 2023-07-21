@@ -6,6 +6,7 @@
 
 #include "ThunderEngine/Core/App.h"
 #include "ThunderEngine/Core/KeyInput.h"
+#include "ThunderEngine/Core/MouseInput.h"
 #include "ThunderEngine/Core/Timer.h"
 
 #include "ThunderEngine/Renderer/Renderer.h"

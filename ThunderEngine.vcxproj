@@ -150,6 +150,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platform\GLFW\GLFWMouseInput.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp" />
     <ClCompile Include="src\ThunderEngine\Renderer\Camera.cpp" />
     <ClCompile Include="src\ThunderEngine\Renderer\RendererText.cpp" />
@@ -209,9 +210,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\GLFW\GLFWMouseInput.h" />
     <ClInclude Include="src\ThunderEngine\Core\Base.h" />
     <ClInclude Include="src\ThunderEngine\Core\KeyInput.h" />
     <ClInclude Include="src\ThunderEngine\Core\KeyInput_Base.h" />
+    <ClInclude Include="src\ThunderEngine\Core\MouseInput.h" />
+    <ClInclude Include="src\ThunderEngine\Core\MouseInput_Base.h" />
     <ClInclude Include="src\ThunderEngine\Core\Window_Base.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h" />
     <ClInclude Include="src\ThunderEngine\Renderer\Buffer_Base.h" />
