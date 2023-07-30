@@ -94,6 +94,7 @@ namespace ThunderEngine
 		// FUTURE Assess if input should be processed here and in this order!
 		// HAS TO BE THIS ORDER OR UPDATE KEY PRESSES DOES NOT WORK
 		GLFWKeyInput::UpdateKeyPresses();
+		GLFWMouseInput::UpdateKeyPresses();
 		glfwPollEvents();
 	}
 

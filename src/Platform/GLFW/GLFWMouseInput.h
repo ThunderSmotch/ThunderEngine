@@ -15,10 +15,13 @@ namespace ThunderEngine
 		std::map<MouseKeyCode, bool> keys_down_;
 		std::map<MouseKeyCode, bool> keys_press_;
 
-		double y_offset;
-		double x_offset; // Most mouses do not have this
+		double y_offset_ = 0;
+		double x_offset_ = 0; // Most mouses do not have this
 
-		bool is_enabled_;
+		double x_position_ = 0;
+		double y_position_ = 0;
+
+		bool is_enabled_ = true;
 		bool update_presses_ = false;
 
 	public:
@@ -33,10 +36,12 @@ namespace ThunderEngine
 		bool GetIsKeyDown(MouseKeyCode key);
 		bool GetIsKeyPress(MouseKeyCode key);
 
-		double GetScrollWheelYOffset() { return y_offset; }
-		double GetScrollWheelXOffset() { return x_offset; }
+		double GetScrollWheelYOffset() const { return y_offset_; }
+		double GetScrollWheelXOffset() const { return x_offset_; }
 
-		bool GetIsEnabled() { return is_enabled_; }
+		void GetMousePosition(double& x_pos, double& y_pos);
+
+		bool GetIsEnabled() const { return is_enabled_; }
 		void SetIsEnabled(bool enabled) { is_enabled_ = enabled; }
 	private:
 		void SetIsKeyDown(MouseKeyCode key, bool is_down);
@@ -49,6 +54,7 @@ namespace ThunderEngine
 	private:
 		static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 		static void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+		static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
 
 		// Keep a list of all KeyInput instances and notify them all of key events
 		static std::vector<GLFWMouseInput*> instances_;

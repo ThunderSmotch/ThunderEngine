@@ -22,6 +22,11 @@ namespace ThunderEngine
 		MOUSE_CENTER = MOUSE_3,
 	};
 
+	// Source: https://www.glfw.org/docs/3.3/input_guide.html#input_mouse
+	// TODO Cursor Enter/Leave Events
+	// TODO Cursor Customization
+	// TODO Raw Mouse Motion
+
 	// Handles mouse input.
 	template <typename Derived>
 	struct MouseInput_Base
@@ -41,5 +46,6 @@ namespace ThunderEngine
 		double GetScrollWheelYOffset() { return TE_DERIVED(GetScrollWheelYOffset); }
 		double GetScrollWheelXOffset() { return TE_DERIVED(GetScrollWheelXOffset); }
 
+		void GetMousePositon(double& xPos, double& yPos) { return TE_DERIVED(GetMousePosition); }
 	};
 }

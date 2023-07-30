@@ -65,12 +65,18 @@ namespace ThunderEngine
         }
     }
 
+    void GLFWMouseInput::GetMousePosition(double& x_pos, double& y_pos) {
+        x_pos = x_position_;
+        y_pos = y_position_;
+    }
+
     // Static functions
 
     void GLFWMouseInput::SetupGLFWMouseInputs(GLFWwindow* window)
     {
         glfwSetMouseButtonCallback(window, GLFWMouseInput::MouseButtonCallback);
         glfwSetScrollCallback(window, GLFWMouseInput::MouseScrollCallback);
+        glfwSetCursorPosCallback(window, GLFWMouseInput::CursorPositionCallback);
     }
 
     void GLFWMouseInput::UpdateKeyPresses()
@@ -108,8 +114,17 @@ namespace ThunderEngine
 
         for (GLFWMouseInput* mouse_input : instances_)
         {
-            mouse_input->x_offset = xoffset;
-            mouse_input->y_offset = yoffset;
+            mouse_input->x_offset_ = xoffset;
+            mouse_input->y_offset_ = yoffset;
+        }
+    }
+
+    void GLFWMouseInput::CursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
+    {
+        for (GLFWMouseInput* mouse_input : instances_) 
+        {
+            mouse_input->x_position_ = xpos;
+            mouse_input->y_position_ = ypos;
         }
     }
 
