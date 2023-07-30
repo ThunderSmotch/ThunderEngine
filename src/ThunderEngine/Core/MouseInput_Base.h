@@ -26,6 +26,7 @@ namespace ThunderEngine
 	// TODO Cursor Enter/Leave Events
 	// TODO Cursor Customization
 	// TODO Raw Mouse Motion
+	// TODO Modifier Key Flags
 
 	// Handles mouse input.
 	template <typename Derived>
