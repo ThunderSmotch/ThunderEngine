@@ -122,7 +122,25 @@ namespace ThunderEngine
 		glAttachShader(program, vertex);
 		glAttachShader(program, fragment);
 		glLinkProgram(program);
-		glValidateProgram(program);
+
+		// Check if program linked correctly
+		int result;
+		glGetProgramiv(program, GL_LINK_STATUS, &result);
+		if (result == GL_FALSE)
+		{
+			int length;
+			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
+			char* message = (char*)malloc(sizeof(char) * length);
+			glGetProgramInfoLog(program, length, NULL, message);
+			TE_ERROR("Failed to compile program, see attached log: %", message);
+
+			if (message != 0)
+			{
+				memset(message, 0, sizeof(char) * length);
+			}
+
+			glDeleteProgram(program);
+		}
 
 		// Delete shaders; they’re linked into our program and no longer necessary
 		glDeleteShader(vertex);
