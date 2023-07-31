@@ -260,6 +260,8 @@
     <ClInclude Include="vendor\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\CircleFragment.glsl" />
+    <None Include="res\shaders\CircleVertex.glsl" />
     <None Include="res\shaders\LineFragment.glsl" />
     <None Include="res\shaders\LineVertex.glsl" />
     <None Include="res\shaders\QuadFragment.glsl" />

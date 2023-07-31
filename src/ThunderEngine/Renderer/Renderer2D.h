@@ -104,6 +104,50 @@ namespace ThunderEngine
 		static void DrawTriangle(const glm::vec2& position);
 
 		/// <summary>
+		/// Draws a colored circle at the specified transform with the given outline parameters
+		/// </summary>
+		/// <param name="transform">The world transform of the circle</param>
+		/// <param name="color">The inner color</param>
+		/// <param name="border_color">The border color</param>
+		/// <param name="border_thickness">Percentage of radius that the border uses</param>
+		/// <param name="thickness">Percentage of circle to show, from outside inwards.</param>
+		/// <param name="fade">Parameter controlling the antialiasing of the circle</param>
+		static void DrawCircle(const glm::mat4& transform, const glm::vec4& color, const glm::vec4& border_color,
+			float border_thickness = 0.05f, float thickness = 1.0f, float fade = 0.005f);
+
+		/// <summary>
+		/// Draw a borderless circle with the given color
+		/// </summary>
+		/// <param name="transform">The world transform of the circle</param>
+		/// <param name="color">The inner color</param>
+		/// <param name="thickness">Percentage of circle to show, from outside inwards.</param>
+		/// <param name="fade">Parameter controlling the antialiasing of the circle</param>
+		static void DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f);
+
+		/// <summary>
+		/// Draws a colored circle at the specified position with the given size and outline parameters
+		/// </summary>
+		/// <param name="position">Position of the center of the circle</param>
+		/// <param name="size">Size of the circle</param>
+		/// <param name="color">The inner color</param>
+		/// <param name="border_color">The border color</param>
+		/// <param name="border_thickness">Percentage of radius that the border uses</param>
+		/// <param name="thickness">Percentage of circle to show, from outside inwards.</param>
+		/// <param name="fade">Parameter controlling the antialiasing of the circle</param>
+		static void DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec4 border_color,
+			float border_thickness, float thickness = 1.0f, float fade = 0.005f);
+
+		/// <summary>
+		/// Draws a colored borderless circle at the specified position with the given size
+		/// </summary>
+		/// <param name="position">Position of the center of the circle</param>
+		/// <param name="size">Size of the circle</param>
+		/// <param name="color">The inner color</param>
+		/// <param name="thickness">Percentage of circle to show, from outside inwards.</param>
+		/// <param name="fade">Parameter controlling the antialiasing of the circle</param>
+		static void DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f);
+
+		/// <summary>
 		/// Sets the line width
 		/// </summary>
 		/// <param name="width">Line width in pixels</param>
@@ -119,6 +163,7 @@ namespace ThunderEngine
 		static void NextBatch();
 
 		static void InitLine();
+		static void InitCircle();
 		static void InitTriangle();
 		static void InitQuad();
 		static void InitWhiteTexture();

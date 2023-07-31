@@ -29,6 +29,17 @@ namespace ThunderEngine
         float tex_index;
     };
 
+    struct CircleVertex 
+    {
+        glm::vec3 world_position;
+        glm::vec3 local_position;
+        glm::vec4 color;
+        glm::vec4 border_color;
+        float border_thickness;
+        float thickness;
+        float fade;
+    };
+
     // Memory being allocated on the heap
     // Lines -> 80k vertices -> 6*4*80k = ~1.8 Mb
 
@@ -53,10 +64,20 @@ namespace ThunderEngine
         float             line_width              = 2.0f;
         ////////////////////////////////////////////////////
 
-        // Triangles
+        // Triangles ///////////////////////////////////////
         Ref<Shader> shader_triangle = nullptr;
         Ref<VertexArray> va_triangle = nullptr;
 
+        // Circles /////////////////////////////////////////
+        Ref<Shader>       circle_shader             = nullptr;
+        Ref<VertexArray>  circle_vertex_array       = nullptr;
+        Ref<VertexBuffer> circle_vertex_buffer      = nullptr;
+
+        uint32_t          circle_index_count = 0;
+        CircleVertex*     circle_vertex_buffer_base = nullptr;
+        CircleVertex*     circle_vertex_buffer_ptr  = nullptr;
+        ///////////////////////////////////////////////////
+        
         // Quads variables
         uint32_t quad_index_count = 0;
         QuadVertex* quad_vertex_buffer_base = nullptr;
@@ -67,6 +88,7 @@ namespace ThunderEngine
         Ref<VertexBuffer> quad_vertex_buffer = nullptr;
         Ref<Texture2D> white_texture = nullptr;
 
+        Ref<IndexBuffer> quad_ib = nullptr;
         std::array<glm::vec4,4> quad_vertex_positions = {glm::vec4(), glm::vec4(), glm::vec4(), glm::vec4()};
 
         std::array<Ref<Texture2D>, MaxTextureSlots> texture_slots;
@@ -109,6 +131,28 @@ namespace ThunderEngine
         data.va_triangle->AddVertexBuffer(vb);
     }
 
+    void Renderer2D::InitCircle() 
+    {
+        data.circle_vertex_array = VertexArray::Create();
+
+        data.circle_vertex_buffer = VertexBuffer::Create(Renderer2DData::MaxVertices * sizeof(CircleVertex));
+        data.circle_vertex_buffer->SetLayout({
+            {"aWorldPosition", ShaderDataType::Float3},
+            {"aLocalPosition", ShaderDataType::Float3},
+            {"aColor", ShaderDataType::Float4},
+            {"aBorderColor", ShaderDataType::Float4},
+            {"aBorderThickness", ShaderDataType::Float},
+            {"aThickness", ShaderDataType::Float},
+            {"aFade", ShaderDataType::Float}
+            });
+        data.circle_vertex_array->AddVertexBuffer(data.circle_vertex_buffer);
+
+        data.circle_vertex_buffer_base = new CircleVertex[ThunderEngine::Renderer2DData::MaxVertices];
+        data.circle_vertex_array->SetIndexBuffer(data.quad_ib); // Reuse quad IndexBuffer
+
+        data.circle_shader = Shader::Create("CircleShader", "res/shaders/CircleVertex.glsl", "res/shaders/CircleFragment.glsl");
+    }
+
     void Renderer2D::InitQuad() {
 
         data.quad_vertex_array = VertexArray::Create();
@@ -143,8 +187,8 @@ namespace ThunderEngine
             offset += 4;
         }
 
-        Ref<IndexBuffer> quad_ib = IndexBuffer::Create(quad_indices, Renderer2DData::MaxIndices);
-        data.quad_vertex_array->SetIndexBuffer(quad_ib);
+        data.quad_ib = IndexBuffer::Create(quad_indices, Renderer2DData::MaxIndices);
+        data.quad_vertex_array->SetIndexBuffer(data.quad_ib);
         delete[] quad_indices;
 
         // Create quad shader
@@ -170,6 +214,8 @@ namespace ThunderEngine
         InitLine();
         //InitTriangle();
         InitQuad();
+        InitCircle();
+
         InitWhiteTexture();
     }
 
@@ -177,6 +223,7 @@ namespace ThunderEngine
     {
         delete[] data.quad_vertex_buffer_base;
         delete[] data.line_vertex_buffer_base;
+        delete[] data.circle_vertex_buffer_base;
     }
 
     void Renderer2D::StartScene(const OrthographicCamera& camera)
@@ -191,6 +238,9 @@ namespace ThunderEngine
 
         data.line_shader->Bind();
         data.line_shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+
+        data.circle_shader->Bind();
+        data.circle_shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
         StartBatch();
     }
@@ -207,6 +257,9 @@ namespace ThunderEngine
 
         data.quad_index_count = 0;
         data.quad_vertex_buffer_ptr = data.quad_vertex_buffer_base;
+
+        data.circle_index_count = 0;
+        data.circle_vertex_buffer_ptr = data.circle_vertex_buffer_base;
 
         data.texture_slot_index = 1;
     }
@@ -241,6 +294,15 @@ namespace ThunderEngine
             RendererCommand::SetLineWidth(data.line_width);
             RendererCommand::DrawLines(data.line_vertex_array, data.line_vertex_count);
         }
+
+        if (data.circle_index_count)
+        {
+            uint32_t data_size = (uint32_t)((uint8_t*)data.circle_vertex_buffer_ptr - (uint8_t*)data.circle_vertex_buffer_base);
+            data.circle_vertex_buffer->SetData(data.circle_vertex_buffer_base, data_size);
+
+            data.circle_shader->Bind();
+            RendererCommand::DrawIndexed(data.circle_vertex_array, data.circle_index_count);
+        }
     }
 
     void Renderer2D::DrawLine(const glm::vec2& start, const glm::vec2& end, const glm::vec4& color)
@@ -259,6 +321,45 @@ namespace ThunderEngine
         data.line_vertex_buffer_ptr++;
 
         data.line_vertex_count += 2;
+    }
+
+    void Renderer2D::DrawCircle(const glm::mat4& transform, const glm::vec4& color, const glm::vec4& border_color, float border_thickness, float thickness, float fade)
+    {
+        if (data.circle_index_count >= Renderer2DData::MaxIndices)
+        {
+            NextBatch();
+        }
+
+        for (size_t i = 0; i < 4; i++)
+        {
+            data.circle_vertex_buffer_ptr->world_position = transform * data.quad_vertex_positions[i];
+            data.circle_vertex_buffer_ptr->local_position = data.quad_vertex_positions[i] * 2.0f;
+            data.circle_vertex_buffer_ptr->color = color;
+            data.circle_vertex_buffer_ptr->border_color = border_color;
+            data.circle_vertex_buffer_ptr->border_thickness = border_thickness;
+            data.circle_vertex_buffer_ptr->thickness = thickness;
+            data.circle_vertex_buffer_ptr->fade = fade;
+            data.circle_vertex_buffer_ptr++;
+        }
+
+        data.circle_index_count += 6;
+    }
+
+    void Renderer2D::DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness, float fade)
+    {
+        DrawCircle(transform, color, color, 0.0f, thickness, fade);
+    }
+
+    void Renderer2D::DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec4 border_color,
+        float border_thickness, float thickness, float fade) 
+    {
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+        DrawCircle(transform, color, border_color, border_thickness, thickness, fade);
+    }
+
+    void Renderer2D::DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float thickness, float fade)
+    {
+        DrawCircle(position, size, color, color, 0.0f, thickness, fade);
     }
 
     void Renderer2D::DrawTriangle() // TODO Remove or fix the code
