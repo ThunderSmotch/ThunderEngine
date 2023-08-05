@@ -357,10 +357,28 @@ namespace ThunderEngine
         DrawCircle(transform, color, border_color, border_thickness, thickness, fade);
     }
 
+    void Renderer2D::DrawCircle(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, const glm::vec4 border_color,
+        float border_thickness, float thickness, float fade)
+    {
+        glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+            * glm::translate(glm::mat4(1.0f), position)
+            * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+        DrawCircle(transform, color, border_color, border_thickness, thickness, fade);
+    }
+
     void Renderer2D::DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float thickness, float fade)
     {
         DrawCircle(position, size, color, color, 0.0f, thickness, fade);
     }
+
+    void Renderer2D::DrawCircle(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, float thickness, float fade)
+    {
+        glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+            * glm::translate(glm::mat4(1.0f), position)
+            * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+        DrawCircle(transform, color, thickness, fade);
+    }
+
 
     void Renderer2D::DrawTriangle() // TODO Remove or fix the code
     {
@@ -372,6 +390,19 @@ namespace ThunderEngine
     void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
     {
         DrawQuad({position.x, position.y, 0.0f}, size, color);
+    }
+
+    void Renderer2D::DrawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color)
+    {
+        DrawQuad({ position.x, position.y, 0.0f }, rotation, size, color);
+    }
+
+    void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color)
+    {
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) 
+            * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+            * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+        DrawQuad(transform, color);
     }
 
     void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
@@ -400,6 +431,19 @@ namespace ThunderEngine
             data.quad_vertex_buffer_ptr++;
         }
         data.quad_index_count += 6;
+    }
+
+    void Renderer2D::DrawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& tint_color)
+    {
+        DrawQuad({position.x, position.y, 0.0f}, rotation, size, texture, tint_color);
+    }
+
+    void Renderer2D::DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& tint_color)
+    {
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+            * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
+            * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+        DrawQuad(transform, texture, tint_color);
     }
 
     void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& tint_color)
