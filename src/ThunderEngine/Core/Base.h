@@ -7,6 +7,8 @@
 
 #define TE_DERIVED(func, ...) static_cast<Derived*>(this)->func(__VA_ARGS__)
 
+using byte = unsigned char;
+
 namespace ThunderEngine
 {
 	template<typename T>

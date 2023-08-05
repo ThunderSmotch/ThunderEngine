@@ -9,6 +9,8 @@
 #include "ThunderEngine/Core/MouseInput.h"
 #include "ThunderEngine/Core/Timer.h"
 
+#include "ThunderEngine/Assets/Font.h"
+
 #include "ThunderEngine/Renderer/Renderer.h"
 #include "ThunderEngine/Renderer/RendererAPI.h"
 #include "ThunderEngine/Renderer/Renderer2D.h"
