@@ -9,14 +9,19 @@
 
 #include <fstream>
 #include <sstream>
+
 #include "Shader.h"
 #include "VertexArray.h"
 #include "RendererAPI.h"
+
+#include "ThunderEngine/Assets/Font.h"
 
 #include <glm/ext/matrix_transform.hpp>
 
 namespace ThunderEngine
 {
+    // TODO Move Font Initialization to an Asset Manager class
+
     struct CharVertex
     {
         glm::vec4 a_pos;
@@ -37,30 +42,37 @@ namespace ThunderEngine
         Ref<Shader> char_shader = nullptr;
         Ref<VertexArray> char_vertex_array = nullptr;
         Ref<VertexBuffer> char_vertex_buffer = nullptr;
+
+        Ref<Shader> sdf_shader = nullptr;
     };
     static RendererTextData text_data;
 
     Ref<Texture2D> RendererText::font_bitmap;
+
+    Ref<Font> RendererText::font;
+
     stbtt_bakedchar RendererText::char_data[96]; // Character information about texture subunits and offsets
+
+
 
     void RendererText::Init()
     {
         text_data.char_vertex_array = VertexArray::Create();
 
-        text_data.char_vertex_buffer = VertexBuffer::Create(text_data.MaxVertices*sizeof(CharVertex));
+        text_data.char_vertex_buffer = VertexBuffer::Create(RendererTextData::MaxVertices*sizeof(CharVertex));
         text_data.char_vertex_buffer->SetLayout({
             {"aPos", ShaderDataType::Float4}
             });
         text_data.char_vertex_array->AddVertexBuffer(text_data.char_vertex_buffer);
 
         // Allocate space for max vertices
-        text_data.char_vertex_buffer_base = new CharVertex[text_data.MaxVertices];
+        text_data.char_vertex_buffer_base = new CharVertex[RendererTextData::MaxVertices];
 
         // Allocate and set Index Buffer
-        uint32_t* char_indices = new uint32_t[text_data.MaxIndices];
+        uint32_t* char_indices = new uint32_t[RendererTextData::MaxIndices];
 
         uint32_t offset = 0;
-        for (uint32_t i = 0; i < text_data.MaxIndices; i += 6)
+        for (uint32_t i = 0; i < RendererTextData::MaxIndices; i += 6)
         {
             char_indices[i + 0] = offset + 0;
             char_indices[i + 1] = offset + 1;
@@ -73,12 +85,14 @@ namespace ThunderEngine
             offset += 4;
         }
 
-        Ref<IndexBuffer> char_ib = IndexBuffer::Create(char_indices, text_data.MaxIndices);
+        Ref<IndexBuffer> char_ib = IndexBuffer::Create(char_indices, RendererTextData::MaxIndices);
         text_data.char_vertex_array->SetIndexBuffer(char_ib);
         delete[] char_indices;
 
         // Create quad shader
         text_data.char_shader = Shader::Create("Text2DShader", "res/shaders/Text2DVertex.glsl", "res/shaders/Text2DFragment.glsl");
+
+        text_data.sdf_shader = Shader::Create("TextSDFShader", "res/shaders/TextSDFVertex.glsl", "res/shaders/TextSDFFragment.glsl");
 
         /* MAYBE Not needed 
         text_data.quad_vertex_positions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
@@ -95,34 +109,7 @@ namespace ThunderEngine
 
     static stbtt_fontinfo font_info;
 
-    void RendererText::LoadFont(const std::string& font_path)
-    {
-        //TODO Unimplemented method -> Need to do it to use more advanced method of stb_truetype
-
-        bool result = true;
-        unsigned char* ttf_buffer = new unsigned char[1 << 20];
-
-        // Read file to byte buffer
-        std::ifstream input(font_path, std::ios::in | std::ios::binary);
-
-        long i = 0;
-        while (input.good())
-        {
-            unsigned char t = input.get();
-            ttf_buffer[i++] = t;
-        }
-
-        result = stbtt_InitFont(&font_info, ttf_buffer, 0);
-
-        if (!result) 
-        {
-            TE_WARN("Could not load font info at %.", font_path);
-        }
-
-        delete[] ttf_buffer;
-    };
-
-	void RendererText::LoadFont2(const std::string& font_path)
+	void RendererText::LoadFontOld(const std::string& font_path)
 	{
         unsigned char* ttf_buffer = new unsigned char[1 << 20];
 
@@ -153,12 +140,24 @@ namespace ThunderEngine
         delete[] temp_bitmap;
 	}
 
+    float RendererText::GetStringPixelWidth(const char* string, float scale)
+    {
+        return font->GetStringPixelWidth(string, scale);
+    }
+
+    void RendererText::LoadFont(Ref<Font> _font)
+    {
+        font = _font;
+    }
 
     void RendererText::StartScene(const OrthographicCamera& camera)
     {
         // Update camera uniform
         text_data.char_shader->Bind();
         text_data.char_shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+        
+        text_data.sdf_shader->Bind();
+        text_data.sdf_shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
         StartBatch();
     }
@@ -190,17 +189,19 @@ namespace ThunderEngine
             text_data.char_vertex_buffer->SetData(text_data.char_vertex_buffer_base, data_size);
 
             // Bind texture
-            font_bitmap->Bind();
+            // OLD font_bitmap->Bind();
+            text_data.sdf_shader->Bind();
+            font->BindAtlas();
 
-            text_data.char_shader->Bind();
+
+            // OLD text_data.char_shader->Bind();
             RendererCommand::DrawIndexed(text_data.char_vertex_array, text_data.char_index_count);
         }
     }
 
-    void RendererText::DrawString(float x, float y, const char* string) 
+    void RendererText::DrawStringOld(float x, float y, const char* string, float scale) 
     {
-        float scale = 1.0f;
-        glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, 0.0f}) * glm::scale(glm::mat4(1.0f), {scale, scale, 1.0f});
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, y, 1.0f}) * glm::scale(glm::mat4(1.0f), {scale, scale, 1.0f});
     
         constexpr size_t quad_vertex_count = 4;
         
@@ -246,6 +247,58 @@ namespace ThunderEngine
             text_data.char_vertex_buffer_ptr++;
 
             xpos += ch.xadvance;
+
+            text_data.char_index_count += 6;
+        }
+    }
+
+    void RendererText::DrawString(float x, float y, const char* string, float scale)
+    {
+        float xpos = x;
+        float ypos = y;
+
+        int atlas_size = font->GetAtlasSize();
+        float font_scale = font->GetScale();
+
+        for (int i = 0; string[i] != '\0'; i++)
+        {
+            if (text_data.char_index_count >= RendererTextData::MaxIndices)
+            {
+                NextBatch();
+            }
+
+            glm::mat4 transform = glm::translate(glm::mat4(1.0f), { xpos, ypos, 1.0f });
+
+            FontGlyph chr = font->GetCharacterInfo(string[i]);
+
+            float ipw = 1.0f / atlas_size, iph = 1.0f / atlas_size; // Coordinates in bitmap
+
+            // NOTE @Thunder: These coordinates start from the top left as the origin, however
+            // as OpenGL flips textures and we never flipped the generated bitmap, we can just use the value as is.
+            float s0 = chr.x_atlas * ipw; float t0 = chr.y_atlas * iph; // Top Left
+            float s1 = (chr.x_atlas + chr.width) * ipw; float t1 = (chr.y_atlas + chr.height) * iph; // Bottom Right
+
+            // MAYBE Need to scale these values by the scale factor of the SDF?
+
+            float x0 = xpos + chr.xoff * scale;
+            float x1 = x0 + chr.width * scale;
+
+            float y0 = ypos - chr.yoff * scale;
+            float y1 = y0 - chr.height * scale;
+
+            glm::vec4 pos1 = transform * glm::vec4(x0, y0, 0.0f, 0.0f); // BL
+            glm::vec4 pos2 = transform * glm::vec4(x1, y1, 0.0f, 0.0f); // TR
+
+            text_data.char_vertex_buffer_ptr->a_pos = { pos1.x, pos1.y, s0, t0 }; // BL
+            text_data.char_vertex_buffer_ptr++;
+            text_data.char_vertex_buffer_ptr->a_pos = { pos2.x, pos1.y, s1, t0 }; // BR
+            text_data.char_vertex_buffer_ptr++;
+            text_data.char_vertex_buffer_ptr->a_pos = { pos2.x, pos2.y, s1, t1 }; // TR
+            text_data.char_vertex_buffer_ptr++;
+            text_data.char_vertex_buffer_ptr->a_pos = { pos1.x, pos2.y, s0, t1 }; // TL
+            text_data.char_vertex_buffer_ptr++;
+
+            xpos += (chr.advance + font->GetKerning(string[i], string[i+1]))*font_scale*scale;
 
             text_data.char_index_count += 6;
         }
