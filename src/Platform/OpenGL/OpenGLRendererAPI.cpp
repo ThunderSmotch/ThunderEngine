@@ -37,6 +37,8 @@ namespace ThunderEngine
 
 		// Enable depth testing
 		glEnable(GL_DEPTH_TEST);
+
+		glEnable(GL_LINE_SMOOTH);
 	}
 
 	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertex_array, uint32_t index_count)
