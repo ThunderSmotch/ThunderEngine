@@ -152,7 +152,6 @@
     </ClCompile>
     <ClCompile Include="src\Platform\GLFW\GLFWMouseInput.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp" />
-    <ClCompile Include="src\ThunderEngine\Assets\Font.cpp" />
     <ClCompile Include="src\ThunderEngine\Renderer\Camera.cpp" />
     <ClCompile Include="src\ThunderEngine\Renderer\RendererText.cpp" />
     <ClCompile Include="src\ThunderEngine\Sound\SoundPlayer.cpp" />
@@ -212,7 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\GLFW\GLFWMouseInput.h" />
-    <ClInclude Include="src\ThunderEngine\Assets\Font.h" />
     <ClInclude Include="src\ThunderEngine\Core\Base.h" />
     <ClInclude Include="src\ThunderEngine\Core\KeyInput.h" />
     <ClInclude Include="src\ThunderEngine\Core\KeyInput_Base.h" />

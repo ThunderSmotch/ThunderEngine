@@ -51,16 +51,7 @@ namespace ThunderEngine
 		/// <param name="size">The horizontal and vertical scales of the quad</param>
 		/// <param name="color">The color of the quad</param>
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
-
-		/// <summary>
-		/// Draws a quad at the specified position with the provided scaling and color
-		/// </summary>
-		/// <param name="position">The position of the center of the quad</param>
-		/// <param name="rotation">Rotation degrees</param>
-		/// <param name="size">The horizontal and vertical scales of the quad</param>
-		/// <param name="color">The color of the quad</param>
-		static void DrawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color);
-
+		
 		/// <summary>
 		/// Draws a quad at the specified position with the provided scaling and color
 		/// </summary>
@@ -68,16 +59,7 @@ namespace ThunderEngine
 		/// <param name="size">The horizontal and vertical scales of the quad</param>
 		/// <param name="color">The color of the quad</param>
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
-
-		/// <summary>
-		/// Draws a quad at the specified position with the provided scaling and color
-		/// </summary>
-		/// <param name="position">The position of the center of the quad</param>
-		/// <param name="rotation">Rotation degrees</param>
-		/// <param name="size">The horizontal and vertical scales of the quad</param>
-		/// <param name="color">The color of the quad</param>
-		static void DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color);
-
+		
 		/// <summary>
 		/// Draws a quad with the provided transform and color
 		/// </summary>
@@ -98,30 +80,10 @@ namespace ThunderEngine
 		/// Draws a texture at the specified position with the provided scaling and color tint
 		/// </summary>
 		/// <param name="position">The position of the center of the texture</param>
-		/// <param name="rotation">Rotation degrees</param>
-		/// <param name="size">The horizontal and vertical scales of the quad</param>
-		/// <param name="texture">The texture to draw</param>
-		/// <param name="tint_color">Color tint of the texture (white is the normal sprite texture)</param>
-		static void DrawQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& tint_color);
-
-		/// <summary>
-		/// Draws a texture at the specified position with the provided scaling and color tint
-		/// </summary>
-		/// <param name="position">The position of the center of the texture</param>
 		/// <param name="size">The horizontal and vertical scales of the quad</param>
 		/// <param name="texture">The texture to draw</param>
 		/// <param name="tint_color">Color tint of the texture (white is the normal sprite texture)</param>
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& tint_color);
-
-		/// <summary>
-		/// Draws a texture at the specified position with the provided scaling and color tint
-		/// </summary>
-		/// <param name="position">The position of the center of the texture</param>
-		/// <param name="rotation">Rotation degrees</param>
-		/// <param name="size">The horizontal and vertical scales of the quad</param>
-		/// <param name="texture">The texture to draw</param>
-		/// <param name="tint_color">Color tint of the texture (white is the normal sprite texture)</param>
-		static void DrawQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& tint_color);
 
 		/// <summary>
 		/// Draws a quad with the provided transform and color tint
@@ -175,9 +137,6 @@ namespace ThunderEngine
 		static void DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec4 border_color,
 			float border_thickness, float thickness = 1.0f, float fade = 0.005f);
 
-		static void DrawCircle(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, const glm::vec4 border_color,
-			float border_thickness, float thickness = 1.0f, float fade = 0.005f);
-
 		/// <summary>
 		/// Draws a colored borderless circle at the specified position with the given size
 		/// </summary>
@@ -187,8 +146,6 @@ namespace ThunderEngine
 		/// <param name="thickness">Percentage of circle to show, from outside inwards.</param>
 		/// <param name="fade">Parameter controlling the antialiasing of the circle</param>
 		static void DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f);
-
-		static void DrawCircle(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f);
 
 		/// <summary>
 		/// Sets the line width
