@@ -20,11 +20,13 @@
 
 namespace ThunderEngine
 {
-    // TODO Move Font Initialization to an Asset Manager class
 
     struct CharVertex
     {
-        glm::vec4 a_pos;
+        glm::vec4 a_pos;     // Text Quad Vertex
+        glm::vec4 a_col;     // Text Color
+        float a_out_size;    // Outline Size
+        glm::vec4 a_out_col; // Outline Color
     };
 
     struct RendererTextData
@@ -61,7 +63,10 @@ namespace ThunderEngine
 
         text_data.char_vertex_buffer = VertexBuffer::Create(RendererTextData::MaxVertices*sizeof(CharVertex));
         text_data.char_vertex_buffer->SetLayout({
-            {"aPos", ShaderDataType::Float4}
+            {"aPos", ShaderDataType::Float4},
+            {"aCol", ShaderDataType::Float4},
+            {"aOutSize", ShaderDataType::Float},
+            {"aOutCol", ShaderDataType::Float4}
             });
         text_data.char_vertex_array->AddVertexBuffer(text_data.char_vertex_buffer);
 
@@ -252,7 +257,8 @@ namespace ThunderEngine
         }
     }
 
-    void RendererText::DrawString(float x, float y, const char* string, float scale)
+    void RendererText::DrawString(float x, float y, const char* string, float scale, glm::vec4 text_color,
+        float outline_size, glm::vec4 outline_color)
     {
         float xpos = x;
         float ypos = y;
@@ -267,18 +273,23 @@ namespace ThunderEngine
                 NextBatch();
             }
 
-            glm::mat4 transform = glm::translate(glm::mat4(1.0f), { xpos, ypos, 1.0f });
+            if (string[i] == '\n')
+            {
+                ypos -= font->GetLineHeight() * font_scale * scale;
+                xpos = x;
+                continue;
+            }
 
             FontGlyph chr = font->GetCharacterInfo(string[i]);
 
             float ipw = 1.0f / atlas_size, iph = 1.0f / atlas_size; // Coordinates in bitmap
 
+            // MAYBE move UV coordinates to the Font class
+
             // NOTE @Thunder: These coordinates start from the top left as the origin, however
             // as OpenGL flips textures and we never flipped the generated bitmap, we can just use the value as is.
             float s0 = chr.x_atlas * ipw; float t0 = chr.y_atlas * iph; // Top Left
             float s1 = (chr.x_atlas + chr.width) * ipw; float t1 = (chr.y_atlas + chr.height) * iph; // Bottom Right
-
-            // MAYBE Need to scale these values by the scale factor of the SDF?
 
             float x0 = xpos + chr.xoff * scale;
             float x1 = x0 + chr.width * scale;
@@ -286,19 +297,23 @@ namespace ThunderEngine
             float y0 = ypos - chr.yoff * scale;
             float y1 = y0 - chr.height * scale;
 
-            glm::vec4 pos1 = transform * glm::vec4(x0, y0, 0.0f, 0.0f); // BL
-            glm::vec4 pos2 = transform * glm::vec4(x1, y1, 0.0f, 0.0f); // TR
+            glm::vec4 vertices[4] = {
+                { x0, y0, s0, t0 }, // BL
+                { x1, y0, s1, t0 }, // BR
+                { x1, y1, s1, t1 }, // TR
+                { x0, y1, s0, t1 }  // TL
+            };
 
-            text_data.char_vertex_buffer_ptr->a_pos = { pos1.x, pos1.y, s0, t0 }; // BL
-            text_data.char_vertex_buffer_ptr++;
-            text_data.char_vertex_buffer_ptr->a_pos = { pos2.x, pos1.y, s1, t0 }; // BR
-            text_data.char_vertex_buffer_ptr++;
-            text_data.char_vertex_buffer_ptr->a_pos = { pos2.x, pos2.y, s1, t1 }; // TR
-            text_data.char_vertex_buffer_ptr++;
-            text_data.char_vertex_buffer_ptr->a_pos = { pos1.x, pos2.y, s0, t1 }; // TL
-            text_data.char_vertex_buffer_ptr++;
+            for (int v = 0; v < 4; v++)
+            {
+                text_data.char_vertex_buffer_ptr->a_pos = vertices[v];
+                text_data.char_vertex_buffer_ptr->a_col = text_color;
+                text_data.char_vertex_buffer_ptr->a_out_size = outline_size;
+                text_data.char_vertex_buffer_ptr->a_out_col = outline_color;
+                text_data.char_vertex_buffer_ptr++;
+            }
 
-            xpos += (chr.advance + font->GetKerning(string[i], string[i+1]))*font_scale*scale;
+            xpos += ( (float) (chr.advance + font->GetKerning(string[i], string[i+1])) )*font_scale*scale;
 
             text_data.char_index_count += 6;
         }

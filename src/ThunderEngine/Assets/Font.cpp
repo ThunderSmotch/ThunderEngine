@@ -216,6 +216,12 @@ namespace ThunderEngine
         return _scale;
     }
 
+    int Font::GetLineHeight() const
+    {
+        return (_ascent - _descent + _line_gap);
+    }
+
+    // TODO Calculate width taking into account new lines
     float Font::GetStringPixelWidth(const char* string, float scale) const
     {
         float width = 0.0f;

@@ -33,7 +33,8 @@ namespace ThunderEngine
 		static void EndScene();
 
 		static void DrawStringOld(float x, float y, const char* string, float scale = 1.0f);
-		static void DrawString(float x, float y, const char* string, float scale = 1.0f);
+		static void DrawString(float x, float y, const char* string, float scale = 1.0f, glm::vec4 text_color = {0.0f, 0.0f, 0.0f, 1.0f},
+			float outline_size = 0.0f, glm::vec4 outline_color = {0.0f, 0.0f, 0.0f, 1.0f});
 
 	private:
 		static void Flush();
