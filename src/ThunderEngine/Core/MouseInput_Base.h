@@ -47,6 +47,6 @@ namespace ThunderEngine
 		double GetScrollWheelYOffset() { return TE_DERIVED(GetScrollWheelYOffset); }
 		double GetScrollWheelXOffset() { return TE_DERIVED(GetScrollWheelXOffset); }
 
-		void GetMousePositon(double& xPos, double& yPos) { return TE_DERIVED(GetMousePosition); }
+		void GetMousePosition(double& xPos, double& yPos) { TE_DERIVED(GetMousePosition, xPos, yPos); }
 	};
 }
