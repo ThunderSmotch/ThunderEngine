@@ -21,6 +21,7 @@ namespace ThunderEngine
 		// Compiles a shader from specified path that uses the #shader directive to separate shader types
 		OpenGLShader(const std::string& shader_path);
 		OpenGLShader(const std::string& name, const std::string& vertex_path, const std::string& fragment_path);
+		OpenGLShader(const std::string& vertex_code, const std::string& fragment_code);
 		~OpenGLShader();
 
 		static Ref<OpenGLShader> Create(const std::string& filepath)
@@ -32,6 +33,11 @@ namespace ThunderEngine
 		static Ref<OpenGLShader> Create(const std::string& name, const std::string& vertex_path, const std::string& fragment_path)
 		{
 			return CreateRef<OpenGLShader>(name, vertex_path, fragment_path);
+		}
+
+		static Ref<OpenGLShader> CreateFromString(const std::string& vertex_code, const std::string& fragment_code)
+		{
+			return CreateRef<OpenGLShader>(vertex_code, fragment_code);
 		}
 
 		void Bind() const;   // Activates the shader program

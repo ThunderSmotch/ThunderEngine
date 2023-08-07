@@ -1,3 +1,5 @@
+// fragment shader
+R"(
 #version 450 core
 
 
@@ -34,3 +36,4 @@ void main()
 	oColor = mix(Input.BorderColor, Input.Color, border);
 	oColor.a *= circle;
 }
+)"

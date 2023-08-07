@@ -6,6 +6,8 @@
 #include <sstream>
 #include <iostream>
 
+#include <string>
+
 #include <glm/gtc/type_ptr.hpp>
 
 namespace ThunderEngine
@@ -36,6 +38,13 @@ namespace ThunderEngine
 
 		renderer_id_ = CreateShader(v_buffer.str().c_str(), f_buffer.str().c_str());
 		name_ = name;
+	}
+
+	OpenGLShader::OpenGLShader(const std::string& vertex_code, const std::string& fragment_code)
+		: renderer_id_(0), name_("")
+	{
+		renderer_id_ = CreateShader(vertex_code, fragment_code);
+		name_ = "InternalShader_" + std::to_string(renderer_id_);
 	}
 
 	OpenGLShader::~OpenGLShader()

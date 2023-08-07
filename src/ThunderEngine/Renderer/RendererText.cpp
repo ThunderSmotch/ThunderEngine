@@ -18,6 +18,22 @@
 
 #include <glm/ext/matrix_transform.hpp>
 
+static const std::string text2d_vertex_source =
+#include "../res/shaders/Text2DVertex.glsl"
+;
+
+static const std::string text2d_fragment_source =
+#include "../res/shaders/Text2DFragment.glsl"
+;
+
+static const std::string textsdf_vertex_source =
+#include "../res/shaders/TextSDFVertex.glsl"
+;
+
+static const std::string textsdf_fragment_source =
+#include "../res/shaders/TextSDFFragment.glsl"
+;
+
 namespace ThunderEngine
 {
 
@@ -95,9 +111,8 @@ namespace ThunderEngine
         delete[] char_indices;
 
         // Create quad shader
-        text_data.char_shader = Shader::Create("Text2DShader", "res/shaders/Text2DVertex.glsl", "res/shaders/Text2DFragment.glsl");
-
-        text_data.sdf_shader = Shader::Create("TextSDFShader", "res/shaders/TextSDFVertex.glsl", "res/shaders/TextSDFFragment.glsl");
+        text_data.char_shader = Shader::CreateFromString(text2d_vertex_source, text2d_fragment_source);
+        text_data.sdf_shader = Shader::CreateFromString(textsdf_vertex_source, textsdf_fragment_source);
 
         /* MAYBE Not needed 
         text_data.quad_vertex_positions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };

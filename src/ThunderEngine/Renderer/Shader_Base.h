@@ -28,5 +28,6 @@ namespace ThunderEngine
 		{
 			return Derived::Create(name, vertex_path, fragment_path);
 		}
+		static Ref<Derived> CreateFromString(const std::string& vertex_code, const std::string& fragment_code) { return Derived::CreateFromString(vertex_code, fragment_code); }
 	};
 }

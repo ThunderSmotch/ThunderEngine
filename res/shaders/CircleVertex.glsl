@@ -1,3 +1,5 @@
+// vertex shader
+R"(
 #version 450 core
 
 layout(location = 0) in vec3 aWorldPosition;
@@ -33,3 +35,4 @@ void main()
 
 	gl_Position = u_ViewProjection * vec4(aWorldPosition, 1.0);
 }
+)"

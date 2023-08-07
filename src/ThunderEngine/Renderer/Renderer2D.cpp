@@ -12,6 +12,34 @@
 #include "RendererAPI.h"
 #include "Texture.h"
 
+
+// Engine Shaders are imported here
+static const std::string line_vertex_source = 
+#include "../res/shaders/LineVertex.glsl"
+;
+
+static const std::string line_fragment_source =
+#include "../res/shaders/LineFragment.glsl"
+;
+
+static const std::string circle_vertex_source =
+#include "../res/shaders/CircleVertex.glsl"
+;
+
+static const std::string circle_fragment_source =
+#include "../res/shaders/CircleFragment.glsl"
+;
+
+static const std::string quad_vertex_source =
+#include "../res/shaders/QuadVertex.glsl"
+;
+
+static const std::string quad_fragment_source =
+#include "../res/shaders/QuadFragment.glsl"
+;
+
+
+
 namespace ThunderEngine
 {
 
@@ -111,9 +139,10 @@ namespace ThunderEngine
 
         data.line_vertex_buffer_base = new LineVertex[ThunderEngine::Renderer2DData::MaxVertices];
 
-        data.line_shader = Shader::Create("LineShader", "res/shaders/LineVertex.glsl", "res/shaders/LineFragment.glsl");
+        data.line_shader = Shader::CreateFromString(line_vertex_source, line_fragment_source);
     }
 
+    // Deprecated Either fix or remove
     void Renderer2D::InitTriangle() {
         data.shader_triangle = Shader::Create("res/shaders/Shader.shader");
 
@@ -150,7 +179,7 @@ namespace ThunderEngine
         data.circle_vertex_buffer_base = new CircleVertex[ThunderEngine::Renderer2DData::MaxVertices];
         data.circle_vertex_array->SetIndexBuffer(data.quad_ib); // Reuse quad IndexBuffer
 
-        data.circle_shader = Shader::Create("CircleShader", "res/shaders/CircleVertex.glsl", "res/shaders/CircleFragment.glsl");
+        data.circle_shader = Shader::CreateFromString(circle_vertex_source, circle_fragment_source);
     }
 
     void Renderer2D::InitQuad() {
@@ -192,7 +221,7 @@ namespace ThunderEngine
         delete[] quad_indices;
 
         // Create quad shader
-        data.quad_shader = Shader::Create("QuadShader", "res/shaders/QuadVertex.glsl", "res/shaders/QuadFragment.glsl");
+        data.quad_shader = Shader::CreateFromString(quad_vertex_source, quad_fragment_source);
         
         data.quad_vertex_positions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
         data.quad_vertex_positions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
