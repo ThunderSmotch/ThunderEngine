@@ -175,7 +175,8 @@ namespace ThunderEngine
 		static void DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, const glm::vec4 border_color,
 			float border_thickness, float thickness = 1.0f, float fade = 0.005f);
 
-		static void DrawCircle(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, const glm::vec4 border_color,
+		static void DrawCircle(const glm::vec3& position, float radius, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f);
+		static void DrawCircle(const glm::vec3& position, float radius, const glm::vec4& color, const glm::vec4 border_color,
 			float border_thickness, float thickness = 1.0f, float fade = 0.005f);
 
 		/// <summary>
@@ -187,8 +188,6 @@ namespace ThunderEngine
 		/// <param name="thickness">Percentage of circle to show, from outside inwards.</param>
 		/// <param name="fade">Parameter controlling the antialiasing of the circle</param>
 		static void DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f);
-
-		static void DrawCircle(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f);
 
 		/// <summary>
 		/// Sets the line width

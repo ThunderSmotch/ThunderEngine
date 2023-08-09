@@ -386,26 +386,20 @@ namespace ThunderEngine
         DrawCircle(transform, color, border_color, border_thickness, thickness, fade);
     }
 
-    void Renderer2D::DrawCircle(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, const glm::vec4 border_color,
-        float border_thickness, float thickness, float fade)
-    {
-        glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
-            * glm::translate(glm::mat4(1.0f), position)
-            * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-        DrawCircle(transform, color, border_color, border_thickness, thickness, fade);
-    }
-
     void Renderer2D::DrawCircle(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float thickness, float fade)
     {
         DrawCircle(position, size, color, color, 0.0f, thickness, fade);
     }
 
-    void Renderer2D::DrawCircle(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color, float thickness, float fade)
+    void Renderer2D::DrawCircle(const glm::vec3& position, float radius, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f)
     {
-        glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
-            * glm::translate(glm::mat4(1.0f), position)
-            * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-        DrawCircle(transform, color, thickness, fade);
+        DrawCircle(position, { radius, radius }, color, thickness, fade);
+    }
+
+    void Renderer2D::DrawCircle(const glm::vec3& position, float radius, const glm::vec4& color, const glm::vec4 border_color,
+        float border_thickness, float thickness = 1.0f, float fade = 0.005f)
+    {
+        DrawCircle(position, { radius, radius }, color, border_color, border_thickness, thickness, fade);
     }
 
 
