@@ -391,13 +391,13 @@ namespace ThunderEngine
         DrawCircle(position, size, color, color, 0.0f, thickness, fade);
     }
 
-    void Renderer2D::DrawCircle(const glm::vec3& position, float radius, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f)
+    void Renderer2D::DrawCircle(const glm::vec3& position, float radius, const glm::vec4& color, float thickness, float fade)
     {
         DrawCircle(position, { radius, radius }, color, thickness, fade);
     }
 
     void Renderer2D::DrawCircle(const glm::vec3& position, float radius, const glm::vec4& color, const glm::vec4 border_color,
-        float border_thickness, float thickness = 1.0f, float fade = 0.005f)
+        float border_thickness, float thickness, float fade)
     {
         DrawCircle(position, { radius, radius }, color, border_color, border_thickness, thickness, fade);
     }
