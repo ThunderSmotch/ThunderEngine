@@ -118,6 +118,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)vendor;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>tepch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,6 +137,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)vendor;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>tepch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -273,6 +275,8 @@
     <None Include="res\shaders\Text2DVertex.glsl" />
     <None Include="res\shaders\TextSDFFragment.glsl" />
     <None Include="res\shaders\TextSDFVertex.glsl" />
+    <None Include="res\shaders\TriangleFragment.glsl" />
+    <None Include="res\shaders\TriangleVertex.glsl" />
     <None Include="shaders\shader.frag" />
     <None Include="shaders\shader.vert" />
   </ItemGroup>

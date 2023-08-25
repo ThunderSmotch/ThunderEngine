@@ -36,9 +36,10 @@ namespace ThunderEngine
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// Enable depth testing
-		glEnable(GL_DEPTH_TEST);
+		// TODO Figure out which render passes need depth test and abstract this to those
+		//glEnable(GL_DEPTH_TEST);
 
-		glEnable(GL_LINE_SMOOTH);
+		//glEnable(GL_LINE_SMOOTH);
 	}
 
 	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertex_array, uint32_t index_count)

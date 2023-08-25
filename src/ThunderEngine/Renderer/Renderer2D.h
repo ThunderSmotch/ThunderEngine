@@ -131,15 +131,10 @@ namespace ThunderEngine
 		/// <param name="tint_color">Color tint of the texture (white is the normal sprite texture)</param>
 		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, const glm::vec4& tint_color);
 
-		/// <summary>
-		/// Deprecated
-		/// </summary>
-		static void DrawTriangle();
-		/// <summary>
-		/// Deprecated
-		/// </summary>
-		/// <param name="position"></param>
-		static void DrawTriangle(const glm::vec2& position);
+
+		static void DrawTriangle(const glm::vec3& p1, const glm::vec4& c1, const glm::vec3& p2, const glm::vec4& c2, const glm::vec3& p3, const glm::vec4& c3);
+		static void DrawTriangle(const glm::vec2& p1, const glm::vec4& c1, const glm::vec2& p2, const glm::vec4& c2, const glm::vec2& p3, const glm::vec4& c3);
+		static void DrawTriangle(const glm::vec2& p1, const glm::vec2& p2, const glm::vec2& p3, const glm::vec4& color);
 
 		/// <summary>
 		/// Draws a colored circle at the specified transform with the given outline parameters

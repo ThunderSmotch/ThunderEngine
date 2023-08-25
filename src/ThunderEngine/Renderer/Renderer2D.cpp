@@ -30,6 +30,14 @@ static const std::string circle_fragment_source =
 #include "../res/shaders/CircleFragment.glsl"
 ;
 
+static const std::string triangle_vertex_source =
+#include "../res/shaders/TriangleVertex.glsl"
+;
+
+static const std::string triangle_fragment_source =
+#include "../res/shaders/TriangleFragment.glsl"
+;
+
 static const std::string quad_vertex_source =
 #include "../res/shaders/QuadVertex.glsl"
 ;
@@ -46,6 +54,12 @@ namespace ThunderEngine
     struct LineVertex
     {
         glm::vec2 position;
+        glm::vec4 color;
+    };
+
+    struct TriangleVertex
+    {
+        glm::vec3 position;
         glm::vec4 color;
     };
 
@@ -75,7 +89,7 @@ namespace ThunderEngine
     // This is being put on the ThunderEngine namespace, everyone can access it.
     struct Renderer2DData
     {
-        static const uint32_t MaxQuads = 10000;
+        static const uint32_t MaxQuads = 9000;
         static const uint32_t MaxVertices = MaxQuads * 4;
         static const uint32_t MaxIndices = MaxQuads * 6;
         static const uint32_t MaxTextureSlots = 32;
@@ -92,10 +106,6 @@ namespace ThunderEngine
         float             line_width              = 2.0f;
         ////////////////////////////////////////////////////
 
-        // Triangles ///////////////////////////////////////
-        Ref<Shader> shader_triangle = nullptr;
-        Ref<VertexArray> va_triangle = nullptr;
-
         // Circles /////////////////////////////////////////
         Ref<Shader>       circle_shader             = nullptr;
         Ref<VertexArray>  circle_vertex_array       = nullptr;
@@ -106,6 +116,20 @@ namespace ThunderEngine
         CircleVertex*     circle_vertex_buffer_ptr  = nullptr;
         ///////////////////////////////////////////////////
         
+        
+        // Triangles ///////////////////////////////////////
+        Ref<Shader> triangle_shader = nullptr;
+        Ref<VertexArray> triangle_vertex_array = nullptr;
+        Ref<VertexBuffer> triangle_vertex_buffer = nullptr;
+        
+        uint32_t triangle_index_count;
+        TriangleVertex* triangle_vertex_buffer_base = nullptr;
+        TriangleVertex* triangle_vertex_buffer_ptr = nullptr;
+
+        Ref<IndexBuffer> triangle_ib = nullptr;
+        ///////////////////////////////////////////////////
+
+
         // Quads variables
         uint32_t quad_index_count = 0;
         QuadVertex* quad_vertex_buffer_base = nullptr;
@@ -142,24 +166,6 @@ namespace ThunderEngine
         data.line_shader = Shader::CreateFromString(line_vertex_source, line_fragment_source);
     }
 
-    // Deprecated Either fix or remove
-    void Renderer2D::InitTriangle() {
-        data.shader_triangle = Shader::Create("res/shaders/Shader.shader");
-
-        std::array<float, 6> vertices =
-        {
-            -0.5f, -0.5f,
-            0.5f, -0.5f,
-            0.0f, 0.5f,
-        };
-
-        Ref<VertexBuffer> vb = VertexBuffer::Create(vertices.data(), sizeof(vertices));
-        vb->SetLayout({ BufferElement("aPos", ShaderDataType::Float2) });
-
-        data.va_triangle = VertexArray::Create();
-        data.va_triangle->AddVertexBuffer(vb);
-    }
-
     void Renderer2D::InitCircle() 
     {
         data.circle_vertex_array = VertexArray::Create();
@@ -182,9 +188,39 @@ namespace ThunderEngine
         data.circle_shader = Shader::CreateFromString(circle_vertex_source, circle_fragment_source);
     }
 
+    void Renderer2D::InitTriangle() {
+        data.triangle_shader = Shader::CreateFromString(triangle_vertex_source, triangle_fragment_source);
+
+        data.triangle_vertex_buffer = VertexBuffer::Create(Renderer2DData::MaxVertices*sizeof(TriangleVertex));
+        data.triangle_vertex_buffer->SetLayout({
+            {"aPos", ShaderDataType::Float3},
+            {"aCol", ShaderDataType::Float4}
+            });
+
+        data.triangle_vertex_array = VertexArray::Create();
+        data.triangle_vertex_array->AddVertexBuffer(data.triangle_vertex_buffer);
+
+        // Allocate space for max vertices
+        data.triangle_vertex_buffer_base = new TriangleVertex[Renderer2DData::MaxVertices];
+
+        // FIX This is stupid, I should really have a DrawVertices inside RendererCommand, to avoid DrawIndexed!
+        // TODO  this will be swapped with a Triangle Strip approach in the end.
+        // Allocate and set Index Buffer
+        uint32_t* triangle_indices = new uint32_t[Renderer2DData::MaxVertices];
+
+        for (uint32_t i = 0; i < Renderer2DData::MaxVertices; i++)
+        {
+            triangle_indices[i] = i;
+        }
+
+        data.triangle_ib = IndexBuffer::Create(triangle_indices, Renderer2DData::MaxVertices);
+        data.triangle_vertex_array->SetIndexBuffer(data.triangle_ib);
+        delete[] triangle_indices;
+
+    }
+
     void Renderer2D::InitQuad() {
 
-        data.quad_vertex_array = VertexArray::Create();
         
         // Create Quad Vertex Buffer and its layout
         data.quad_vertex_buffer = VertexBuffer::Create(Renderer2DData::MaxVertices*sizeof(QuadVertex));
@@ -194,6 +230,8 @@ namespace ThunderEngine
             {"aTexCoord", ShaderDataType::Float2},
             {"aTexIndex", ShaderDataType::Float},
             });
+
+        data.quad_vertex_array = VertexArray::Create();
         data.quad_vertex_array->AddVertexBuffer(data.quad_vertex_buffer);
 
         // Allocate space for max vertices
@@ -241,7 +279,7 @@ namespace ThunderEngine
     void Renderer2D::Init()
     {
         InitLine();
-        //InitTriangle();
+        InitTriangle();
         InitQuad();
         InitCircle();
 
@@ -251,6 +289,7 @@ namespace ThunderEngine
     void Renderer2D::Shutdown()
     {
         delete[] data.quad_vertex_buffer_base;
+        delete[] data.triangle_vertex_buffer_base;
         delete[] data.line_vertex_buffer_base;
         delete[] data.circle_vertex_buffer_base;
     }
@@ -264,6 +303,9 @@ namespace ThunderEngine
         // Update camera uniform
         data.quad_shader->Bind();
         data.quad_shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+
+        data.triangle_shader->Bind();
+        data.triangle_shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 
         data.line_shader->Bind();
         data.line_shader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
@@ -286,6 +328,9 @@ namespace ThunderEngine
 
         data.quad_index_count = 0;
         data.quad_vertex_buffer_ptr = data.quad_vertex_buffer_base;
+
+        data.triangle_index_count = 0;
+        data.triangle_vertex_buffer_ptr = data.triangle_vertex_buffer_base;
 
         data.circle_index_count = 0;
         data.circle_vertex_buffer_ptr = data.circle_vertex_buffer_base;
@@ -312,6 +357,15 @@ namespace ThunderEngine
 
             data.quad_shader->Bind();
             RendererCommand::DrawIndexed(data.quad_vertex_array, data.quad_index_count);
+        }
+
+        if (data.triangle_index_count)
+        {
+            uint32_t data_size = (uint32_t)((uint8_t*)data.triangle_vertex_buffer_ptr - (uint8_t*)data.triangle_vertex_buffer_base);
+            data.triangle_vertex_buffer->SetData(data.triangle_vertex_buffer_base, data_size);
+
+            data.triangle_shader->Bind();
+            RendererCommand::DrawIndexed(data.triangle_vertex_array, data.triangle_index_count);
         }
 
         if (data.line_vertex_count)
@@ -402,13 +456,43 @@ namespace ThunderEngine
         DrawCircle(position, { radius, radius }, color, border_color, border_thickness, thickness, fade);
     }
 
-
-    void Renderer2D::DrawTriangle() // TODO Remove or fix the code
+    void Renderer2D::DrawTriangle(
+        const glm::vec3& p1, const glm::vec4& c1,
+        const glm::vec3& p2, const glm::vec4& c2, 
+        const glm::vec3& p3, const glm::vec4& c3)
     {
-        data.shader_triangle->Bind();
-        data.va_triangle->Bind();
-        RendererCommand::DrawIndexed(data.va_triangle, 3);
+        if (data.triangle_index_count >= Renderer2DData::MaxVertices)
+        {
+            NextBatch();
+        }
+
+        data.triangle_vertex_buffer_ptr->position = p1;
+        data.triangle_vertex_buffer_ptr->color = c1;
+        data.triangle_vertex_buffer_ptr++;
+
+        data.triangle_vertex_buffer_ptr->position = p2;
+        data.triangle_vertex_buffer_ptr->color = c2;
+        data.triangle_vertex_buffer_ptr++;
+
+        data.triangle_vertex_buffer_ptr->position = p3;
+        data.triangle_vertex_buffer_ptr->color = c3;
+        data.triangle_vertex_buffer_ptr++;
+
+        data.triangle_index_count += 3;
     }
+
+    void Renderer2D::DrawTriangle(const glm::vec2& p1, const glm::vec4& c1,
+        const glm::vec2& p2, const glm::vec4& c2,
+        const glm::vec2& p3, const glm::vec4& c3)
+    {
+        DrawTriangle({ p1.x, p1.y, 0.9f }, c1, { p2.x, p2.y, 0.9f }, c2, { p3.x, p3.y, 0.9f }, c3);
+    }
+
+    void Renderer2D::DrawTriangle(const glm::vec2& p1, const glm::vec2& p2, const glm::vec2& p3, const glm::vec4& color)
+    {
+        DrawTriangle(p1, color, p2, color, p3, color);
+    }
+
 
     void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
     {
@@ -522,13 +606,15 @@ namespace ThunderEngine
         data.quad_index_count += 6;
     }
 
+    /*
     void Renderer2D::DrawTriangle(const glm::vec2& position)
     {
         data.shader_triangle->Bind();
         data.va_triangle->Bind();
         RendererCommand::DrawIndexed(data.va_triangle, 3);
     }
-    
+    */
+
     void Renderer2D::SetLineWidth(float width)
     {
         data.line_width = width;
