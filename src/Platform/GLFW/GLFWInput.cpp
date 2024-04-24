@@ -22,7 +22,10 @@ namespace ThunderEngine
 
     GLFWKeyInput::~GLFWKeyInput()
     {
-        instances_.erase(std::remove(instances_.begin(), instances_.end(), this), instances_.end());
+        if (!instances_.empty())
+        {
+            std::erase(instances_, this);
+        }
     }
 
     bool GLFWKeyInput::GetIsKeyDown(KeyCode key)
