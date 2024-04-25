@@ -7,7 +7,7 @@
 #include "ThunderEngine/Core/App.h"
 #include "ThunderEngine/Core/KeyInput.h"
 #include "ThunderEngine/Core/MouseInput.h"
-#include "ThunderEngine/Core/Timer.h"
+//#include "ThunderEngine/Core/Timer.h"
 
 #include "ThunderEngine/Renderer/Renderer.h"
 #include "ThunderEngine/Renderer/RendererAPI.h"
@@ -22,3 +22,5 @@
 #include "ThunderEngine/Renderer/Camera.h"
 
 #include "ThunderEngine/Sound/SoundPlayer.h"
+
+import Timer;

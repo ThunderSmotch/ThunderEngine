@@ -1,7 +1,4 @@
-#pragma once
-#include "tepch.h"
-
-#include "GLFWWindow.h"
+module;
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
@@ -10,10 +7,14 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
-#include "GLFWInput.h"
 #include "GLFWMouseInput.h"
 
 #include "ThunderEngine/Renderer/RendererAPI.h"
+
+module ThunderEngine.Platform.GLFW.Window;
+
+import std;
+import ThunderEngine.Platform.GLFW.KeyInput;
 
 namespace ThunderEngine
 {

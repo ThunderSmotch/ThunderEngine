@@ -1,8 +1,8 @@
-#include "tepch.h"
 #include "SoundPlayer.h"
 
 #include <miniaudio/miniaudio.h>
 
+import std;
 
 namespace ThunderEngine
 {

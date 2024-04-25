@@ -1,5 +1,6 @@
-#include "tepch.h"
 #include "Buffer_Base.h"
+
+import std;
 
 namespace ThunderEngine
 {

@@ -1,17 +1,15 @@
-#pragma once
+module;
+#include <GLFW/glfw3.h>
+export module ThunderEngine.Platform.GLFW.KeyInput;
 
-#include "ThunderEngine/Core/KeyInput_Base.h"
+import ThunderEngine.KeyCode;
+import ThunderEngine.Base;
 
-#include <map>
-#include <vector>
+import std;
 
-struct GLFWwindow;
-
-// PERF Switch to a bitfield approach, less data is being stored that way and keys_press_ is as easy as &ing both fields.
-
-namespace ThunderEngine
+export namespace ThunderEngine
 {
-	class GLFWKeyInput : public KeyInput_Base<GLFWKeyInput>
+	class GLFWKeyInput
 	{
 	private:
 		std::map<KeyCode, bool> keys_down_;
@@ -38,7 +36,7 @@ namespace ThunderEngine
 		void SetIsKeyDown(KeyCode key, bool is_down);
 		void SetIsKeyPress(KeyCode key, bool is_press);
 
-		// Static part of the class to make it work
+	// Static part of the class to make it work
 	public:
 		static void SetupGLFWKeyInputs(GLFWwindow* window);
 		static void UpdateKeyPresses();
@@ -48,4 +46,6 @@ namespace ThunderEngine
 		// Keep a list of all KeyInput instances and notify them all of key events
 		static std::vector<GLFWKeyInput*> instances_;
 	};
+
+	using KeyInput = GLFWKeyInput;
 }

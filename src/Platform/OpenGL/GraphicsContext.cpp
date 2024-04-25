@@ -1,8 +1,12 @@
-#include "tepch.h"
-#include "OpenGLGraphicsContext.h"
+module;
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+
+#include "ThunderEngine/Utils/Logger.h"
+module ThunderEngine.Platform.OpenGL.GraphicsContext;
+
+import std;
 
 namespace ThunderEngine
 {

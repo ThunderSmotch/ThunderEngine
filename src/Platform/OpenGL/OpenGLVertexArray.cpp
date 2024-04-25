@@ -1,8 +1,9 @@
-#include "tepch.h"
 #include "OpenGLVertexArray.h"
 
 #include <glad/gl.h>
 #include <cassert>
+
+import std;
 
 
 namespace ThunderEngine

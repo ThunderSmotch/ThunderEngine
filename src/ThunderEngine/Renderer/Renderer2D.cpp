@@ -1,4 +1,3 @@
-#include "tepch.h"
 #include "Renderer2D.h"
 
 #include <array>
@@ -11,6 +10,8 @@
 #include "VertexArray.h"
 #include "RendererAPI.h"
 #include "Texture.h"
+
+import std;
 
 
 // Engine Shaders are imported here

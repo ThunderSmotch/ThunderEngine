@@ -1,8 +1,6 @@
-#include "tepch.h"
 #include "Logger.h"
 
-#include <iomanip>
-#include <chrono>
+import std;
 
 namespace ThunderEngine
 {

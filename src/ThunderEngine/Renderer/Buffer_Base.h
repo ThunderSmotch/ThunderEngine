@@ -2,6 +2,8 @@
 
 #include "ThunderEngine/Core/Base.h"
 
+import std;
+
 namespace ThunderEngine
 {
 	/// <summary>

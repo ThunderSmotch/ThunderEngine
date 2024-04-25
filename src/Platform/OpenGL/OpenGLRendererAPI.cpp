@@ -1,7 +1,9 @@
-#include "tepch.h"
 #include "OpenGLRendererAPI.h"
 
 #include <glad/gl.h>
+
+import std;
+
 
 namespace ThunderEngine
 {

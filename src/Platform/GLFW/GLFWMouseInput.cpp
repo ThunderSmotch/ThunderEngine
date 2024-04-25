@@ -1,9 +1,9 @@
-#include "tepch.h"
 #include "GLFWMouseInput.h"
 
 #include <GLFW/glfw3.h>
 
-#include "ThunderEngine/Core/App.h"
+import ThunderEngine.App;
+import std;
 
 namespace ThunderEngine
 {

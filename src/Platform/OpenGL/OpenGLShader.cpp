@@ -1,4 +1,3 @@
-#include "tepch.h"
 #include "OpenGLShader.h"
 
 #include <glad/gl.h>
@@ -9,6 +8,8 @@
 #include <string>
 
 #include <glm/gtc/type_ptr.hpp>
+
+import std;
 
 namespace ThunderEngine
 {

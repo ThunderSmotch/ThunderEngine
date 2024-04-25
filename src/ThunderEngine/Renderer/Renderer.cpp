@@ -1,4 +1,3 @@
-#include "tepch.h"
 #include "Renderer.h"
 
 #include "RendererAPI.h"

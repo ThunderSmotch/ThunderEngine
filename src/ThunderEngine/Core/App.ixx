@@ -1,12 +1,12 @@
-#pragma once
-
-#include <vector>
-#include <functional>
+module;
 
 #include "Base.h"
-#include "Window.h"
 
-namespace ThunderEngine
+export module ThunderEngine.App;
+import std;
+import ThunderEngine.Window;
+
+export namespace ThunderEngine
 {
 	class App
 	{
@@ -18,12 +18,12 @@ namespace ThunderEngine
 		/// <param name="width">The width of the main window in pixels</param>
 		/// <param name="height">The height of the main window in pixels</param>
 		App(const std::string& title, uint32_t width, uint32_t height);
-		
+
 		/// <summary>
 		/// Creates a new app
 		/// </summary>
 		App() : App("ThunderEngine", 1280, 720) {};
-		
+
 		~App();
 		App(const App&) = delete;
 		App& operator=(const App&) = delete;
@@ -49,7 +49,7 @@ namespace ThunderEngine
 		/// </summary>
 		/// <returns>The main Window of this app</returns>
 		const Window& GetWindow() const { return *window_; }
-		
+
 
 		/// <summary>
 		/// Gets the unique instance of App
@@ -61,9 +61,9 @@ namespace ThunderEngine
 		void OnWindowClose();     // Called when window was closed
 
 		bool running_ = false;    // Controls the main app loop
-		
+
 		// Vector of callbacks that run every frame
-		std::vector<std::function<void(float dt)>> callbacks_; 
+		std::vector<std::function<void(float dt)>> callbacks_;
 		Ref<Window> window_;   // Shared pointer to the main window
 		static App* instance_; // The unique instance of the app
 	};

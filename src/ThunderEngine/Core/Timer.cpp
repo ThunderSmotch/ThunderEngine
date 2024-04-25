@@ -1,5 +1,6 @@
-#include "tepch.h"
-#include "Timer.h"
+module ThunderEngine.Timer;
+
+import std;
 
 namespace ThunderEngine
 {

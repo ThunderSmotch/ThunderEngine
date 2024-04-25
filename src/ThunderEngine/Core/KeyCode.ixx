@@ -1,9 +1,6 @@
-#pragma once
+export module ThunderEngine.KeyCode;
 
-#include "Base.h"
-#include <vector>
-
-namespace ThunderEngine
+export namespace ThunderEngine 
 {
 	enum class KeyCode
 	{
@@ -138,21 +135,5 @@ namespace ThunderEngine
 		RIGHT_ALT = 346,
 		RIGHT_SUPER = 347,
 		MENU = 348
-	};
-
-	// Handles keyboard input.
-	template <typename Derived>
-	struct KeyInput_Base
-	{
-		static Ref<Derived> Create(std::vector<KeyCode> keys_to_monitor)
-		{
-			return Derived::Create(keys_to_monitor);
-		}
-
-		bool GetIsKeyDown(KeyCode key) { return TE_DERIVED(GetIsKeyDown, key); }
-		bool GetIsKeyPress(KeyCode key) { return TE_DERIVED(GetIsKeyPress, key); }
-
-		bool GetIsEnabled() { return TE_DERIVED(GetIsEnabled); }
-		void SetIsEnabled(bool enabled) { TE_DERIVED(SetIsEnabled, enabled); }
 	};
 }

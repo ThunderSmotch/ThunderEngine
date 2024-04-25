@@ -1,9 +1,9 @@
-#pragma once
+export module ThunderEngine.Timer;
 
-#include <chrono>
+import std;
 
-namespace ThunderEngine
-{	
+export namespace ThunderEngine
+{
 	/// <summary>
 	/// A simple timer class to track time
 	/// </summary>

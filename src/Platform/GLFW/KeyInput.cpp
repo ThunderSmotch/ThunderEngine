@@ -1,9 +1,11 @@
-#include "tepch.h"
-#include "GLFWInput.h"
+module;
 
 #include <GLFW/glfw3.h>
 
-#include "ThunderEngine/Core/App.h"
+module ThunderEngine.Platform.GLFW.KeyInput;
+
+import ThunderEngine.App;
+import std;
 
 namespace ThunderEngine
 {

@@ -1,7 +1,8 @@
-#include "tepch.h"
 #include "OpenGLTexture2D.h"
 
 #include <stb/stb_image.h>
+
+import std;
 
 namespace ThunderEngine
 {

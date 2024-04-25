@@ -1,8 +1,10 @@
-#include "tepch.h"
-#include "App.h"
+module ThunderEngine.App;
 
 #include "ThunderEngine/Renderer/Renderer.h"
-#include "Timer.h"
+
+import ThunderEngine.Timer;
+
+import std;
 
 namespace ThunderEngine
 {

@@ -1,14 +1,15 @@
-#pragma once
-
+module;
 #include <GLFW/glfw3.h>
 
-#include "ThunderEngine/Core/Window_Base.h"
-#include "ThunderEngine/Renderer/GraphicsContext.h"
+export module ThunderEngine.Platform.GLFW.Window;
 
+import std;
+import ThunderEngine.WindowProps;
+import ThunderEngine.GraphicsContext;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
-	class GLFWWindow : public Window_Base<GLFWWindow>
+	class GLFWWindow
 	{
 	private:
 		GLFWwindow* window_;
@@ -49,4 +50,6 @@ namespace ThunderEngine
 		void* GetNativeWindow() const { return window_; }
 		GraphicsContext& GetGraphicsContext() const { return *graphics_context_; }
 	};
+
+	using Window = GLFWWindow;
 }

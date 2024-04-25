@@ -1,5 +1,3 @@
-#include "tepch.h"
-
 #include <fstream>
 #include <sstream>
 
@@ -8,6 +6,8 @@
 #include <stb/stb_image_write.h>
 
 #include "Font.h"
+
+import std;
 
 namespace ThunderEngine
 {

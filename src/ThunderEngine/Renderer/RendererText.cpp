@@ -1,4 +1,3 @@
-#include "tepch.h"
 #include "RendererText.h"
 
 #include "Texture.h"
@@ -33,6 +32,8 @@ static const std::string textsdf_vertex_source =
 static const std::string textsdf_fragment_source =
 #include "../res/shaders/TextSDFFragment.glsl"
 ;
+
+import std;
 
 namespace ThunderEngine
 {
