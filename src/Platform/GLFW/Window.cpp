@@ -1,19 +1,16 @@
 module;
-
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
 #include <glad/gl.h>
-
-#include "ThunderEngine/Renderer/RendererAPI.h"
-
 module ThunderEngine.Platform.GLFW.Window;
 
 import std;
 import ThunderEngine.Platform.GLFW.KeyInput;
 import ThunderEngine.Platform.GLFW.MouseInput;
 import ThunderEngine.Logger;
+import ThunderEngine.RendererAPI;
 
 namespace ThunderEngine
 {
@@ -51,7 +48,7 @@ namespace ThunderEngine
 		// MAYBE Change this to a callback on the Window class
 		glfwSetFramebufferSizeCallback(window_, [](GLFWwindow* window, int width, int height)
 			{
-				RendererCommand::SetViewport(0, 0, width, height);
+				RendererAPI::SetViewport(0, 0, width, height);
 			});
 
 		// Defines the callback when the window should close

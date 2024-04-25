@@ -1,13 +1,13 @@
-#include "Renderer.h"
+module ThunderEngine.Renderer;
 
-#include "RendererAPI.h"
-#include "Renderer2D.h"
+import ThunderEngine.RendererAPI;
+import ThunderEngine.Renderer2D;
 
 namespace ThunderEngine
 {
 	void Renderer::Init()
 	{
-		RendererCommand::Init();
+		RendererAPI::Init();
 		Renderer2D::Init();
 	}
 

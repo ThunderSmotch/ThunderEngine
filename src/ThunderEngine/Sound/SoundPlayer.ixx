@@ -1,10 +1,8 @@
-#pragma once
+module;
+#include <miniaudio/miniaudio.h>
+export module ThunderEngine.SoundPlayer;
 
-#include "ThunderEngine/Core/Base.h"
-
-#include <string>
-#include <unordered_map>
-
+import std;
 
 struct ma_engine;
 struct ma_sound;

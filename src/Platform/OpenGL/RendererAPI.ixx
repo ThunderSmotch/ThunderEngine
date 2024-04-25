@@ -1,10 +1,13 @@
-#pragma once
+module;
+#include <glm/glm.hpp>
+export module ThunderEngine.Platform.OpenGL.RendererAPI;
 
-#include "ThunderEngine/Renderer/RendererAPI_Base.h"
+import ThunderEngine.Base;
+import ThunderEngine.VertexArray;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
-	class OpenGLRendererAPI : public RendererAPI_Base<OpenGLRendererAPI>
+	class OpenGLRendererAPI
 	{
 	public:
 		static void Init();
@@ -21,4 +24,5 @@ namespace ThunderEngine
 		static void Clear();
 		static void SetClearColor(const glm::vec4& color);
 	};
+	export using RendererAPI = OpenGLRendererAPI;
 }

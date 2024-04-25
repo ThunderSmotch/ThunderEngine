@@ -1,12 +1,12 @@
-#pragma once
+export module ThunderEngine.Platform.OpenGL.Buffer;
 
-#include "ThunderEngine/Renderer/Buffer_Base.h"
-
+import std;
 import ThunderEngine.Base;
+import ThunderEngine.BufferDefinitions;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
-	class OpenGLVertexBuffer : public VertexBuffer_Base<OpenGLVertexBuffer>
+	class OpenGLVertexBuffer
 	{
 	private:
 		uint32_t renderer_id_;
@@ -36,7 +36,7 @@ namespace ThunderEngine
 
 	};
 
-	class OpenGLIndexBuffer : public VertexBuffer_Base<OpenGLIndexBuffer>
+	class OpenGLIndexBuffer
 	{
 	private:
 		uint32_t renderer_id_;
@@ -56,4 +56,7 @@ namespace ThunderEngine
 
 		uint32_t GetCount() const { return count_; }
 	};
+
+	export using VertexBuffer = OpenGLVertexBuffer;
+	export using IndexBuffer = OpenGLIndexBuffer;
 }

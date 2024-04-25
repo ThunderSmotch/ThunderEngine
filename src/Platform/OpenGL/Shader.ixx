@@ -1,9 +1,11 @@
-#pragma once
+module;
+#include <glm/glm.hpp>
+export module ThunderEngine.Platform.OpenGL.Shader;
 
-#include "ThunderEngine/Renderer/Shader_Base.h"
+import std;
+import ThunderEngine.Base;
 
-
-namespace ThunderEngine
+export namespace ThunderEngine
 {
 	struct ShaderProgramSource
 	{
@@ -11,10 +13,10 @@ namespace ThunderEngine
 		std::string FragmentSource;
 	};
 
-	class OpenGLShader : public Shader_Base<OpenGLShader> {
+	class OpenGLShader {
 	private:
 		uint32_t renderer_id_;
-		std::unordered_map<std::string, int32_t> uniform_location_cache_;
+		std::unordered_map<std::string, std::int32_t> uniform_location_cache_;
 		std::string name_;
 	public:
 		// Compiles a shader from specified path that uses the #shader directive to separate shader types
@@ -60,4 +62,5 @@ namespace ThunderEngine
 		uint32_t CompileShader(uint32_t type, const std::string& source);
 		uint32_t CreateShader(const std::string& vertex_source, const std::string& fragment_source);
 	};
+	export using Shader = OpenGLShader;
 }

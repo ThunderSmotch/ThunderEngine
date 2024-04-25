@@ -1,19 +1,18 @@
-#pragma once
-
-#include "ThunderEngine/Core/Base.h"
-#include "ThunderEngine/Renderer/Texture.h"
-
-// Forward Declarations for stbtruetype
-struct stbtt_fontinfo;
-struct stbrp_rect;
+module;
+#include <stb/stb_rect_pack.h>
+#include <stb/stb_truetype.h>
+#include <stb/stb_image_write.h>
+export module ThunderEngine.Font;
 
 // MAYBE migrate to msdfgen in the future to handle straight edged fonts better
 // TODO Implement Drop Shadows https://libgdx.com/wiki/graphics/2d/fonts/distance-field-fonts
 // Review this https://www.youtube.com/watch?v=Y1kuhXtVAc4
 // Original Valve paper https://steamcdn-a.akamaihd.net/apps/valve/2007/SIGGRAPH2007_AlphaTestedMagnification.pdf
 
+import ThunderEngine.Base;
+import ThunderEngine.Texture;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
 
 	// Saves spacing information about a specific character

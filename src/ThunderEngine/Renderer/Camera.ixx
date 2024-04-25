@@ -1,8 +1,8 @@
-#pragma once
-
+module;
 #include <glm/glm.hpp>
+export module ThunderEngine.Camera;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
 	/// <summary>
 	/// Creates an OrthographicCamera, good for 2D representations

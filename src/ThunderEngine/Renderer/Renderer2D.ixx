@@ -1,13 +1,12 @@
-#pragma once
-
+module;
 #include <glm/glm.hpp>
-
-#include "Texture.h"
-#include "Camera.h"
+export module ThunderEngine.Renderer2D;
 
 import ThunderEngine.Base;
+import ThunderEngine.Camera;
+import ThunderEngine.Texture;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
 	class Renderer2D
 	{

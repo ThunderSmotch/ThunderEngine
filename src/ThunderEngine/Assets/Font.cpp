@@ -1,13 +1,10 @@
+module;
 #include <stb/stb_rect_pack.h>
 #include <stb/stb_truetype.h>
 #include <stb/stb_image_write.h>
+module ThunderEngine.Font;
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
-#include "Font.h"
-
+import std;
 import ThunderEngine.Logger;
 
 namespace ThunderEngine

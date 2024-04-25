@@ -1,13 +1,10 @@
-#pragma once
+export module ThunderEngine.BufferDefinitions;
 
-#include "ThunderEngine/Core/Base.h"
-#include <string>
-#include <vector>
-
+import std;
 import ThunderEngine.Base;
 import ThunderEngine.Logger;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
 	/// <summary>
 	/// Datatypes of shader related variables
@@ -22,7 +19,7 @@ namespace ThunderEngine
 	/// </summary>
 	/// <param name="type">A valid ShaderDataType</param>
 	/// <returns>Size in bytes of the provided type</returns>
-	static uint32_t GetShaderDataTypeSize(ShaderDataType type)
+	uint32_t GetShaderDataTypeSize(ShaderDataType type)
 	{
 		switch (type)
 		{
@@ -101,34 +98,20 @@ namespace ThunderEngine
 		// Calculates the offset of each BufferElement and the total vertex stride
 		void CalculateOffsetsAndStride();
 	};
+}
 
-	template <typename Derived>
-	struct VertexBuffer_Base
+namespace ThunderEngine
+{
+
+	void BufferLayout::CalculateOffsetsAndStride()
 	{
-		static Ref<Derived> Create(uint32_t size) { return Derived::Create(size); }
-		static Ref<Derived> Create(float* vertices, uint32_t size) { return Derived::Create(vertices, size); }
+		size_t offset = 0;
+		stride_ = 0;
 
-		void Bind() const { TE_DERIVED(Bind); }
-		void Unbind() const { TE_DERIVED(Unbind); }
-
-		void SetData(const void* data, uint32_t size) { TE_DERIVED(SetData, data, size); }
-
-		const BufferLayout& GetLayout() const { return TE_DERIVED(GetLayout); };
-		void SetLayout(const BufferLayout& layout) { TE_DERIVED(SetLayout, layout); };
-	};
-
-	// NOTE Maybe in the future we should support for other indices types (uint8_t) for smaller things.
-	template <typename Derived>
-	struct IndexBuffer_Base 
-	{
-		static Ref<Derived> Create(uint32_t* indices, uint32_t count)
-		{
-			Derived::Create(indices, count);
+		for (BufferElement& element : elements_) {
+			element.offset = offset;
+			offset += element.size;
+			stride_ += element.size;
 		}
-
-		void Bind() const { TE_DERIVED(Bind); }
-		void Unbind() const { TE_DERIVED(Unbind); }
-
-		uint32_t GetCount() const { return TE_DERIVED(GetCount); }
-	};
+	}
 }

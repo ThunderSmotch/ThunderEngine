@@ -1,10 +1,12 @@
-#pragma once
+export module ThunderEngine.Platform.OpenGL.VertexArray;
 
-#include "ThunderEngine/Renderer/VertexArray_Base.h"
+import std;
+import ThunderEngine.Buffer;
+import ThunderEngine.Base;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
-	class OpenGLVertexArray : public VertexArray_Base<OpenGLVertexArray>
+	class OpenGLVertexArray
 	{
 	private:
 		uint32_t renderer_id_;
@@ -26,5 +28,7 @@ namespace ThunderEngine
 		const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const { return vertex_buffers_; }
 		const Ref<IndexBuffer> GetIndexBuffer() const { return index_buffer_; }
 	};
+
+	export using VertexArray = OpenGLVertexArray;
 }
 

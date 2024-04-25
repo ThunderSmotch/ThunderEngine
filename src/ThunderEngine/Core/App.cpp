@@ -1,8 +1,7 @@
 module ThunderEngine.App;
 
-#include "ThunderEngine/Renderer/Renderer.h"
-
 import ThunderEngine.Timer;
+import ThunderEngine.Renderer;
 
 import std;
 

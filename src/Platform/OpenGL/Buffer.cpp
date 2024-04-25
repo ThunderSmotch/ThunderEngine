@@ -1,6 +1,7 @@
-#include "OpenGLBuffer.h"
-
+module;
 #include <glad/gl.h>
+
+module ThunderEngine.Platform.OpenGL.Buffer;
 
 namespace ThunderEngine
 {

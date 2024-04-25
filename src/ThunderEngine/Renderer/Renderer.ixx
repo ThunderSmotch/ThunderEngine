@@ -1,6 +1,6 @@
-#pragma once
+export module ThunderEngine.Renderer;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
 	class Renderer
 	{

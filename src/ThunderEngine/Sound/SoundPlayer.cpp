@@ -1,6 +1,6 @@
-#include "SoundPlayer.h"
-
+module;
 #include <miniaudio/miniaudio.h>
+module ThunderEngine.SoundPlayer;
 
 import ThunderEngine.Logger;
 

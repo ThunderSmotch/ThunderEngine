@@ -1,7 +1,7 @@
-#include "OpenGLShader.h"
-
+module;
 #include <glad/gl.h>
 #include <glm/gtc/type_ptr.hpp>
+module ThunderEngine.Platform.OpenGL.Shader;
 
 import ThunderEngine.Logger;
 

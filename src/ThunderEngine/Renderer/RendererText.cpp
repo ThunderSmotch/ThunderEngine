@@ -1,21 +1,16 @@
-#include "RendererText.h"
-
-#include "Texture.h"
-
+module;
 #include <stb/stb_rect_pack.h>
 #include <stb/stb_truetype.h>
 #include <stb/stb_image_write.h>
-
-#include <fstream>
-#include <sstream>
-
-#include "Shader.h"
-#include "VertexArray.h"
-#include "RendererAPI.h"
-
-#include "ThunderEngine/Assets/Font.h"
-
 #include <glm/ext/matrix_transform.hpp>
+module ThunderEngine.RendererText;
+
+import std;
+
+import ThunderEngine.Buffer;
+import ThunderEngine.VertexArray;
+import ThunderEngine.Shader;
+import ThunderEngine.RendererAPI;
 
 static const std::string text2d_vertex_source =
 #include "../res/shaders/Text2DVertex.glsl"
@@ -214,7 +209,7 @@ namespace ThunderEngine
 
 
             // OLD text_data.char_shader->Bind();
-            RendererCommand::DrawIndexed(text_data.char_vertex_array, text_data.char_index_count);
+            RendererAPI::DrawIndexed(text_data.char_vertex_array, text_data.char_index_count);
         }
     }
 

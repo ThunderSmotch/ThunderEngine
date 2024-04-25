@@ -10,7 +10,6 @@ import std;
 import ThunderEngine.Base;
 
 using namespace ThunderEngine;
-
 template <typename T>
 concept is_graphicscontext = requires(T t, void* window)
 {

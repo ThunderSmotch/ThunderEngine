@@ -1,8 +1,10 @@
-#include "OpenGLVertexArray.h"
-
+module;
 #include <glad/gl.h>
 #include <cassert>
+module ThunderEngine.Platform.OpenGL.VertexArray;
 
+import std;
+import ThunderEngine.BufferDefinitions;
 import ThunderEngine.Logger;
 
 namespace ThunderEngine

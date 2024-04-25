@@ -1,9 +1,9 @@
-#include "OpenGLTexture2D.h"
-
+module;
+#include <glad/gl.h>
 #include <stb/stb_image.h>
+module ThunderEngine.Platform.OpenGL.Texture2D;
 
 import ThunderEngine.Logger;
-
 
 namespace ThunderEngine
 {

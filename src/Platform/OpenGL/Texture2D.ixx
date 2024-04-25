@@ -1,14 +1,13 @@
-#pragma once
-
-#include "ThunderEngine/Renderer/Texture_Base.h"
-
+module;
 #include <glad/gl.h>
+export module ThunderEngine.Platform.OpenGL.Texture2D;
 
+import std;
 import ThunderEngine.Base;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
-	class OpenGLTexture2D : public Texture_Base<OpenGLTexture2D>
+	class OpenGLTexture2D
 	{
 	public:
 		OpenGLTexture2D(uint32_t width, uint32_t height, uint32_t number_channels);
@@ -50,4 +49,6 @@ namespace ThunderEngine
 
 		uint32_t renderer_id_ = 0;
 	};
+
+	export using Texture2D = OpenGLTexture2D;
 }

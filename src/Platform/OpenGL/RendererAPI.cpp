@@ -1,6 +1,8 @@
-#include "OpenGLRendererAPI.h"
-
+module;
+#include <glm/glm.hpp>
 #include <glad/gl.h>
+#include <cstdio>
+module ThunderEngine.Platform.OpenGL.RendererAPI;
 
 namespace ThunderEngine
 {
