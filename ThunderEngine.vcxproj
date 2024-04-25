@@ -75,11 +75,13 @@
     <IncludePath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glad\include;F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glfw-3.3.8.bin.WIN64\include;$(IncludePath)</IncludePath>
     <LibraryPath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glfw-3.3.8.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
     <SourcePath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glad\src;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glad\include;F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glfw-3.3.8.bin.WIN64\include;$(IncludePath)</IncludePath>
     <LibraryPath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glfw-3.3.8.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
     <SourcePath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glad\src;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,9 +118,17 @@
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)vendor;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>tepch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <BuildStlModules>true</BuildStlModules>
+      <ModuleDependenciesFile>$(IntDir)%(RelativeDir)</ModuleDependenciesFile>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ModuleOutputFile>$(IntDir)%(RelativeDir)</ModuleOutputFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <DisableSpecificWarnings>5050;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,9 +145,17 @@
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)vendor;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>tepch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <BuildStlModules>true</BuildStlModules>
+      <ModuleOutputFile>$(IntDir)%(RelativeDir)</ModuleOutputFile>
+      <ModuleDependenciesFile>$(IntDir)%(RelativeDir)</ModuleDependenciesFile>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <DisableSpecificWarnings>5050;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,29 +170,74 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Platform\GLFW\GLFWMouseInput.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp" />
+    <ClCompile Include="src\Platform\GLFW\GLFW.ixx" />
+    <ClCompile Include="src\Platform\GLFW\KeyInput.ixx" />
+    <ClCompile Include="src\Platform\GLFW\MouseInput.cpp" />
+    <ClCompile Include="src\Platform\GLFW\MouseInput.ixx" />
+    <ClCompile Include="src\Platform\GLFW\Window.cpp" />
+    <ClCompile Include="src\Platform\GLFW\Window.ixx" />
+    <ClCompile Include="src\Platform\OpenGL\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\Buffer.ixx" />
+    <ClCompile Include="src\Platform\OpenGL\GraphicsContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\GraphicsContext.ixx" />
+    <ClCompile Include="src\Platform\OpenGL\RendererAPI.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\RendererAPI.ixx" />
+    <ClCompile Include="src\Platform\OpenGL\Shader.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\Shader.ixx" />
+    <ClCompile Include="src\Platform\OpenGL\Texture2D.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\Texture2D.ixx" />
+    <ClCompile Include="src\Platform\OpenGL\VertexArray.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\VertexArray.ixx" />
     <ClCompile Include="src\ThunderEngine\Assets\Font.cpp" />
-    <ClCompile Include="src\ThunderEngine\Renderer\Camera.cpp" />
-    <ClCompile Include="src\ThunderEngine\Renderer\RendererText.cpp" />
-    <ClCompile Include="src\ThunderEngine\Sound\SoundPlayer.cpp" />
-    <ClCompile Include="src\tepch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    <ClCompile Include="src\ThunderEngine\Assets\Font.ixx" />
+    <ClCompile Include="src\ThunderEngine\Core\App.ixx">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\ThunderEngine\Utils\Logger.cpp" />
-    <ClCompile Include="src\ThunderEngine\Core\Timer.cpp" />
-    <ClCompile Include="src\Platform\GLFW\GLFWInput.cpp" />
-    <ClCompile Include="src\Platform\GLFW\GLFWWindow.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLGraphicsContext.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\ThunderEngine\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\ThunderEngine\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\ThunderEngine\Core\Base.ixx" />
+    <ClCompile Include="src\ThunderEngine\Core\KeyCode.ixx" />
+    <ClCompile Include="src\ThunderEngine\Core\KeyInput.ixx" />
+    <ClCompile Include="src\ThunderEngine\Core\MouseInput.ixx" />
+    <ClCompile Include="src\ThunderEngine\Core\Timer.ixx">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\ThunderEngine\Core\Window.ixx" />
+    <ClCompile Include="src\ThunderEngine\Core\WindowProps.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Buffer.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\BufferDefinitions.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Camera.cpp" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Camera.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Color.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\GraphicsContext.ixx" />
     <ClCompile Include="src\ThunderEngine\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\ThunderEngine\Core\App.cpp" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Renderer.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Renderer2D.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\RendererAPI.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\RendererText.cpp" />
+    <ClCompile Include="src\ThunderEngine\Renderer\RendererText.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Shader.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Texture.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\VertexArray.ixx" />
+    <ClCompile Include="src\ThunderEngine\Sound\SoundPlayer.cpp" />
+    <ClCompile Include="src\ThunderEngine\Core\Timer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</CompileAs>
+    </ClCompile>
+    <ClCompile Include="src\Platform\GLFW\KeyInput.cpp" />
+    <ClCompile Include="src\ThunderEngine\Core\App.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</CompileAs>
+    </ClCompile>
+    <ClCompile Include="src\ThunderEngine\Sound\SoundPlayer.ixx" />
+    <ClCompile Include="src\ThunderEngine.ixx" />
+    <ClCompile Include="src\ThunderEngine\Utils\Logger.ixx" />
+    <ClCompile Include="src\ThunderEngine\Utils\Logger.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -213,46 +276,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Platform\GLFW\GLFWMouseInput.h" />
-    <ClInclude Include="src\ThunderEngine\Assets\Font.h" />
-    <ClInclude Include="src\ThunderEngine\Core\Base.h" />
-    <ClInclude Include="src\ThunderEngine\Core\KeyInput.h" />
-    <ClInclude Include="src\ThunderEngine\Core\KeyInput_Base.h" />
-    <ClInclude Include="src\ThunderEngine\Core\MouseInput.h" />
-    <ClInclude Include="src\ThunderEngine\Core\MouseInput_Base.h" />
-    <ClInclude Include="src\ThunderEngine\Core\Window_Base.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Buffer_Base.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Camera.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Color.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\GraphicsContext_Base.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\RendererAPI_Base.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Shader_Base.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\RendererText.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Texture.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Texture_Base.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\VertexArray_Base.h" />
-    <ClInclude Include="src\ThunderEngine\Sound\SoundPlayer.h" />
-    <ClInclude Include="src\tepch.h" />
-    <ClInclude Include="src\ThunderEngine\Utils\Logger.h" />
-    <ClInclude Include="src\ThunderEngine\Core\Timer.h" />
-    <ClInclude Include="src\Platform\GLFW\GLFWInput.h" />
-    <ClInclude Include="src\Platform\GLFW\GLFWWindow.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLGraphicsContext.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Buffer.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Renderer2D.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Renderer.h" />
-    <ClInclude Include="src\ThunderEngine\Core\App.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Shader.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\VertexArray.h" />
-    <ClInclude Include="src\ThunderEngine\Core\Window.h" />
-    <ClInclude Include="src\ThunderEngine.h" />
     <ClInclude Include="vendor\imgui\imconfig.h" />
     <ClInclude Include="vendor\imgui\imgui.h" />
     <ClInclude Include="vendor\imgui\imgui_impl_glfw.h" />

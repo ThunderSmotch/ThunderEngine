@@ -1,22 +1,16 @@
-#include "tepch.h"
-#include "RendererText.h"
-
-#include "Texture.h"
-
+module;
 #include <stb/stb_rect_pack.h>
 #include <stb/stb_truetype.h>
 #include <stb/stb_image_write.h>
-
-#include <fstream>
-#include <sstream>
-
-#include "Shader.h"
-#include "VertexArray.h"
-#include "RendererAPI.h"
-
-#include "ThunderEngine/Assets/Font.h"
-
 #include <glm/ext/matrix_transform.hpp>
+module ThunderEngine.RendererText;
+
+import std;
+
+import ThunderEngine.Buffer;
+import ThunderEngine.VertexArray;
+import ThunderEngine.Shader;
+import ThunderEngine.RendererAPI;
 
 static const std::string text2d_vertex_source =
 #include "../res/shaders/Text2DVertex.glsl"
@@ -65,9 +59,9 @@ namespace ThunderEngine
     };
     static RendererTextData text_data;
 
-    Ref<Texture2D> RendererText::font_bitmap;
+    Ref<Texture2D> RendererText::font_bitmap = nullptr;
 
-    Ref<Font> RendererText::font;
+    Ref<Font> RendererText::font = nullptr;
 
     stbtt_bakedchar RendererText::char_data[96]; // Character information about texture subunits and offsets
 
@@ -210,12 +204,20 @@ namespace ThunderEngine
 
             // Bind texture
             // OLD font_bitmap->Bind();
-            text_data.sdf_shader->Bind();
-            font->BindAtlas();
+            
 
+            if (font != nullptr) 
+            {
+                text_data.sdf_shader->Bind();
+                font->BindAtlas();
+            }
+            else if(font_bitmap != nullptr) // OLD
+            {
+                text_data.char_shader->Bind();
+                font_bitmap->Bind();
+            }
 
-            // OLD text_data.char_shader->Bind();
-            RendererCommand::DrawIndexed(text_data.char_vertex_array, text_data.char_index_count);
+            RendererAPI::DrawIndexed(text_data.char_vertex_array, text_data.char_index_count);
         }
     }
 

@@ -1,8 +1,8 @@
-#include "tepch.h"
-#include "SoundPlayer.h"
-
+module;
 #include <miniaudio/miniaudio.h>
+module ThunderEngine.SoundPlayer;
 
+import ThunderEngine.Logger;
 
 namespace ThunderEngine
 {
@@ -15,7 +15,7 @@ namespace ThunderEngine
 		result = ma_engine_init(nullptr, &engine_);
 		if (result != MA_SUCCESS)
 		{
-			TE_ERROR("Failed to initialize the audio engine! Error code: %", result);
+			Logger::Error("Failed to initialize the audio engine! Error code: %", result);
 		}
 	}
 
@@ -34,7 +34,7 @@ namespace ThunderEngine
 		ma_result result;
 		result = ma_sound_init_from_file(&engine_, filepath.c_str(), MA_SOUND_FLAG_DECODE, nullptr, nullptr, sound);
 		if (result != MA_SUCCESS) {
-			TE_ERROR("Failed to load sound at %. Error code: %", filepath, (int)result);
+			Logger::Error("Failed to load sound at %. Error code: %", filepath, (int)result);
 		}
 		else 
 		{

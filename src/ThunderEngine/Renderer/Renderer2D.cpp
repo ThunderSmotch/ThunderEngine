@@ -1,17 +1,14 @@
-#include "tepch.h"
-#include "Renderer2D.h"
-
-#include <array>
-
+module;
 #include <glad/gl.h>
 #include <glm/gtc/matrix_transform.hpp>
+module ThunderEngine.Renderer2D;
 
-#include "Shader.h"
-#include "Buffer.h"
-#include "VertexArray.h"
-#include "RendererAPI.h"
-#include "Texture.h"
-
+import ThunderEngine.Base;
+import ThunderEngine.Buffer;
+import ThunderEngine.Shader;
+import ThunderEngine.VertexArray;
+import ThunderEngine.RendererAPI;
+import ThunderEngine.Texture;
 
 // Engine Shaders are imported here
 static const std::string line_vertex_source = 
@@ -45,8 +42,6 @@ static const std::string quad_vertex_source =
 static const std::string quad_fragment_source =
 #include "../res/shaders/QuadFragment.glsl"
 ;
-
-
 
 namespace ThunderEngine
 {
@@ -354,9 +349,7 @@ namespace ThunderEngine
             // Bind textures
             for (uint32_t i = 0; i < data.texture_slot_index; i++)
                 data.texture_slots[i]->Bind(i);
-
-            data.quad_shader->Bind();
-            RendererCommand::DrawIndexed(data.quad_vertex_array, data.quad_index_count);
+            RendererAPI::DrawIndexed(data.quad_vertex_array, data.quad_index_count);
         }
 
         if (data.triangle_index_count)
@@ -365,7 +358,7 @@ namespace ThunderEngine
             data.triangle_vertex_buffer->SetData(data.triangle_vertex_buffer_base, data_size);
 
             data.triangle_shader->Bind();
-            RendererCommand::DrawIndexed(data.triangle_vertex_array, data.triangle_index_count);
+            RendererAPI::DrawIndexed(data.triangle_vertex_array, data.triangle_index_count);
         }
 
         if (data.line_vertex_count)
@@ -374,8 +367,8 @@ namespace ThunderEngine
             data.line_vertex_buffer->SetData(data.line_vertex_buffer_base, data_size);
 
             data.line_shader->Bind();
-            RendererCommand::SetLineWidth(data.line_width);
-            RendererCommand::DrawLines(data.line_vertex_array, data.line_vertex_count);
+            RendererAPI::SetLineWidth(data.line_width);
+            RendererAPI::DrawLines(data.line_vertex_array, data.line_vertex_count);
         }
 
         if (data.circle_index_count)
@@ -384,7 +377,7 @@ namespace ThunderEngine
             data.circle_vertex_buffer->SetData(data.circle_vertex_buffer_base, data_size);
 
             data.circle_shader->Bind();
-            RendererCommand::DrawIndexed(data.circle_vertex_array, data.circle_index_count);
+            RendererAPI::DrawIndexed(data.circle_vertex_array, data.circle_index_count);
         }
     }
 
@@ -611,7 +604,7 @@ namespace ThunderEngine
     {
         data.shader_triangle->Bind();
         data.va_triangle->Bind();
-        RendererCommand::DrawIndexed(data.va_triangle, 3);
+        RendererAPI::DrawIndexed(data.va_triangle, 3);
     }
     */
 
