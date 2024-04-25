@@ -4,6 +4,8 @@ module;
 
 export module ThunderEngine.App;
 import std;
+
+import ThunderEngine.Base;
 import ThunderEngine.Window;
 
 export namespace ThunderEngine
@@ -17,7 +19,7 @@ export namespace ThunderEngine
 		/// <param name="title">The title of the App</param>
 		/// <param name="width">The width of the main window in pixels</param>
 		/// <param name="height">The height of the main window in pixels</param>
-		App(const std::string& title, uint32_t width, uint32_t height);
+		App(const std::string& title, u32 width, u32 height);
 
 		/// <summary>
 		/// Creates a new app

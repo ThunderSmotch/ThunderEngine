@@ -1,7 +1,5 @@
 #include "Buffer_Base.h"
 
-import std;
-
 namespace ThunderEngine
 {
 

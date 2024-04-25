@@ -4,6 +4,8 @@
 
 #include <glad/gl.h>
 
+import ThunderEngine.Base;
+
 namespace ThunderEngine
 {
 	class OpenGLTexture2D : public Texture_Base<OpenGLTexture2D>

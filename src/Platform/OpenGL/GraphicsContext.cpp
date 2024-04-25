@@ -3,10 +3,10 @@ module;
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
-#include "ThunderEngine/Utils/Logger.h"
 module ThunderEngine.Platform.OpenGL.GraphicsContext;
 
 import std;
+import ThunderEngine.Logger;
 
 namespace ThunderEngine
 {
@@ -27,8 +27,9 @@ namespace ThunderEngine
 
 		// Load GLAD
 		int version = gladLoadGL(glfwGetProcAddress);
-		TE_INFO("OpenGL %.%", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
-		TE_INFO("Vendor: %", glGetString(GL_VENDOR));
+
+		Logger::Info("OpenGL %.%", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+		Logger::Info("Vendor: %", glGetString(GL_VENDOR));
 	}
 
 	void OpenGLGraphicsContext::SwapBuffers()

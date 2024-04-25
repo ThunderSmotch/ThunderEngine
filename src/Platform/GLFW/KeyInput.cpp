@@ -1,11 +1,4 @@
-module;
-
-#include <GLFW/glfw3.h>
-
 module ThunderEngine.Platform.GLFW.KeyInput;
-
-import ThunderEngine.App;
-import std;
 
 namespace ThunderEngine
 {
@@ -96,11 +89,11 @@ namespace ThunderEngine
 
         for (GLFWKeyInput* key_input : instances_)
         {
-            if (action == GLFW_PRESS) {
+            if (action == GLFW::PRESS) {
                 key_input->SetIsKeyPress(key_code, true);
                 key_input->update_presses_ = true;
             }
-            key_input->SetIsKeyDown(key_code, (action != GLFW_RELEASE));
+            key_input->SetIsKeyDown(key_code, (action != GLFW::RELEASE));
         }
     }
 }

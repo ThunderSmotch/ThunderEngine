@@ -1,8 +1,8 @@
-#pragma once
+export module ThunderEngine.Logger;
 
-#include <iostream>
+import std;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
 	enum class LogMessageType
 	{
@@ -25,6 +25,26 @@ namespace ThunderEngine
 		/// <param name="message_type">The type of message to log</param>
 		static void LogPreMessage(LogMessageType message_type);
 
+		template<typename... TArgs>
+		static void Info(const char* text, TArgs... FArgs)
+		{
+			LogPreMessage(ThunderEngine::LogMessageType::INFO);
+			Log(text, FArgs...);
+		}
+
+		template<typename... TArgs>
+		static void Warning(const char* text, TArgs... FArgs)
+		{
+			LogPreMessage(ThunderEngine::LogMessageType::WARNING);
+			Log(text, FArgs...);
+		}
+
+		template<typename... TArgs>
+		static void Error(const char* text, TArgs... FArgs)
+		{
+			LogPreMessage(ThunderEngine::LogMessageType::ERROR);
+			Log(text, FArgs...);
+		}
 
 		/// <summary>
 		/// Prints the given text and resets the style
@@ -82,12 +102,3 @@ namespace ThunderEngine
 		static constexpr const char* UNDERLINE = "\033[4m";
 	};
 }
-
-// Log macros
-
-// Log an Information
-#define TE_INFO(...) ThunderEngine::Logger::LogPreMessage(ThunderEngine::LogMessageType::INFO); ThunderEngine::Logger::Log(__VA_ARGS__)
-// Log a Warning
-#define TE_WARN(...) ThunderEngine::Logger::LogPreMessage(ThunderEngine::LogMessageType::WARNING); ThunderEngine::Logger::Log(__VA_ARGS__)
-// Log an Error
-#define TE_ERROR(...) ThunderEngine::Logger::LogPreMessage(ThunderEngine::LogMessageType::ERROR); ThunderEngine::Logger::Log(__VA_ARGS__)

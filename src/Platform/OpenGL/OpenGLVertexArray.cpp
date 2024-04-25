@@ -3,8 +3,7 @@
 #include <glad/gl.h>
 #include <cassert>
 
-import std;
-
+import ThunderEngine.Logger;
 
 namespace ThunderEngine
 {
@@ -28,7 +27,7 @@ namespace ThunderEngine
 			return GL_BOOL;
 		}
 
-		TE_WARN("Unknown ShaderDataType! Can't convert to OpenGL type!");
+		Logger::Warning("Unknown ShaderDataType! Can't convert to OpenGL type!");
 		return 0;
 	}
 
@@ -51,7 +50,7 @@ namespace ThunderEngine
 		case ShaderDataType::Mat4:
 			return 4;
 		}
-		TE_WARN("Unknown ShaderDataType! Can't get number of components!");
+		Logger::Warning("Unknown ShaderDataType! Can't get number of components!");
 		return 0;
 	}
 
@@ -144,7 +143,7 @@ namespace ThunderEngine
 				break;
 			}
 			default:
-				TE_WARN("Unknown ShaderDataType! Can't add to Buffer!");
+				Logger::Warning("Unknown ShaderDataType! Can't add to Buffer!");
 			}
 		}
 

@@ -1,11 +1,10 @@
-module;
-#include <GLFW/glfw3.h>
 export module ThunderEngine.Platform.GLFW.KeyInput;
 
-import ThunderEngine.KeyCode;
-import ThunderEngine.Base;
-
 import std;
+
+import ThunderEngine.Platform.GLFW;
+import ThunderEngine.Base;
+import ThunderEngine.KeyCode;
 
 export namespace ThunderEngine
 {

@@ -5,9 +5,6 @@ module;
 #include <imgui/imgui_impl_opengl3.h>
 
 #include <glad/gl.h>
-#include <GLFW/glfw3.h>
-
-#include "GLFWMouseInput.h"
 
 #include "ThunderEngine/Renderer/RendererAPI.h"
 
@@ -15,6 +12,8 @@ module ThunderEngine.Platform.GLFW.Window;
 
 import std;
 import ThunderEngine.Platform.GLFW.KeyInput;
+import ThunderEngine.Platform.GLFW.MouseInput;
+import ThunderEngine.Logger;
 
 namespace ThunderEngine
 {
@@ -22,19 +21,19 @@ namespace ThunderEngine
 		:window_(nullptr), window_props_(props), vsync_enabled_(true)
 	{
 		int success = glfwInit();
-		if (success == GLFW_FALSE)
+		if (success == GLFW::FALSE)
 		{
-			TE_ERROR("Failed to initialize GLFW");
+			Logger::Error("Failed to initialize GLFW");
 		}
 
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW::CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW::CONTEXT_VERSION_MINOR, 5);
+		glfwWindowHint(GLFW::OPENGL_PROFILE, GLFW::OPENGL_CORE_PROFILE);
 
 		window_ = glfwCreateWindow(props.width, props.height, props.title.c_str(), NULL, NULL);
 		if (window_ == NULL)
 		{
-			TE_ERROR("Failed to create window!");
+			Logger::Error("Failed to create window!");
 			glfwTerminate();
 			exit(-1);
 		}
@@ -45,7 +44,7 @@ namespace ThunderEngine
 
 		glfwSetErrorCallback([](int error, const char* description)
 			{
-				TE_ERROR("GLFW: %", description);
+				Logger::Error("GLFW: %", description);
 			});
 
 		//Defines the callback when the window is resized

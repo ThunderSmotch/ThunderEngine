@@ -5,6 +5,8 @@ import std;
 export {
 	using byte = unsigned char;
 	using u32 = std::uint32_t;
+	using uint32_t = std::uint32_t; // TODO Remove
+
 	using string = std::string;
 
 	template<typename T>

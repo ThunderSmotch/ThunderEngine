@@ -2,9 +2,6 @@
 
 #include <glad/gl.h>
 
-import std;
-
-
 namespace ThunderEngine
 {
 	void GLAPIENTRY ErrorOccurredGL(GLenum source,

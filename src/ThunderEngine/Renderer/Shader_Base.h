@@ -3,6 +3,9 @@
 #include "ThunderEngine/Core/Base.h"
 
 #include <glm/glm.hpp>
+#include <string>
+
+import ThunderEngine.Base;
 
 namespace ThunderEngine
 {

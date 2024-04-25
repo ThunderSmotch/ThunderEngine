@@ -1,6 +1,4 @@
-#include "Logger.h"
-
-import std;
+module ThunderEngine.Logger;
 
 namespace ThunderEngine
 {

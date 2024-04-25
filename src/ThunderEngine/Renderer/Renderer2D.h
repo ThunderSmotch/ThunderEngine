@@ -5,6 +5,8 @@
 #include "Texture.h"
 #include "Camera.h"
 
+import ThunderEngine.Base;
+
 namespace ThunderEngine
 {
 	class Renderer2D

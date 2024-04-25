@@ -2,6 +2,10 @@
 
 #include "ThunderEngine/Core/Base.h"
 
+#include <string>
+
+import ThunderEngine.Base;
+
 namespace ThunderEngine
 {
 	template <typename Derived>

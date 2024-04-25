@@ -1,13 +1,14 @@
-#include <fstream>
-#include <sstream>
-
 #include <stb/stb_rect_pack.h>
 #include <stb/stb_truetype.h>
 #include <stb/stb_image_write.h>
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 #include "Font.h"
 
-import std;
+import ThunderEngine.Logger;
 
 namespace ThunderEngine
 {
@@ -30,7 +31,7 @@ namespace ThunderEngine
 
         if (!load_result)
         {
-            TE_WARN("Could not load font info at %.", font_path);
+            Logger::Warning("Could not load font info at %.", font_path);
         }
 
         return ttf_buffer;
@@ -98,7 +99,7 @@ namespace ThunderEngine
         // Pack rects into atlas
         int pack_result = stbrp_pack_rects(&sdf_atlas_context, rects, num_rects);
         if (pack_result == 0) {
-            TE_WARN("Could not pack entire font into the atlas.");
+            Logger::Warning("Could not pack entire font into the atlas.");
         }
 
         // Copy SDF bitmaps into atlas

@@ -1,15 +1,9 @@
 #include "OpenGLShader.h"
 
 #include <glad/gl.h>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-
-#include <string>
-
 #include <glm/gtc/type_ptr.hpp>
 
-import std;
+import ThunderEngine.Logger;
 
 namespace ThunderEngine
 {
@@ -109,7 +103,7 @@ namespace ThunderEngine
 
 			glGetShaderInfoLog(id, length, NULL, message);
 
-			TE_ERROR("Failed to compile % shader, see attached log: %", ((type == GL_VERTEX_SHADER) ? "vertex" : "fragment"), message);
+			Logger::Error("Failed to compile % shader, see attached log: %", ((type == GL_VERTEX_SHADER) ? "vertex" : "fragment"), message);
 
 			if (message != 0)
 			{
@@ -142,7 +136,7 @@ namespace ThunderEngine
 			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
 			char* message = (char*)malloc(sizeof(char) * length);
 			glGetProgramInfoLog(program, length, NULL, message);
-			TE_ERROR("Failed to compile program, see attached log: %", message);
+			Logger::Error("Failed to compile program, see attached log: %", message);
 
 			if (message != 0)
 			{
@@ -220,7 +214,7 @@ namespace ThunderEngine
 		int location = glGetUniformLocation(renderer_id_, name.c_str());
 		if (location == -1)
 		{
-			TE_WARN("Uniform % was not found!", name);
+			Logger::Warning("Uniform % was not found!", name);
 		}
 		uniform_location_cache_[name] = location;
 		return location;

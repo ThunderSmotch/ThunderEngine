@@ -1,9 +1,9 @@
 #pragma once
 
 #include "ThunderEngine/Core/Base.h"
-
-#include <vector>
 #include "Buffer.h"
+
+import ThunderEngine.Base;
 
 namespace ThunderEngine {
 	template <typename Derived>

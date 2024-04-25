@@ -1,8 +1,11 @@
 #pragma once
 
 #include "ThunderEngine/Core/Base.h"
+#include <string>
+#include <vector>
 
-import std;
+import ThunderEngine.Base;
+import ThunderEngine.Logger;
 
 namespace ThunderEngine
 {
@@ -37,7 +40,7 @@ namespace ThunderEngine
 		default: break;
 		}
 
-		TE_WARN("Unknown ShaderDataType! Cannot get size.");
+		Logger::Warning("Unknown ShaderDataType! Cannot get size.");
 		return 0;
 	}
 

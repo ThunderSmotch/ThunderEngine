@@ -2,8 +2,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-import std;
-
 namespace ThunderEngine 
 {
 	OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)

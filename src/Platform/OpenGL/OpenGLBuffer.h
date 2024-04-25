@@ -2,6 +2,8 @@
 
 #include "ThunderEngine/Renderer/Buffer_Base.h"
 
+import ThunderEngine.Base;
+
 namespace ThunderEngine
 {
 	class OpenGLVertexBuffer : public VertexBuffer_Base<OpenGLVertexBuffer>

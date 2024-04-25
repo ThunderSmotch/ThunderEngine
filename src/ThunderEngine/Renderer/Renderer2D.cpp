@@ -11,9 +11,6 @@
 #include "RendererAPI.h"
 #include "Texture.h"
 
-import std;
-
-
 // Engine Shaders are imported here
 static const std::string line_vertex_source = 
 #include "../res/shaders/LineVertex.glsl"
@@ -47,7 +44,7 @@ static const std::string quad_fragment_source =
 #include "../res/shaders/QuadFragment.glsl"
 ;
 
-
+import ThunderEngine.Base;
 
 namespace ThunderEngine
 {

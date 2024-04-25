@@ -2,7 +2,8 @@
 
 #include <stb/stb_image.h>
 
-import std;
+import ThunderEngine.Logger;
+
 
 namespace ThunderEngine
 {
@@ -66,7 +67,7 @@ namespace ThunderEngine
 
 			if (!(internal_format & data_format))
 			{
-				TE_ERROR("Failed to load texture. Format is not supported!");
+				Logger::Error("Failed to load texture. Format is not supported!");
 			}
 
 			glCreateTextures(GL_TEXTURE_2D, 1, &renderer_id_);
@@ -84,7 +85,7 @@ namespace ThunderEngine
 		}
 		else
 		{
-			TE_WARN("Could not load the image at %.", path);
+			Logger::Warning("Could not load the image at %.", path);
 		}
 	}
 
@@ -113,7 +114,7 @@ namespace ThunderEngine
 
 		if (size != width_ * height_ * channels)
 		{
-			TE_ERROR("Error setting data to texture! Size mismatch: data must be the entire texture! Expected % bytes, got %.", size, width_*height_*channels);
+			Logger::Error("Error setting data to texture! Size mismatch: data must be the entire texture! Expected % bytes, got %.", size, width_*height_*channels);
 		}
 
 		glTextureSubImage2D(renderer_id_, 0, 0, 0, width_, height_, data_format_, GL_UNSIGNED_BYTE, data);

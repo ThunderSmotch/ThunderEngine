@@ -1,15 +1,15 @@
-#pragma once
+export module ThunderEngine.Platform.GLFW.MouseInput;
 
-#include "ThunderEngine/Core/MouseInput_Base.h"
+import std;
 
-#include <map>
-#include <vector>
+import ThunderEngine.Platform.GLFW;
 
-struct GLFWwindow;
+import ThunderEngine.Base;
+import ThunderEngine.KeyCode;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
-	class GLFWMouseInput : public MouseInput_Base<GLFWMouseInput>
+	class GLFWMouseInput
 	{
 	private:
 		std::map<MouseKeyCode, bool> keys_down_;
@@ -59,4 +59,6 @@ namespace ThunderEngine
 		// Keep a list of all KeyInput instances and notify them all of key events
 		static std::vector<GLFWMouseInput*> instances_;
 	};
+
+	using MouseInput = GLFWMouseInput;
 }

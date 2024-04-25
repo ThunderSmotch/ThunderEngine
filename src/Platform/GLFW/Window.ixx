@@ -1,9 +1,8 @@
-module;
-#include <GLFW/glfw3.h>
-
 export module ThunderEngine.Platform.GLFW.Window;
 
 import std;
+
+import ThunderEngine.Platform.GLFW;
 import ThunderEngine.WindowProps;
 import ThunderEngine.GraphicsContext;
 

@@ -33,8 +33,6 @@ static const std::string textsdf_fragment_source =
 #include "../res/shaders/TextSDFFragment.glsl"
 ;
 
-import std;
-
 namespace ThunderEngine
 {
 

@@ -1,7 +1,6 @@
 export module ThunderEngine.Platform.OpenGL.GraphicsContext;
 
-#include <GLFW/glfw3.h>
-
+import ThunderEngine.Platform.GLFW;
 import ThunderEngine.Base;
 
 export namespace ThunderEngine
