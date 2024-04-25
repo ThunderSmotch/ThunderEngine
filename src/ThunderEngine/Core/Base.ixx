@@ -8,7 +8,9 @@ export {
 	using uint32_t = std::uint32_t; // TODO Remove
 
 	using string = std::string;
+}
 
+export namespace ThunderEngine {
 	template<typename T>
 	using Ref = std::shared_ptr<T>;
 
@@ -26,4 +28,4 @@ export {
 	{
 		return std::make_unique<T>(std::forward<Args>(args)...);
 	}
-}
+};

@@ -1,10 +1,6 @@
-module;
-
-#include "Base.h"
-
 export module ThunderEngine.App;
-import std;
 
+import std;
 import ThunderEngine.Base;
 import ThunderEngine.Window;
 

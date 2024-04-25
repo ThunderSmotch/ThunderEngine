@@ -1,9 +1,8 @@
 module ThunderEngine.App;
 
+import std;
 import ThunderEngine.Timer;
 import ThunderEngine.Renderer;
-
-import std;
 
 namespace ThunderEngine
 {

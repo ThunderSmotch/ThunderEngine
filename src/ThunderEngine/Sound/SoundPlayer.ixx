@@ -1,5 +1,6 @@
 module;
 #include <miniaudio/miniaudio.h>
+#undef PlaySound
 export module ThunderEngine.SoundPlayer;
 
 import std;
@@ -7,7 +8,7 @@ import std;
 struct ma_engine;
 struct ma_sound;
 
-namespace ThunderEngine
+export namespace ThunderEngine
 {
 	// TODO Incorporate SoundGroups to have different controls for different kinds of sounds
 	// TODO Abstract the miniaudio away

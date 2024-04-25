@@ -59,9 +59,9 @@ namespace ThunderEngine
     };
     static RendererTextData text_data;
 
-    Ref<Texture2D> RendererText::font_bitmap;
+    Ref<Texture2D> RendererText::font_bitmap = nullptr;
 
-    Ref<Font> RendererText::font;
+    Ref<Font> RendererText::font = nullptr;
 
     stbtt_bakedchar RendererText::char_data[96]; // Character information about texture subunits and offsets
 
@@ -204,11 +204,19 @@ namespace ThunderEngine
 
             // Bind texture
             // OLD font_bitmap->Bind();
-            text_data.sdf_shader->Bind();
-            font->BindAtlas();
+            
 
+            if (font != nullptr) 
+            {
+                text_data.sdf_shader->Bind();
+                font->BindAtlas();
+            }
+            else if(font_bitmap != nullptr) // OLD
+            {
+                text_data.char_shader->Bind();
+                font_bitmap->Bind();
+            }
 
-            // OLD text_data.char_shader->Bind();
             RendererAPI::DrawIndexed(text_data.char_vertex_array, text_data.char_index_count);
         }
     }

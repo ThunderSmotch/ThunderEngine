@@ -124,6 +124,9 @@
       <ModuleDependenciesFile>$(IntDir)%(RelativeDir)</ModuleDependenciesFile>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
       <ModuleOutputFile>$(IntDir)%(RelativeDir)</ModuleOutputFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <DisableSpecificWarnings>5050;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +151,9 @@
       <ModuleOutputFile>$(IntDir)%(RelativeDir)</ModuleOutputFile>
       <ModuleDependenciesFile>$(IntDir)%(RelativeDir)</ModuleDependenciesFile>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <DisableSpecificWarnings>5050;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -200,6 +206,7 @@
     <ClCompile Include="src\ThunderEngine\Renderer\BufferDefinitions.ixx" />
     <ClCompile Include="src\ThunderEngine\Renderer\Camera.cpp" />
     <ClCompile Include="src\ThunderEngine\Renderer\Camera.ixx" />
+    <ClCompile Include="src\ThunderEngine\Renderer\Color.ixx" />
     <ClCompile Include="src\ThunderEngine\Renderer\GraphicsContext.ixx" />
     <ClCompile Include="src\ThunderEngine\Renderer\Renderer.cpp" />
     <ClCompile Include="src\ThunderEngine\Renderer\Renderer.ixx" />
@@ -222,8 +229,11 @@
     <ClCompile Include="src\ThunderEngine\Core\App.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</CompileAs>
     </ClCompile>
     <ClCompile Include="src\ThunderEngine\Sound\SoundPlayer.ixx" />
+    <ClCompile Include="src\ThunderEngine.ixx" />
     <ClCompile Include="src\ThunderEngine\Utils\Logger.ixx" />
     <ClCompile Include="src\ThunderEngine\Utils\Logger.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp">
@@ -264,9 +274,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ThunderEngine\Core\Base.h" />
-    <ClInclude Include="src\ThunderEngine\Renderer\Color.h" />
-    <ClInclude Include="src\ThunderEngine.h" />
     <ClInclude Include="vendor\imgui\imconfig.h" />
     <ClInclude Include="vendor\imgui\imgui.h" />
     <ClInclude Include="vendor\imgui\imgui_impl_glfw.h" />

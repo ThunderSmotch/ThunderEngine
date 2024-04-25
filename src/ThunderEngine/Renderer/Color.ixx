@@ -1,8 +1,8 @@
-#pragma once
-
+module;
 #include <glm/glm.hpp>
+export module ThunderEngine.Color;
 
-namespace Color {
+export namespace Color {
 	glm::vec4 const Black     = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	glm::vec4 const White     = glm::vec4(1.0f);
 	glm::vec4 const Red       = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
