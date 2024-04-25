@@ -75,11 +75,13 @@
     <IncludePath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glad\include;F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glfw-3.3.8.bin.WIN64\include;$(IncludePath)</IncludePath>
     <LibraryPath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glfw-3.3.8.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
     <SourcePath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glad\src;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glad\include;F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glfw-3.3.8.bin.WIN64\include;$(IncludePath)</IncludePath>
     <LibraryPath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glfw-3.3.8.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
     <SourcePath>F:\Carlos\Documents\Coding Projects\GameDev\OpenGL\lib\glad\src;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
