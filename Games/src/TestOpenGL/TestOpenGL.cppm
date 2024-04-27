@@ -4,9 +4,9 @@ module;
 export module Game.TestOpenGL;
 
 import std;
-import ThunderEngine;
+import ThunderLib;
 
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 Ref<Texture2D> container, awesome_face;
 
@@ -124,7 +124,7 @@ export int Main()
     RendererText::Init();
     //RendererText::LoadFont("res/fonts/open_sans.ttf");
 
-    //auto font =  ThunderEngine::CreateRef<Font>("res/fonts/open_sans.ttf", 128);
+    //auto font =  ThunderLib::CreateRef<Font>("res/fonts/open_sans.ttf", 128);
     RendererText::LoadFontOld("res/fonts/open_sans.ttf");
 
     // Loading textures

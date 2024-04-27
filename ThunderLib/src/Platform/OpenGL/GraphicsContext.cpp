@@ -3,12 +3,12 @@ module;
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
-module ThunderEngine.Platform.OpenGL.GraphicsContext;
+module ThunderLib.Platform.OpenGL.GraphicsContext;
 
 import std;
-import ThunderEngine.Logger;
+import ThunderLib.Logger;
 
-namespace ThunderEngine
+namespace ThunderLib
 {
 
 	OpenGLGraphicsContext::OpenGLGraphicsContext(GLFWwindow* window)

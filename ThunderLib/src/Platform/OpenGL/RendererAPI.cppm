@@ -1,11 +1,11 @@
 module;
 #include <glm/glm.hpp>
-export module ThunderEngine.Platform.OpenGL.RendererAPI;
+export module ThunderLib.Platform.OpenGL.RendererAPI;
 
-import ThunderEngine.Base;
-import ThunderEngine.VertexArray;
+import ThunderLib.Base;
+import ThunderLib.VertexArray;
 
-export namespace ThunderEngine
+export namespace ThunderLib
 {
 	class OpenGLRendererAPI
 	{

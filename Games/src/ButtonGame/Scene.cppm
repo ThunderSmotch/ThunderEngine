@@ -1,6 +1,6 @@
 export module Animation.Scene;
 
-import ThunderEngine;
+import ThunderLib;
 
 export class Scene {
 private:
@@ -11,5 +11,5 @@ public:
 	virtual void Update(float dt) = 0;
 	
 	// TODO: Rethink how to pass inputs to the processInput func
-	virtual void ProcessInput(ThunderEngine::MouseInput& mouse) = 0;
+	virtual void ProcessInput(ThunderLib::MouseInput& mouse) = 0;
 };

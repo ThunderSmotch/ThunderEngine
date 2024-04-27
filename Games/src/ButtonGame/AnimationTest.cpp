@@ -2,7 +2,7 @@ module;
 #include <glm/glm.hpp>
 #define ANIMATE(animation, ...) Add(CreateRef<animation>(__VA_ARGS__))
 module Animation.AnimationTest;
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 
 AnimationScene::AnimationScene()

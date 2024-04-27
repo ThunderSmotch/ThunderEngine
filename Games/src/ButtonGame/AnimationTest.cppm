@@ -1,6 +1,6 @@
 export module Animation.AnimationTest;
 
-import ThunderEngine;
+import ThunderLib;
 import Animation.Animation;
 import Animation.Scene;
 
@@ -13,5 +13,5 @@ public:
 
 	void Render(float dt) override;
 	void Update(float dt) override;
-	void ProcessInput(ThunderEngine::MouseInput& mouse) override;
+	void ProcessInput(ThunderLib::MouseInput& mouse) override;
 };

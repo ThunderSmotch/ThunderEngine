@@ -3,7 +3,7 @@ module;
 #include <glm/ext/matrix_transform.hpp>
 #include <imgui/imgui.h>
 module ButtonGame.Button;
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 ButtonMachine::ButtonMachine()
 {

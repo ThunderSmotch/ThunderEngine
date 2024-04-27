@@ -2,7 +2,7 @@ module;
 #include <glm/glm.hpp>
 module Asteroids.ProjectileSystem;
 
-import ThunderEngine;
+import ThunderLib;
 import Asteroids.AsteroidSystem;
 import Asteroids.ParticleSystem;
 
@@ -118,7 +118,7 @@ void ProjectileSystem::Render(float dt)
 		glm::vec2 trail = 30.0f * glm::vec2(sin(projectiles_[i].direction), cos(projectiles_[i].direction));
 		glm::vec4 color = projectiles_[i].friendly ? glm::vec4(1.0f, 1.0f, 0.0f, 1.0f) : glm::vec4(1.0f, 0.0f, 0.1f, 1.0f);
 
-		ThunderEngine::Renderer2D::DrawLine(projectiles_[i].position, projectiles_[i].position - trail, color);
+		ThunderLib::Renderer2D::DrawLine(projectiles_[i].position, projectiles_[i].position - trail, color);
 
 
 		ParticleSystem::SpawnParticle(projectiles_[i].position, 2.0f, Color::Red);

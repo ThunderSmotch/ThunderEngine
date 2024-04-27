@@ -4,14 +4,14 @@ int the_canvas_width  = 800;
 int the_canvas_height = 800;
 export module Game.Asteroids;
 
-import ThunderEngine;
+import ThunderLib;
 
 import Asteroids.Player;
 import Asteroids.ProjectileSystem;
 import Asteroids.AsteroidSystem;
 import Asteroids.ParticleSystem;
 
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 static void HandleInput(float dt, KeyInput& input, Player& player)
 {
@@ -31,7 +31,7 @@ static void Simulate(float dt)
 
 static void Render(float dt, const OrthographicCamera& camera, const Player& player)
 {
-	ThunderEngine::RendererAPI::Clear();
+	ThunderLib::RendererAPI::Clear();
 
 	Renderer2D::StartScene(camera);
 
@@ -44,7 +44,7 @@ static void Render(float dt, const OrthographicCamera& camera, const Player& pla
 
 export int Main() 
 {
-	ThunderEngine::App app("Asteroids", the_canvas_width , the_canvas_height);
+	ThunderLib::App app("Asteroids", the_canvas_width , the_canvas_height);
 
 	OrthographicCamera camera(0, (float) the_canvas_width, 0, (float) the_canvas_height);
 
@@ -59,7 +59,7 @@ export int Main()
 	Ref<KeyInput> input = KeyInput::Create({KeyCode::SPACE, KeyCode::ESCAPE });
 
 	// Set render clear color to black
-	ThunderEngine::RendererAPI::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
+	ThunderLib::RendererAPI::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
 
 	// Add callbacks
 	app.AddCallback([&input, &player](float dt) {HandleInput(dt, *input, player); });

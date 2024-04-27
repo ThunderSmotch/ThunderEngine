@@ -2,9 +2,9 @@ module;
 #include <glm/glm.hpp>
 module Asteroids.Player;
 
-import ThunderEngine;
+import ThunderLib;
 import Asteroids.ProjectileSystem;
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 extern int the_canvas_width;
 extern int the_canvas_height;

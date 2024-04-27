@@ -1,10 +1,10 @@
-export module ThunderEngine.Platform.OpenGL.Buffer;
+export module ThunderLib.Platform.OpenGL.Buffer;
 
 import std;
-import ThunderEngine.Base;
-import ThunderEngine.BufferDefinitions;
+import ThunderLib.Base;
+import ThunderLib.BufferDefinitions;
 
-export namespace ThunderEngine
+export namespace ThunderLib
 {
 	class OpenGLVertexBuffer
 	{

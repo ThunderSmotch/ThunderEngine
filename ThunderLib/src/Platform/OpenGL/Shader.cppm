@@ -1,11 +1,11 @@
 module;
 #include <glm/glm.hpp>
-export module ThunderEngine.Platform.OpenGL.Shader;
+export module ThunderLib.Platform.OpenGL.Shader;
 
 import std;
-import ThunderEngine.Base;
+import ThunderLib.Base;
 
-export namespace ThunderEngine
+export namespace ThunderLib
 {
 	struct ShaderProgramSource
 	{

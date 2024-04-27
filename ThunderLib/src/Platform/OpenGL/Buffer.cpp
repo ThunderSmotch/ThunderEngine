@@ -1,9 +1,9 @@
 module;
 #include <glad/gl.h>
 
-module ThunderEngine.Platform.OpenGL.Buffer;
+module ThunderLib.Platform.OpenGL.Buffer;
 
-namespace ThunderEngine
+namespace ThunderLib
 {
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)

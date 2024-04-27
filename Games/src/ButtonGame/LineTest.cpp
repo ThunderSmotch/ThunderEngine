@@ -5,7 +5,7 @@ module Animation.LineTest;
 
 import std;
 
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 glm::vec2 PolyLine::GetPoint(int index)
 {
@@ -452,7 +452,7 @@ void LineTest::Update(float dt)
 
 }
 
-void LineTest::ProcessInput(ThunderEngine::MouseInput& mouse)
+void LineTest::ProcessInput(ThunderLib::MouseInput& mouse)
 {
 	if (mouse.GetIsKeyDown(MouseKeyCode::MOUSE_1))
 	{

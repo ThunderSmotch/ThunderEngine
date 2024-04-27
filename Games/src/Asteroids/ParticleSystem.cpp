@@ -1,7 +1,7 @@
 module;
 #include <glm/glm.hpp>
 module Asteroids.ParticleSystem;
-import ThunderEngine;
+import ThunderLib;
 
 int ParticleSystem::count = 0;
 //Particle ParticleSystem::particles;
@@ -34,7 +34,7 @@ void ParticleSystem::Render(float dt)
 			continue;
 		}
 		// @Incomplete insert size of particles in the struct maybe
-		ThunderEngine::Renderer2D::DrawQuad(p.position, {1,1}, p.color);
+		ThunderLib::Renderer2D::DrawQuad(p.position, {1,1}, p.color);
 	}
 }
 

@@ -1,6 +1,6 @@
-module ThunderEngine.Platform.GLFW.MouseInput;
+module ThunderLib.Platform.GLFW.MouseInput;
 
-namespace ThunderEngine
+namespace ThunderLib
 {
     std::vector<GLFWMouseInput*> GLFWMouseInput::instances_ = std::vector<GLFWMouseInput*>();
 

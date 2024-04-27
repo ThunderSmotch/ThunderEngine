@@ -4,7 +4,7 @@ module;
 export module Animation.Animation;
 
 import std;
-import ThunderEngine;
+import ThunderLib;
 
 export{
 
@@ -110,13 +110,13 @@ export{
 	class Cutscene
 	{
 	private:
-		std::vector<ThunderEngine::Ref<Animation>> commands_;
+		std::vector<ThunderLib::Ref<Animation>> commands_;
 		int current_animation_ = -1;
 		bool active_ = false;
 	public:
 		Cutscene() = default;
 
-		void Add(ThunderEngine::Ref<Animation> animation);
+		void Add(ThunderLib::Ref<Animation> animation);
 		void Play();
 		void Update(float dt);
 	};

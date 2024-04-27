@@ -4,17 +4,17 @@ export module Game.Fractal;
 
 import std;
 
-import ThunderEngine.Base;
-import ThunderEngine.Shader;
-import ThunderEngine.App;
-import ThunderEngine.VertexArray;
-import ThunderEngine.KeyInput;
-import ThunderEngine.RendererAPI;
-import ThunderEngine.KeyCode;
+import ThunderLib.Base;
+import ThunderLib.Shader;
+import ThunderLib.App;
+import ThunderLib.VertexArray;
+import ThunderLib.KeyInput;
+import ThunderLib.RendererAPI;
+import ThunderLib.KeyCode;
 
-ThunderEngine::Ref<ThunderEngine::VertexArray> quad;
-ThunderEngine::Ref<ThunderEngine::Shader> shader;
-ThunderEngine::Ref<ThunderEngine::KeyInput> input;
+ThunderLib::Ref<ThunderLib::VertexArray> quad;
+ThunderLib::Ref<ThunderLib::Shader> shader;
+ThunderLib::Ref<ThunderLib::KeyInput> input;
 
 static const std::string fractal_vertex_source =
 #include "FractalVertex.glsl"
@@ -31,65 +31,65 @@ bool quit = false;
 
 void InitQuad()
 {
-	shader = ThunderEngine::Shader::CreateFromString(fractal_vertex_source, fractal_fragment_source);
+	shader = ThunderLib::Shader::CreateFromString(fractal_vertex_source, fractal_fragment_source);
 	shader->Bind();
 
-	quad = ThunderEngine::VertexArray::Create();
+	quad = ThunderLib::VertexArray::Create();
 
-	auto buffer = ThunderEngine::VertexBuffer::Create(4*2*4);
-	buffer->SetLayout({ { "aPos", ThunderEngine::ShaderDataType::Float2 } });
+	auto buffer = ThunderLib::VertexBuffer::Create(4*2*4);
+	buffer->SetLayout({ { "aPos", ThunderLib::ShaderDataType::Float2 } });
 
 	glm::vec2 vertices[4] = { {-1.0f, -1.0f}, {1.0f, -1.0f}, {1.0f, 1.0f}, {-1.0f, 1.0f} };
 	buffer->SetData(vertices, 2 * 4 * 4);
 	quad->AddVertexBuffer(buffer);
 
 	uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
-	auto index_buffer = ThunderEngine::IndexBuffer::Create(indices, 6);
+	auto index_buffer = ThunderLib::IndexBuffer::Create(indices, 6);
 	quad->SetIndexBuffer(index_buffer);
 
-	ThunderEngine::RendererAPI::Init();
+	ThunderLib::RendererAPI::Init();
 
 	shader->SetFloat2("viewportDims", { 1024, 768 });
 }
 
 void ProcessInput(float t)
 {
-	if (input->GetIsKeyDown(ThunderEngine::KeyCode::Q) )
+	if (input->GetIsKeyDown(ThunderLib::KeyCode::Q) )
 	{
 		zoom *= 1.01f;
 	}
-	if (input->GetIsKeyDown(ThunderEngine::KeyCode::E))
+	if (input->GetIsKeyDown(ThunderLib::KeyCode::E))
 	{
 		zoom *= 0.99f;
 	}
 
-	if (input->GetIsKeyDown(ThunderEngine::KeyCode::W))
+	if (input->GetIsKeyDown(ThunderLib::KeyCode::W))
 	{
 		center.y += velocity/zoom;
 	}
-	if (input->GetIsKeyDown(ThunderEngine::KeyCode::S))
+	if (input->GetIsKeyDown(ThunderLib::KeyCode::S))
 	{
 		center.y -= velocity/zoom;
 	}
 
-	if (input->GetIsKeyDown(ThunderEngine::KeyCode::A))
+	if (input->GetIsKeyDown(ThunderLib::KeyCode::A))
 	{
 		center.x -= velocity/zoom;
 	}
-	if (input->GetIsKeyDown(ThunderEngine::KeyCode::D))
+	if (input->GetIsKeyDown(ThunderLib::KeyCode::D))
 	{
 		center.x += velocity/zoom;
 	}
 
-	if (input->GetIsKeyPress(ThunderEngine::KeyCode::R))
+	if (input->GetIsKeyPress(ThunderLib::KeyCode::R))
 	{
 		zoom = 1.0f;
 		center = { 0.0f, 0.0f };
 	}
 
-	if (input->GetIsKeyPress(ThunderEngine::KeyCode::ESCAPE))
+	if (input->GetIsKeyPress(ThunderLib::KeyCode::ESCAPE))
 	{
-		ThunderEngine::App::Get().Close();
+		ThunderLib::App::Get().Close();
 	}
 
 }
@@ -99,17 +99,17 @@ void Render(float t)
 	shader->Bind();
 	shader->SetFloat("zoom", zoom);
 	shader->SetFloat2("center", center);
-	ThunderEngine::RendererAPI::DrawIndexed(quad, 6);
+	ThunderLib::RendererAPI::DrawIndexed(quad, 6);
 }
 
 export int Main()
 {
 
-	auto app = ThunderEngine::App("Fractal", 1024, 768);
+	auto app = ThunderLib::App("Fractal", 1024, 768);
 	InitQuad();
 
-	input = ThunderEngine::KeyInput::Create({ ThunderEngine::KeyCode::W, ThunderEngine::KeyCode::S, ThunderEngine::KeyCode::A, ThunderEngine::KeyCode::D,
-		ThunderEngine::KeyCode::E, ThunderEngine::KeyCode::Q, ThunderEngine::KeyCode::R, ThunderEngine::KeyCode::ESCAPE });
+	input = ThunderLib::KeyInput::Create({ ThunderLib::KeyCode::W, ThunderLib::KeyCode::S, ThunderLib::KeyCode::A, ThunderLib::KeyCode::D,
+		ThunderLib::KeyCode::E, ThunderLib::KeyCode::Q, ThunderLib::KeyCode::R, ThunderLib::KeyCode::ESCAPE });
 
 	app.AddCallback(ProcessInput);
 	app.AddCallback(Render);

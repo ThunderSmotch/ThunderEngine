@@ -1,6 +1,6 @@
-module ThunderEngine.Platform.GLFW.KeyInput;
+module ThunderLib.Platform.GLFW.KeyInput;
 
-namespace ThunderEngine
+namespace ThunderLib
 {
     std::vector<GLFWKeyInput*> GLFWKeyInput::instances_ = std::vector<GLFWKeyInput*>();
 

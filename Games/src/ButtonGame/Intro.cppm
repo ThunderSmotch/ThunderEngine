@@ -1,6 +1,6 @@
 export module Animation.Intro;
 
-import ThunderEngine;
+import ThunderLib;
 import Animation.Scene;
 
 export class IntroScene: public Scene {
@@ -14,5 +14,5 @@ public:
 	
 	void Render(float dt) override;
 	void Update(float dt) override;
-	void ProcessInput(ThunderEngine::MouseInput& mouse) override;
+	void ProcessInput(ThunderLib::MouseInput& mouse) override;
 };

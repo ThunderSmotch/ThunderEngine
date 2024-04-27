@@ -1,7 +1,7 @@
 module;
 #include <glm/glm.hpp>
 module Animation.Animation;
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 Animatable::Animatable(glm::vec3 position, float rotation, glm::vec2 size, glm::vec4 tint)
 	: position_(position), rotation_(rotation), size_(size), tint_(tint)

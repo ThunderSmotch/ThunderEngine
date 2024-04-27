@@ -3,7 +3,7 @@ module;
 
 #define USE export using ::
 
-export module ThunderEngine.Platform.GLFW;
+export module ThunderLib.Platform.GLFW;
 
 export namespace  GLFW
 {

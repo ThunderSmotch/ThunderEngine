@@ -1,6 +1,6 @@
 module Animation.Intro;
 
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 IntroScene::IntroScene()
 {

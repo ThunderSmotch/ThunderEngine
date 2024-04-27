@@ -1,13 +1,13 @@
-export module ThunderEngine.Platform.GLFW.MouseInput;
+export module ThunderLib.Platform.GLFW.MouseInput;
 
 import std;
 
-import ThunderEngine.Platform.GLFW;
+import ThunderLib.Platform.GLFW;
 
-import ThunderEngine.Base;
-import ThunderEngine.KeyCode;
+import ThunderLib.Base;
+import ThunderLib.KeyCode;
 
-export namespace ThunderEngine
+export namespace ThunderLib
 {
 	class GLFWMouseInput
 	{

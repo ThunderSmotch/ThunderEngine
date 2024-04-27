@@ -1,9 +1,9 @@
-export module ThunderEngine.Platform.OpenGL.GraphicsContext;
+export module ThunderLib.Platform.OpenGL.GraphicsContext;
 
-import ThunderEngine.Platform.GLFW;
-import ThunderEngine.Base;
+import ThunderLib.Platform.GLFW;
+import ThunderLib.Base;
 
-export namespace ThunderEngine
+export namespace ThunderLib
 {
 	class OpenGLGraphicsContext
 	{

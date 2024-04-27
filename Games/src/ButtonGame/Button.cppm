@@ -2,7 +2,7 @@ module;
 #include <glm/glm.hpp>
 export module ButtonGame.Button;
 
-import ThunderEngine;
+import ThunderLib;
 import Animation.Scene;
 
 export class ButtonMachine : public Scene
@@ -25,5 +25,5 @@ public:
 
 	void Render(float dt) override;
 	void Update(float dt) override;
-	void ProcessInput(ThunderEngine::MouseInput& mouse) override;
+	void ProcessInput(ThunderLib::MouseInput& mouse) override;
 };

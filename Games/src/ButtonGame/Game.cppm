@@ -3,7 +3,7 @@ module;
 #include <imgui/imgui.h>
 export module Game.ButtonGame;
 
-import ThunderEngine;
+import ThunderLib;
 
 import Animation.Scene;
 import Animation.Intro;
@@ -13,7 +13,7 @@ import SVG.SVGParser;
 
 import ButtonGame.Button;
 
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 constexpr int WIDTH_2 = 1280 / 2;
 constexpr int HEIGHT_2 = 720 / 2;

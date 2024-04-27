@@ -1,10 +1,10 @@
-export module ThunderEngine.Platform.OpenGL.VertexArray;
+export module ThunderLib.Platform.OpenGL.VertexArray;
 
 import std;
-import ThunderEngine.Buffer;
-import ThunderEngine.Base;
+import ThunderLib.Buffer;
+import ThunderLib.Base;
 
-export namespace ThunderEngine
+export namespace ThunderLib
 {
 	class OpenGLVertexArray
 	{

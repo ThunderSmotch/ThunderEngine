@@ -1,11 +1,11 @@
 module;
 #include <glad/gl.h>
-export module ThunderEngine.Platform.OpenGL.Texture2D;
+export module ThunderLib.Platform.OpenGL.Texture2D;
 
 import std;
-import ThunderEngine.Base;
+import ThunderLib.Base;
 
-export namespace ThunderEngine
+export namespace ThunderLib
 {
 	class OpenGLTexture2D
 	{

@@ -3,7 +3,7 @@ module;
 export module Animation.LineTest;
 
 import std;
-import ThunderEngine;
+import ThunderLib;
 import Animation.Scene;
 import SVG.SVGParser;
 import SVG.Path;
@@ -45,6 +45,6 @@ export{
 		LineTest();
 		void Render(float dt) override;
 		void Update(float dt) override;
-		void ProcessInput(ThunderEngine::MouseInput& mouse) override;
+		void ProcessInput(ThunderLib::MouseInput& mouse) override;
 	};
 }

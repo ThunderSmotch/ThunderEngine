@@ -1,12 +1,12 @@
-export module ThunderEngine.Platform.GLFW.Window;
+export module ThunderLib.Platform.GLFW.Window;
 
 import std;
 
-import ThunderEngine.Platform.GLFW;
-import ThunderEngine.WindowProps;
-import ThunderEngine.GraphicsContext;
+import ThunderLib.Platform.GLFW;
+import ThunderLib.WindowProps;
+import ThunderLib.GraphicsContext;
 
-export namespace ThunderEngine
+export namespace ThunderLib
 {
 	class GLFWWindow
 	{

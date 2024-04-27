@@ -2,9 +2,9 @@ module;
 #include <glm/glm.hpp>
 #include <glad/gl.h>
 #include <cstdio>
-module ThunderEngine.Platform.OpenGL.RendererAPI;
+module ThunderLib.Platform.OpenGL.RendererAPI;
 
-namespace ThunderEngine
+namespace ThunderLib
 {
 	void GLAPIENTRY ErrorOccurredGL(GLenum source,
 		GLenum type,

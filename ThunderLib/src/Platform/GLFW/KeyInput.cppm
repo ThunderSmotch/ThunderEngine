@@ -1,12 +1,12 @@
-export module ThunderEngine.Platform.GLFW.KeyInput;
+export module ThunderLib.Platform.GLFW.KeyInput;
 
 import std;
 
-import ThunderEngine.Platform.GLFW;
-import ThunderEngine.Base;
-import ThunderEngine.KeyCode;
+import ThunderLib.Platform.GLFW;
+import ThunderLib.Base;
+import ThunderLib.KeyCode;
 
-export namespace ThunderEngine
+export namespace ThunderLib
 {
 	class GLFWKeyInput
 	{

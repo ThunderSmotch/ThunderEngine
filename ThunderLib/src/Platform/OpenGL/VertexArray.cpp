@@ -1,13 +1,13 @@
 module;
 #include <glad/gl.h>
 #include <cassert>
-module ThunderEngine.Platform.OpenGL.VertexArray;
+module ThunderLib.Platform.OpenGL.VertexArray;
 
 import std;
-import ThunderEngine.BufferDefinitions;
-import ThunderEngine.Logger;
+import ThunderLib.BufferDefinitions;
+import ThunderLib.Logger;
 
-namespace ThunderEngine
+namespace ThunderLib
 {
 	static GLenum ShaderDataTypeToOpenGLType(ShaderDataType type)
 	{

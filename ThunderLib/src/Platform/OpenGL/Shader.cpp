@@ -1,11 +1,11 @@
 module;
 #include <glad/gl.h>
 #include <glm/gtc/type_ptr.hpp>
-module ThunderEngine.Platform.OpenGL.Shader;
+module ThunderLib.Platform.OpenGL.Shader;
 
-import ThunderEngine.Logger;
+import ThunderLib.Logger;
 
-namespace ThunderEngine
+namespace ThunderLib
 {
 	OpenGLShader::OpenGLShader(const std::string& shader_path)
 		: renderer_id_(0), name_("")

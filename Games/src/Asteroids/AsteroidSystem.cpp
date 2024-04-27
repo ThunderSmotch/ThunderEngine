@@ -1,7 +1,7 @@
 module;
 #include <glm/glm.hpp>
 module Asteroids.AsteroidSystem;
-import ThunderEngine;
+import ThunderLib;
 
 constexpr int MAX_ASTEROIDS = 20;
 
@@ -43,7 +43,7 @@ void AsteroidSystem::Render(float dt)
 		{
 			glm::vec2 ip = ast.position + ast.points[j];
 			glm::vec2 fp = ast.position + ast.points[(j + 1) % ast.number_of_points];
-			ThunderEngine::Renderer2D::DrawLine(ip, fp, Color::White);
+			ThunderLib::Renderer2D::DrawLine(ip, fp, Color::White);
 		}
 	}
 }

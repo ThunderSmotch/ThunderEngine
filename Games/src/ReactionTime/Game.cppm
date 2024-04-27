@@ -1,20 +1,20 @@
 export module Game.ReactionTime;
 
-import ThunderEngine.Base;
-import ThunderEngine.Timer;
-import ThunderEngine.App;
-import ThunderEngine.KeyInput;
-import ThunderEngine.GraphicsContext;
+import ThunderLib.Base;
+import ThunderLib.Timer;
+import ThunderLib.App;
+import ThunderLib.KeyInput;
+import ThunderLib.GraphicsContext;
 
-import ThunderEngine.KeyCode;
+import ThunderLib.KeyCode;
 
-import ThunderEngine.Renderer;
-import ThunderEngine.Renderer2D;
-import ThunderEngine.RendererAPI;
+import ThunderLib.Renderer;
+import ThunderLib.Renderer2D;
+import ThunderLib.RendererAPI;
 
 import std;
 
-using namespace ThunderEngine;
+using namespace ThunderLib;
 
 Ref<KeyInput> key_input = nullptr;
 

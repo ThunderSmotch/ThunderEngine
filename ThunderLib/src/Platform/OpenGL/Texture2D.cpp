@@ -1,11 +1,11 @@
 module;
 #include <glad/gl.h>
 #include <stb/stb_image.h>
-module ThunderEngine.Platform.OpenGL.Texture2D;
+module ThunderLib.Platform.OpenGL.Texture2D;
 
-import ThunderEngine.Logger;
+import ThunderLib.Logger;
 
-namespace ThunderEngine
+namespace ThunderLib
 {
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height, uint32_t number_channels)
 		:width_(width), height_(height)

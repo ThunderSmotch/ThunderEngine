@@ -1,7 +1,7 @@
 export module ButtonGame.XML;
 
 import std;
-import ThunderEngine.Base;
+import ThunderLib.Base;
 
 /**********************************
 * Code related to parsing XML files

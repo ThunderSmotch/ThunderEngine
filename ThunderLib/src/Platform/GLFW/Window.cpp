@@ -4,15 +4,15 @@ module;
 #include <imgui/imgui_impl_opengl3.h>
 
 #include <glad/gl.h>
-module ThunderEngine.Platform.GLFW.Window;
+module ThunderLib.Platform.GLFW.Window;
 
 import std;
-import ThunderEngine.Platform.GLFW.KeyInput;
-import ThunderEngine.Platform.GLFW.MouseInput;
-import ThunderEngine.Logger;
-import ThunderEngine.RendererAPI;
+import ThunderLib.Platform.GLFW.KeyInput;
+import ThunderLib.Platform.GLFW.MouseInput;
+import ThunderLib.Logger;
+import ThunderLib.RendererAPI;
 
-namespace ThunderEngine
+namespace ThunderLib
 {
 	GLFWWindow::GLFWWindow(const WindowProps& props)
 		:window_(nullptr), window_props_(props), vsync_enabled_(true)
