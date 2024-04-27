@@ -1,23 +1,23 @@
 # ThunderLib
 
-This is a little quick-start project template for C++ projects which utilise a Core/App project architecture. There are two included projects - one called _Core_, and one called _App_. [Premake](https://github.com/premake/premake-core) is used to generate project files.
+ThunderLib is a C++ OpenGL engine made for learning purposes.
 
-Core builds into a static library and is meant to contain common code intended for use in multiple applications. App builds into an executable and links the Core static library, as well as provides an include path to Core's code.
+It spun off from the Hazel2D engine created by TheCherno, available at [https://github.com/TheCherno/Hazel](https://github.com/TheCherno/Hazel).
 
-The `Scripts/` directory contains build scripts for Windows and Linux, and the `Vendor/` directory contains Premake binaries (currently version `5.0-beta2`).
+This repository contains the main engine inside the `ThunderLib` folder as well as some example projects in the `Games` folder.
+ThunderLib builds into a static library and is meant to contain common code intended for use in multiple applications. Games builds into an executable and links the Core static library, as well as provides an include path to Core's code.
+
+The `build_scripts/` directory contains build scripts for Windows and Linux, and the `vendor/` directory contains Premake binaries and all the third-party dependencies.
 
 ## Getting Started
-1. Clone this repository or use the "Use this template" button on GitHub to quickly set up your own repository based on this template
-2. `App/` and `Core/` are the two projects - you can edit the names of these folders and their contents to suit
-3. The three included Premake build files are `Build.lua`, `Core/Build-Core.lua` and `App/Build-App.lua` - you can edit these to customise your build configurations, edit the names of your projects and workspace/solution, etc.
-4. Open the `Scripts/` directory and run the appropriate `Setup` script to generate projects files. You can edit the setup scripts to change the type of project that is generated - out of the box they are set to Visual Studio 2022 for Windows and gmake2 for Linux.
+1. Clone this repository
+2. Open the `build_scripts/` directory and run the appropriate `Setup` script to generate projects files.
+3. Open the project files to build the project.
 
+You can edit the setup scripts to change the type of project that is generated - out of the box they are set to Visual Studio 2022 for Windows and gmake2 for Linux (using the Clang compiler).
 Note that no macOS setup script is currently provided; you can duplicate the Linux script and adjust accordingly.
 
-## Included
-- Some example code (in `App/Source` and `Core/Source`) to provide a starting point and test
-- Simple `.gitignore` to ignore project files and binaries
-- Premake binaries for Win/Mac/Linux (`v5.0-beta2`)
+Note that as of April 2024, you need to use a compiler compatible with the C++23 standard as this codebase makes heavy use of modules. For Visual Studio, an installation of the current preview version of Visual Studio 2022 is recommended.  
 
 ## License and Credits
 - MIT License for this repository (see `LICENSE.md` for more details)
