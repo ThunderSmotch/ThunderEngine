@@ -20,7 +20,7 @@ Note that no macOS setup script is currently provided; you can duplicate the Lin
 - Premake binaries for Win/Mac/Linux (`v5.0-beta2`)
 
 ## License and Credits
-- UNLICENSE for this repository (see `UNLICENSE.txt` for more details)
+- MIT License for this repository (see `LICENSE.md` for more details)
 - Premake is licensed under BSD 3-Clause (see included LICENSE.txt file for more details)
 - stb is licensed under the MIT License (see included LICENSE.txt file for more details)
 - miniaudio is licensed under the MIT License (see included LICENSE file for more details)
