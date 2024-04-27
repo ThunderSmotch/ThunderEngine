@@ -17,6 +17,8 @@ The `build_scripts/` directory contains build scripts for Windows and Linux, and
 You can edit the setup scripts to change the type of project that is generated - out of the box they are set to Visual Studio 2022 for Windows and gmake2 for Linux (using the Clang compiler).
 Note that no macOS setup script is currently provided; you can duplicate the Linux script and adjust accordingly.
 
+Note that as of April 2024, you need to use a compiler compatible with the C++23 standard as this codebase makes heavy use of modules. For Visual Studio, an installation of the current preview version of Visual Studio 2022 is recommended.  
+
 ## License and Credits
 - MIT License for this repository (see `LICENSE.md` for more details)
 - Premake is licensed under BSD 3-Clause (see included LICENSE.txt file for more details)
