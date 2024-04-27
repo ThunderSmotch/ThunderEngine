@@ -81,7 +81,7 @@ public:
 };
 
 //////////////////////// PARSING HELPER FUNCTIONS ////////////////////
-std::pair<int, int> findLineAndColumn(const uint32_t* start, const uint32_t* current)
+std::pair<int, int> findLineAndColumn(const u32* start, const u32* current)
 {
 	int line   = 1;
 	int column = 0;
@@ -101,10 +101,10 @@ std::pair<int, int> findLineAndColumn(const uint32_t* start, const uint32_t* cur
 
 // Modifies the vector data to convert CRLF to LF and standalone CR to LF as well
 // This erases elements from the given vector so it is costly.
-void normalizeLineBreaks(std::vector<uint32_t>& data)
+void normalizeLineBreaks(std::vector<u32>& data)
 {
-	constexpr uint32_t CR = 0x0D;
-	constexpr uint32_t LF = 0x0A;
+	constexpr u32 CR = 0x0D;
+	constexpr u32 LF = 0x0A;
 	size_t last = data.size() - 1;
 
 	for (size_t i = 0; i < last; i++)
@@ -130,11 +130,11 @@ void normalizeLineBreaks(std::vector<uint32_t>& data)
 }
 
 // As defined in the spec
-inline bool isWhiteSpace(uint32_t codepoint)
+inline bool isWhiteSpace(u32 codepoint)
 {
 	return (codepoint == 0x20 || codepoint == 0x9 || codepoint == 0xD || codepoint == 0xA);
 };
-inline bool isNameStartChar(uint32_t codepoint)
+inline bool isNameStartChar(u32 codepoint)
 {
 	return (
 		('a' <= codepoint && codepoint <= 'z')   ||
@@ -155,7 +155,7 @@ inline bool isNameStartChar(uint32_t codepoint)
 		(0x10000 <= codepoint && codepoint <= 0xEFFFF)
 	);
 }
-inline bool isNameChar(uint32_t codepoint)
+inline bool isNameChar(u32 codepoint)
 {
 	return (
 		isNameStartChar(codepoint) ||
@@ -169,9 +169,9 @@ inline bool isNameChar(uint32_t codepoint)
 }
 
 // Utility functions to transverse the data and find specific sequences of codepoints
-uint32_t* find(uint32_t goal, uint32_t* data, const uint32_t* end)
+u32* find(u32 goal, u32* data, const u32* end)
 {
-	uint32_t codepoint = *data;
+	u32 codepoint = *data;
 	while (codepoint != goal)
 	{
 		data++;
@@ -186,10 +186,10 @@ uint32_t* find(uint32_t goal, uint32_t* data, const uint32_t* end)
 	}
 	return data;
 }
-uint32_t* find(const uint32_t* sequence_start, const uint32_t* sequence_end, uint32_t* data, const uint32_t* end)
+u32* find(const u32* sequence_start, const u32* sequence_end, u32* data, const u32* end)
 {
 	size_t sequence_length = 1 + sequence_end - sequence_start;
-	uint32_t codepoint = *sequence_start;
+	u32 codepoint = *sequence_start;
 
 	while (true)
 	{
@@ -216,20 +216,20 @@ uint32_t* find(const uint32_t* sequence_start, const uint32_t* sequence_end, uin
 }
 
 template<std::size_t Extent>
-uint32_t* find(std::span<const uint32_t, Extent> sequence, uint32_t* data, const uint32_t* end)
+u32* find(std::span<const u32, Extent> sequence, u32* data, const u32* end)
 {
 	assert("Sequence length is not zero" && sequence.size());
 	return find(sequence.data(), &sequence.back(), data, end);
 }
 
-constexpr std::array<uint32_t, 5> seq_XMLDECL_beg = { '<', '?', 'x', 'm', 'l'};
-constexpr std::array<uint32_t, 2> seq_PI_beg = { '<', '?', };
-constexpr std::array<uint32_t, 2> seq_PI_end = { '?', '>', };
-constexpr std::array<uint32_t, 4> seq_COMMENT_beg = { '<', '!', '-', '-'};
-constexpr std::array<uint32_t, 3> seq_COMMENT_end = { '-', '-', '>', };
+constexpr std::array<u32, 5> seq_XMLDECL_beg = { '<', '?', 'x', 'm', 'l'};
+constexpr std::array<u32, 2> seq_PI_beg = { '<', '?', };
+constexpr std::array<u32, 2> seq_PI_end = { '?', '>', };
+constexpr std::array<u32, 4> seq_COMMENT_beg = { '<', '!', '-', '-'};
+constexpr std::array<u32, 3> seq_COMMENT_end = { '-', '-', '>', };
 //////////////////////////////////////////////////////////////////////////
 
-[[noreturn]] void XMLParser::Throw(const char* error, const uint32_t* at) const
+[[noreturn]] void XMLParser::Throw(const char* error, const u32* at) const
 {
 	auto [line, column] = findLineAndColumn(_beg, at);
 	throw ParsingError(error, line, column);
@@ -237,7 +237,7 @@ constexpr std::array<uint32_t, 3> seq_COMMENT_end = { '-', '-', '>', };
 
 void XMLParser::ParseProcessingInstruction()
 {
-	uint32_t* ending = find(std::span(seq_PI_end), _cur, _end);
+	u32* ending = find(std::span(seq_PI_end), _cur, _end);
 	if (ending == nullptr)
 	{
 		Throw("Processing instruction was not closed!", _cur);
@@ -252,7 +252,7 @@ void XMLParser::ParseComment()
 		Throw("Expected a comment!", _cur);
 	}
 	
-	uint32_t* ending = find(std::span(seq_COMMENT_end), _cur, _end);
+	u32* ending = find(std::span(seq_COMMENT_end), _cur, _end);
 	if (ending == nullptr)
 	{
 		Throw("Comment was not closed!", _cur);
@@ -263,7 +263,7 @@ void XMLParser::ParseComment()
 // Skips all whitespace, _cur becomes a non whitespace character
 void XMLParser::SkipWhiteSpace()
 {
-	uint32_t codepoint = *_cur;
+	u32 codepoint = *_cur;
 	while (isWhiteSpace(codepoint))
 	{
 		if (_cur == _end)
@@ -329,7 +329,7 @@ void XMLParser::ParseProlog()
 // Returns the beginning of the name and, after parsing the name, _cur is ahead of the name
 std::string XMLParser::ParseName()
 {
-	uint32_t* begining = _cur;
+	u32* begining = _cur;
 	if (!isNameStartChar(*_cur))
 	{
 		Throw("Character is not a valid starting name character.", _cur);
@@ -357,10 +357,10 @@ void XMLParser::ParseAttribute(XMLNode* element)
 	{
 		Throw("Expected quotes or apostrophe to start attribute value!", _cur);
 	}
-	uint32_t* value_start = _cur + 1;
+	u32* value_start = _cur + 1;
 
 	// TODO Process possible references therein
-	uint32_t* end = find(*_cur, _cur + 1, _end);
+	u32* end = find(*_cur, _cur + 1, _end);
 	if (end == nullptr || end >= _end)
 	{
 		Throw("Attribute value was not closed!", _cur);
@@ -423,7 +423,7 @@ void XMLParser::ParseEndTag(const XMLNode* element)
 
 std::unique_ptr<XMLNode> XMLParser::ParseElement(XMLNode* parent)
 {
-	uint32_t* start_element = _cur;
+	u32* start_element = _cur;
 
 	_cur++;
 	if (_cur >= _end)
@@ -447,7 +447,7 @@ std::unique_ptr<XMLNode> XMLParser::ParseElement(XMLNode* parent)
 	while (true)
 	{
 		// MAYBE Not skip inner content CharData and save it as a special XML node
-		uint32_t* start_of_tag = find('<', _cur, _end);
+		u32* start_of_tag = find('<', _cur, _end);
 		_cur = start_of_tag;
 		
 		if (start_of_tag == nullptr || start_of_tag == _end)
@@ -495,7 +495,7 @@ bool XMLParser::Parse()
 XMLParser::XMLParser(std::string_view path)
 	: path(path)
 {
-	std::vector<uint32_t> data = getFileDataAsCodepoints(path);
+	std::vector<u32> data = getFileDataAsCodepoints(path);
 	normalizeLineBreaks(data);
 	_beg = data.data();
 	_end = &data.back();
@@ -509,7 +509,7 @@ XMLParser::XMLParser(std::string_view path)
 	_cur = nullptr;
 }
 
-XMLParser::XMLParser(std::vector<uint32_t>& data)
+XMLParser::XMLParser(std::vector<u32>& data)
 : _beg(data.data()), _end(&data.back()), _cur(_beg), path("embedded data")
 {
 }

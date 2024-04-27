@@ -9,8 +9,8 @@ export namespace ThunderLib
 	class OpenGLVertexArray
 	{
 	private:
-		uint32_t renderer_id_;
-		uint32_t vertex_buffer_index_ = 0;
+		u32 renderer_id_;
+		u32 vertex_buffer_index_ = 0;
 		std::vector<Ref<VertexBuffer>> vertex_buffers_;
 		Ref<IndexBuffer> index_buffer_;
 

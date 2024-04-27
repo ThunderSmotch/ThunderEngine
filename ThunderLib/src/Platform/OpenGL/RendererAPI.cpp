@@ -43,14 +43,14 @@ namespace ThunderLib
 		//glEnable(GL_LINE_SMOOTH);
 	}
 
-	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertex_array, uint32_t index_count)
+	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertex_array, u32 index_count)
 	{
 		vertex_array->Bind();
-		uint32_t count = index_count ? index_count : vertex_array->GetIndexBuffer()->GetCount();
+		u32 count = index_count ? index_count : vertex_array->GetIndexBuffer()->GetCount();
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 	}
 
-	void OpenGLRendererAPI::DrawLines(const Ref<VertexArray>& vertex_array, uint32_t vertex_count)
+	void OpenGLRendererAPI::DrawLines(const Ref<VertexArray>& vertex_array, u32 vertex_count)
 	{
 		vertex_array->Bind();
 		glDrawArrays(GL_LINES, 0, vertex_count);
@@ -73,7 +73,7 @@ namespace ThunderLib
 		}
 	}
 
-	void OpenGLRendererAPI::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+	void OpenGLRendererAPI::SetViewport(u32 x, u32 y, u32 width, u32 height)
 	{
 		glViewport(x, y, width, height);
 	}

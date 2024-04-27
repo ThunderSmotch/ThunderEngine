@@ -84,17 +84,17 @@ namespace ThunderLib
     // This is being put on the ThunderLib namespace, everyone can access it.
     struct Renderer2DData
     {
-        static const uint32_t MaxQuads = 9000;
-        static const uint32_t MaxVertices = MaxQuads * 4;
-        static const uint32_t MaxIndices = MaxQuads * 6;
-        static const uint32_t MaxTextureSlots = 32;
+        static const u32 MaxQuads = 9000;
+        static const u32 MaxVertices = MaxQuads * 4;
+        static const u32 MaxIndices = MaxQuads * 6;
+        static const u32 MaxTextureSlots = 32;
 
         // Lines variables /////////////////////////////////
         Ref<Shader>       line_shader             = nullptr;
         Ref<VertexArray>  line_vertex_array       = nullptr;
         Ref<VertexBuffer> line_vertex_buffer      = nullptr;
         
-        uint32_t          line_vertex_count       = 0;
+        u32          line_vertex_count       = 0;
         LineVertex*       line_vertex_buffer_base = nullptr;
         LineVertex*       line_vertex_buffer_ptr  = nullptr;
 
@@ -106,7 +106,7 @@ namespace ThunderLib
         Ref<VertexArray>  circle_vertex_array       = nullptr;
         Ref<VertexBuffer> circle_vertex_buffer      = nullptr;
 
-        uint32_t          circle_index_count = 0;
+        u32          circle_index_count = 0;
         CircleVertex*     circle_vertex_buffer_base = nullptr;
         CircleVertex*     circle_vertex_buffer_ptr  = nullptr;
         ///////////////////////////////////////////////////
@@ -117,7 +117,7 @@ namespace ThunderLib
         Ref<VertexArray> triangle_vertex_array = nullptr;
         Ref<VertexBuffer> triangle_vertex_buffer = nullptr;
         
-        uint32_t triangle_index_count;
+        u32 triangle_index_count;
         TriangleVertex* triangle_vertex_buffer_base = nullptr;
         TriangleVertex* triangle_vertex_buffer_ptr = nullptr;
 
@@ -126,7 +126,7 @@ namespace ThunderLib
 
 
         // Quads variables
-        uint32_t quad_index_count = 0;
+        u32 quad_index_count = 0;
         QuadVertex* quad_vertex_buffer_base = nullptr;
         QuadVertex* quad_vertex_buffer_ptr = nullptr;
 
@@ -139,7 +139,7 @@ namespace ThunderLib
         std::array<glm::vec4,4> quad_vertex_positions = {glm::vec4(), glm::vec4(), glm::vec4(), glm::vec4()};
 
         std::array<Ref<Texture2D>, MaxTextureSlots> texture_slots;
-        uint32_t texture_slot_index = 1; // 0 = white texture
+        u32 texture_slot_index = 1; // 0 = white texture
     };
 
     // TODO move this inside Renderer2D
@@ -201,9 +201,9 @@ namespace ThunderLib
         // FIX This is stupid, I should really have a DrawVertices inside RendererCommand, to avoid DrawIndexed!
         // TODO  this will be swapped with a Triangle Strip approach in the end.
         // Allocate and set Index Buffer
-        uint32_t* triangle_indices = new uint32_t[Renderer2DData::MaxVertices];
+        u32* triangle_indices = new u32[Renderer2DData::MaxVertices];
 
-        for (uint32_t i = 0; i < Renderer2DData::MaxVertices; i++)
+        for (u32 i = 0; i < Renderer2DData::MaxVertices; i++)
         {
             triangle_indices[i] = i;
         }
@@ -233,10 +233,10 @@ namespace ThunderLib
         data.quad_vertex_buffer_base = new QuadVertex[Renderer2DData::MaxVertices];
         
         // Allocate and set Index Buffer
-        uint32_t* quad_indices = new uint32_t[Renderer2DData::MaxIndices];
+        u32* quad_indices = new u32[Renderer2DData::MaxIndices];
 
-        uint32_t offset = 0;
-        for (uint32_t i = 0; i < Renderer2DData::MaxIndices; i += 6)
+        u32 offset = 0;
+        for (u32 i = 0; i < Renderer2DData::MaxIndices; i += 6)
         {
             quad_indices[i + 0] = offset + 0;
             quad_indices[i + 1] = offset + 1;
@@ -265,8 +265,8 @@ namespace ThunderLib
     void Renderer2D::InitWhiteTexture() 
     {
         data.white_texture = Texture2D::Create(1, 1);
-        uint32_t white_texture_data = 0xffffffff;
-        data.white_texture->SetData(&white_texture_data, sizeof(uint32_t));
+        u32 white_texture_data = 0xffffffff;
+        data.white_texture->SetData(&white_texture_data, sizeof(u32));
 
         data.texture_slots[0] = data.white_texture;
     }
@@ -343,18 +343,18 @@ namespace ThunderLib
     {
         if (data.quad_index_count)
         {
-            uint32_t data_size = (uint32_t)((uint8_t*)data.quad_vertex_buffer_ptr - (uint8_t*)data.quad_vertex_buffer_base);
+            u32 data_size = (u32)((uint8_t*)data.quad_vertex_buffer_ptr - (uint8_t*)data.quad_vertex_buffer_base);
             data.quad_vertex_buffer->SetData(data.quad_vertex_buffer_base, data_size);
 
             // Bind textures
-            for (uint32_t i = 0; i < data.texture_slot_index; i++)
+            for (u32 i = 0; i < data.texture_slot_index; i++)
                 data.texture_slots[i]->Bind(i);
             RendererAPI::DrawIndexed(data.quad_vertex_array, data.quad_index_count);
         }
 
         if (data.triangle_index_count)
         {
-            uint32_t data_size = (uint32_t)((uint8_t*)data.triangle_vertex_buffer_ptr - (uint8_t*)data.triangle_vertex_buffer_base);
+            u32 data_size = (u32)((uint8_t*)data.triangle_vertex_buffer_ptr - (uint8_t*)data.triangle_vertex_buffer_base);
             data.triangle_vertex_buffer->SetData(data.triangle_vertex_buffer_base, data_size);
 
             data.triangle_shader->Bind();
@@ -363,7 +363,7 @@ namespace ThunderLib
 
         if (data.line_vertex_count)
         {
-            uint32_t data_size = (uint32_t)((uint8_t*)data.line_vertex_buffer_ptr - (uint8_t*)data.line_vertex_buffer_base);
+            u32 data_size = (u32)((uint8_t*)data.line_vertex_buffer_ptr - (uint8_t*)data.line_vertex_buffer_base);
             data.line_vertex_buffer->SetData(data.line_vertex_buffer_base, data_size);
 
             data.line_shader->Bind();
@@ -373,7 +373,7 @@ namespace ThunderLib
 
         if (data.circle_index_count)
         {
-            uint32_t data_size = (uint32_t)((uint8_t*)data.circle_vertex_buffer_ptr - (uint8_t*)data.circle_vertex_buffer_base);
+            u32 data_size = (u32)((uint8_t*)data.circle_vertex_buffer_ptr - (uint8_t*)data.circle_vertex_buffer_base);
             data.circle_vertex_buffer->SetData(data.circle_vertex_buffer_base, data_size);
 
             data.circle_shader->Bind();
@@ -568,7 +568,7 @@ namespace ThunderLib
         }
 
         float texture_index = 0.0f; 
-        for (uint32_t i = 1; i < data.texture_slot_index; i++)
+        for (u32 i = 1; i < data.texture_slot_index; i++)
         {
             if (*data.texture_slots[i] == *texture)
             {

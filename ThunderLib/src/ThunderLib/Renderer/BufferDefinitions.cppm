@@ -19,7 +19,7 @@ export namespace ThunderLib
 	/// </summary>
 	/// <param name="type">A valid ShaderDataType</param>
 	/// <returns>Size in bytes of the provided type</returns>
-	uint32_t GetShaderDataTypeSize(ShaderDataType type)
+	u32 GetShaderDataTypeSize(ShaderDataType type)
 	{
 		switch (type)
 		{
@@ -47,7 +47,7 @@ export namespace ThunderLib
 	struct BufferElement
 	{
 		ShaderDataType type; // Type of data
-		uint32_t size;       // Size in bytes of data
+		u32 size;       // Size in bytes of data
 		size_t offset = 0;   // Offset in bytes compared to the Vertex's base address
 		bool normalized;     // If vector, is it normalized?
 		std::string name;    // Name of element
@@ -66,7 +66,7 @@ export namespace ThunderLib
 	{
 	private:
 		std::vector<BufferElement> elements_;
-		uint32_t stride_ = 0;
+		u32 stride_ = 0;
 
 	public:
 		BufferLayout() = default;
@@ -85,7 +85,7 @@ export namespace ThunderLib
 		/// Returns the stride of a Vertex with this BufferLayout
 		/// </summary>
 		/// <returns>Stride in bytes of a vertex with this layout</returns>
-		uint32_t GetStride() const { return stride_; }
+		u32 GetStride() const { return stride_; }
 
 		/// <summary>
 		/// Returns the vector of BufferElements of this layout

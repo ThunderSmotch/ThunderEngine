@@ -8,7 +8,7 @@ namespace ThunderLib
 {
     App* App::instance_ = nullptr;
 
-    App::App(const std::string& title, uint32_t width, uint32_t height)
+    App::App(const std::string& title, u32 width, u32 height)
         : running_(true)
     {
         instance_ = this;

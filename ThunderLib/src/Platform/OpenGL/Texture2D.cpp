@@ -7,7 +7,7 @@ import ThunderLib.Logger;
 
 namespace ThunderLib
 {
-	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height, uint32_t number_channels)
+	OpenGLTexture2D::OpenGLTexture2D(u32 width, u32 height, u32 number_channels)
 		:width_(width), height_(height)
 	{
 		switch (number_channels)
@@ -94,9 +94,9 @@ namespace ThunderLib
 		glDeleteTextures(1, &renderer_id_);
 	}
 
-	void OpenGLTexture2D::SetData(void* data, uint32_t size)
+	void OpenGLTexture2D::SetData(void* data, u32 size)
 	{
-		uint32_t channels;
+		u32 channels;
 		
 		switch (data_format_)
 		{
@@ -120,7 +120,7 @@ namespace ThunderLib
 		glTextureSubImage2D(renderer_id_, 0, 0, 0, width_, height_, data_format_, GL_UNSIGNED_BYTE, data);
 	}
 
-	void OpenGLTexture2D::Bind(uint32_t slot) const
+	void OpenGLTexture2D::Bind(u32 slot) const
 	{
 		glBindTextureUnit(slot, renderer_id_);
 	}

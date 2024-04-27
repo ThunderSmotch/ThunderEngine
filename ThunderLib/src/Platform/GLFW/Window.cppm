@@ -35,8 +35,8 @@ export namespace ThunderLib
 		void OnPreUpdate();
 		void OnUpdate();
 
-		uint32_t GetWidth() const { return window_props_.width; }
-		uint32_t GetHeight() const { return window_props_.height; }
+		u32 GetWidth() const { return window_props_.width; }
+		u32 GetHeight() const { return window_props_.height; }
 
 		// FUTURE An event system would exploit this type of code
 		// Window attributes

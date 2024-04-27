@@ -12,14 +12,14 @@ export namespace ThunderLib
 	public:
 		static void Init();
 
-		static void DrawIndexed(const Ref<VertexArray>& vertex_array, uint32_t index_count = 0);
-		static void DrawLines(const Ref<VertexArray>& vertex_array, uint32_t vertex_count);
+		static void DrawIndexed(const Ref<VertexArray>& vertex_array, u32 index_count = 0);
+		static void DrawLines(const Ref<VertexArray>& vertex_array, u32 vertex_count);
 
 		static void SetLineWidth(float width);
 
 		static void SetWireframeMode(bool enabled);
 
-		static void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
+		static void SetViewport(u32 x, u32 y, u32 width, u32 height);
 
 		static void Clear();
 		static void SetClearColor(const glm::vec4& color);

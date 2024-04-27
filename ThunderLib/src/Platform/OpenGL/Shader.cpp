@@ -85,9 +85,9 @@ namespace ThunderLib
 		return { shadersCode[0].str(), shadersCode[1].str() };
 	}
 
-	uint32_t OpenGLShader::CompileShader(uint32_t type, const std::string& source)
+	u32 OpenGLShader::CompileShader(u32 type, const std::string& source)
 	{
-		uint32_t id = glCreateShader(type);
+		u32 id = glCreateShader(type);
 		const char* src = source.c_str();
 
 		glShaderSource(id, 1, &src, NULL);
@@ -117,12 +117,12 @@ namespace ThunderLib
 		return id;
 	}
 
-	uint32_t OpenGLShader::CreateShader(const std::string& vertex_source, const std::string& fragment_source)
+	u32 OpenGLShader::CreateShader(const std::string& vertex_source, const std::string& fragment_source)
 	{
-		uint32_t vertex = CompileShader(GL_VERTEX_SHADER, vertex_source);
-		uint32_t fragment = CompileShader(GL_FRAGMENT_SHADER, fragment_source);
+		u32 vertex = CompileShader(GL_VERTEX_SHADER, vertex_source);
+		u32 fragment = CompileShader(GL_FRAGMENT_SHADER, fragment_source);
 
-		uint32_t program = glCreateProgram();
+		u32 program = glCreateProgram();
 		glAttachShader(program, vertex);
 		glAttachShader(program, fragment);
 		glLinkProgram(program);
@@ -174,7 +174,7 @@ namespace ThunderLib
 		glUniform1i(GetUniformLocation(name), value);
 	}
 
-	void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
+	void OpenGLShader::SetIntArray(const std::string& name, int* values, u32 count)
 	{
 		glUniform1iv(GetUniformLocation(name), count, values);
 	}

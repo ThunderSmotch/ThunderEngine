@@ -10,11 +10,11 @@ export namespace ThunderLib
 	class OpenGLTexture2D
 	{
 	public:
-		OpenGLTexture2D(uint32_t width, uint32_t height, uint32_t number_channels);
+		OpenGLTexture2D(u32 width, u32 height, u32 number_channels);
 		OpenGLTexture2D(const std::string& path);
 		~OpenGLTexture2D();
 
-		static Ref<OpenGLTexture2D> Create(uint32_t width, uint32_t height, uint32_t number_channels = 4)
+		static Ref<OpenGLTexture2D> Create(u32 width, u32 height, u32 number_channels = 4)
 		{
 			return CreateRef<OpenGLTexture2D>(width, height, number_channels);
 		}
@@ -24,14 +24,14 @@ export namespace ThunderLib
 			return CreateRef<OpenGLTexture2D>(path);
 		}
 
-		uint32_t GetWidth() const { return width_; }
-		uint32_t GetHeight() const { return height_; }
-		uint32_t GetRendererID() const { return renderer_id_; }
+		u32 GetWidth() const { return width_; }
+		u32 GetHeight() const { return height_; }
+		u32 GetRendererID() const { return renderer_id_; }
 		const std::string& GetPath() const { return path_; }
 
-		void SetData(void* data, uint32_t size);
+		void SetData(void* data, u32 size);
 
-		void Bind(uint32_t slot = 0) const;
+		void Bind(u32 slot = 0) const;
 
 		bool IsLoaded() const { return is_loaded_; }
 
@@ -41,13 +41,13 @@ export namespace ThunderLib
 	private:
 		std::string path_;
 		bool is_loaded_ = false;
-		uint32_t width_;
-		uint32_t height_;
+		u32 width_;
+		u32 height_;
 
 		GLenum internal_format_;
 		GLenum data_format_;
 
-		uint32_t renderer_id_ = 0;
+		u32 renderer_id_ = 0;
 	};
 
 	export using Texture2D = OpenGLTexture2D;

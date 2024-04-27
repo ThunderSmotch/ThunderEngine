@@ -9,19 +9,19 @@ export namespace ThunderLib
 	class OpenGLVertexBuffer
 	{
 	private:
-		uint32_t renderer_id_;
+		u32 renderer_id_;
 		BufferLayout layout_;
 
 	public:
-		OpenGLVertexBuffer(uint32_t size);
-		OpenGLVertexBuffer(float* vertices, uint32_t size);
+		OpenGLVertexBuffer(u32 size);
+		OpenGLVertexBuffer(float* vertices, u32 size);
 		~OpenGLVertexBuffer();
 
-		static Ref<OpenGLVertexBuffer> Create(uint32_t size) 
+		static Ref<OpenGLVertexBuffer> Create(u32 size) 
 		{ 
 			return CreateRef<OpenGLVertexBuffer>(size);
 		}
-		static Ref<OpenGLVertexBuffer> Create(float* vertices, uint32_t size)
+		static Ref<OpenGLVertexBuffer> Create(float* vertices, u32 size)
 		{
 			return CreateRef<OpenGLVertexBuffer>(vertices, size);
 		}
@@ -29,7 +29,7 @@ export namespace ThunderLib
 		void Bind() const;
 		void Unbind() const;
 
-		void SetData(const void* data, uint32_t size);
+		void SetData(const void* data, u32 size);
 
 		const BufferLayout& GetLayout() const { return layout_; }
 		void SetLayout(const BufferLayout& layout) { layout_ = layout; }
@@ -39,14 +39,14 @@ export namespace ThunderLib
 	class OpenGLIndexBuffer
 	{
 	private:
-		uint32_t renderer_id_;
-		uint32_t count_;
+		u32 renderer_id_;
+		u32 count_;
 
 	public:
-		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
+		OpenGLIndexBuffer(u32* indices, u32 count);
 		~OpenGLIndexBuffer();
 
-		static Ref<OpenGLIndexBuffer> Create(uint32_t* indices, uint32_t count)
+		static Ref<OpenGLIndexBuffer> Create(u32* indices, u32 count)
 		{
 			return CreateRef<OpenGLIndexBuffer>(indices, count);
 		}
@@ -54,7 +54,7 @@ export namespace ThunderLib
 		void Bind() const;
 		void Unbind() const;
 
-		uint32_t GetCount() const { return count_; }
+		u32 GetCount() const { return count_; }
 	};
 
 	export using VertexBuffer = OpenGLVertexBuffer;

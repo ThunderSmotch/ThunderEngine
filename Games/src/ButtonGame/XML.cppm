@@ -48,22 +48,22 @@ export {
 	class XMLParser
 	{
 	private:
-		uint32_t* _beg = nullptr;
-		uint32_t* _end = nullptr;
-		uint32_t* _cur = nullptr;
+		u32* _beg = nullptr;
+		u32* _end = nullptr;
+		u32* _cur = nullptr;
 
 		std::string path;
 
 		std::unique_ptr<XMLNode> _root = nullptr;
 
 	public:
-		explicit XMLParser(std::vector<uint32_t>& data);
+		explicit XMLParser(std::vector<u32>& data);
 		explicit XMLParser(std::string_view path);
 		bool Parse();
 		XMLNode* GetRootElement() { return _root.get(); }
 
 	private:
-		void Throw(const char* error, const uint32_t* at) const;
+		void Throw(const char* error, const u32* at) const;
 
 		void ParseProlog();
 

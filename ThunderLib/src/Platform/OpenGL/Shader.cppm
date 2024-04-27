@@ -15,7 +15,7 @@ export namespace ThunderLib
 
 	class OpenGLShader {
 	private:
-		uint32_t renderer_id_;
+		u32 renderer_id_;
 		std::unordered_map<std::string, std::int32_t> uniform_location_cache_;
 		std::string name_;
 	public:
@@ -48,7 +48,7 @@ export namespace ThunderLib
 
 		void SetBool(const std::string& name, uint8_t value);
 		void SetInt(const std::string& name, int value);
-		void SetIntArray(const std::string& name, int* values, uint32_t count);
+		void SetIntArray(const std::string& name, int* values, u32 count);
 		void SetFloat(const std::string& name, float value);
 		void SetFloat2(const std::string& name, const glm::vec2& value);
 		void SetFloat3(const std::string& name, const glm::vec3& value);
@@ -59,8 +59,8 @@ export namespace ThunderLib
 		int GetUniformLocation(const std::string& name);
 
 		ShaderProgramSource ParseShader(const std::string& filepath);
-		uint32_t CompileShader(uint32_t type, const std::string& source);
-		uint32_t CreateShader(const std::string& vertex_source, const std::string& fragment_source);
+		u32 CompileShader(u32 type, const std::string& source);
+		u32 CreateShader(const std::string& vertex_source, const std::string& fragment_source);
 	};
 	export using Shader = OpenGLShader;
 }

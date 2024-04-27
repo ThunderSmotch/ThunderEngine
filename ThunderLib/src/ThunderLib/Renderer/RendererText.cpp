@@ -41,13 +41,13 @@ namespace ThunderLib
 
     struct RendererTextData
     {
-        static const uint32_t MaxChars = 10000;
-        static const uint32_t MaxVertices = MaxChars * 4;
-        static const uint32_t MaxIndices = MaxChars * 6;
-        static const uint32_t MaxTextureSlots = 32;
+        static const u32 MaxChars = 10000;
+        static const u32 MaxVertices = MaxChars * 4;
+        static const u32 MaxIndices = MaxChars * 6;
+        static const u32 MaxTextureSlots = 32;
 
         // Char information
-        uint32_t char_index_count = 0;
+        u32 char_index_count = 0;
         CharVertex* char_vertex_buffer_base = nullptr;
         CharVertex* char_vertex_buffer_ptr = nullptr;
 
@@ -84,10 +84,10 @@ namespace ThunderLib
         text_data.char_vertex_buffer_base = new CharVertex[RendererTextData::MaxVertices];
 
         // Allocate and set Index Buffer
-        uint32_t* char_indices = new uint32_t[RendererTextData::MaxIndices];
+        u32* char_indices = new u32[RendererTextData::MaxIndices];
 
-        uint32_t offset = 0;
-        for (uint32_t i = 0; i < RendererTextData::MaxIndices; i += 6)
+        u32 offset = 0;
+        for (u32 i = 0; i < RendererTextData::MaxIndices; i += 6)
         {
             char_indices[i + 0] = offset + 0;
             char_indices[i + 1] = offset + 1;
@@ -199,7 +199,7 @@ namespace ThunderLib
     {
         if (text_data.char_index_count)
         {
-            uint32_t data_size = (uint32_t)((uint8_t*)text_data.char_vertex_buffer_ptr - (uint8_t*)text_data.char_vertex_buffer_base);
+            u32 data_size = (u32)((uint8_t*)text_data.char_vertex_buffer_ptr - (uint8_t*)text_data.char_vertex_buffer_base);
             text_data.char_vertex_buffer->SetData(text_data.char_vertex_buffer_base, data_size);
 
             // Bind texture

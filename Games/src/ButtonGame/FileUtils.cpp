@@ -41,15 +41,15 @@ static FileEncoding findFileEncoding(std::ifstream& file)
 	return encoding;
 }
 
-static uint32_t constexpr  replacement_character = 0xFFFD;
+static u32 constexpr  replacement_character = 0xFFFD;
 
 // Returns true if byte is a valid leadbyte
 // Returns a pair of the expected number of bytes in this encoding and the information bits within
 // BUG Not checking UTF8 validity of lead byte see getNextCodepointFromUTF8Stream
-static std::pair<short, uint32_t> parseLeadByte(byte lead)
+static std::pair<short, u32> parseLeadByte(byte lead)
 {
 	short num_bytes = 0;     // Expected number of bytes in this codepoint
-	uint32_t codepoint = 0;  // Integer where we will store information bits
+	u32 codepoint = 0;  // Integer where we will store information bits
 
 	// Check encoding length
 	if ((lead >> 3) == 0b11110) {
@@ -94,7 +94,7 @@ static byte getNextByte(std::ifstream& file)
 // To do so we would need to implement the table 3.7 on https://www.unicode.org/versions/Unicode6.0.0/ch03.pdf
 // Also check https://en.wikipedia.org/wiki/UTF-8#Invalid_sequences_and_error_handling
 // MAYBE Should try catch getNextByte or let the exception freely travel upwards through the callstack
-static uint32_t getNextCodepointFromUTF8Stream(std::ifstream& file)
+static u32 getNextCodepointFromUTF8Stream(std::ifstream& file)
 {
 	byte first_byte = getNextByte(file);
 	auto [num_bytes, codepoint] = parseLeadByte(first_byte);
@@ -127,9 +127,9 @@ static uint32_t getNextCodepointFromUTF8Stream(std::ifstream& file)
 	return codepoint;
 }
 
-std::vector<uint32_t> getFileDataAsCodepoints(std::string_view path)
+std::vector<u32> getFileDataAsCodepoints(std::string_view path)
 {
-	std::vector<uint32_t> filedata;
+	std::vector<u32> filedata;
 
 	// Open file
 	std::ifstream file;
@@ -167,7 +167,7 @@ std::vector<uint32_t> getFileDataAsCodepoints(std::string_view path)
 	return filedata;
 }
 
-std::vector<char> convertCodepointsToUTF8(const std::vector<uint32_t>& data)
+std::vector<char> convertCodepointsToUTF8(const std::vector<u32>& data)
 {
 	std::vector<char> text = std::vector<char>();
 
@@ -200,7 +200,7 @@ std::vector<char> convertCodepointsToUTF8(const std::vector<uint32_t>& data)
 	return text;
 }
 
-std::string convertCodepointsToUTF8(uint32_t* start, uint32_t* end)
+std::string convertCodepointsToUTF8(u32* start, u32* end)
 {
 	std::string text;
 

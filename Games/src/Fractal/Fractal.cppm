@@ -43,7 +43,7 @@ void InitQuad()
 	buffer->SetData(vertices, 2 * 4 * 4);
 	quad->AddVertexBuffer(buffer);
 
-	uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
+	u32 indices[6] = { 0, 1, 2, 2, 3, 0 };
 	auto index_buffer = ThunderLib::IndexBuffer::Create(indices, 6);
 	quad->SetIndexBuffer(index_buffer);
 
