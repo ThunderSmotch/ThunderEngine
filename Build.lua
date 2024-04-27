@@ -15,7 +15,7 @@ group "Dependencies"
    include "vendor/glad"
    include "vendor/miniaudio"
    include "vendor/stb"
-   --include "vendor/glfw-3.3.8.bin.WIN64"
+   --include "vendor/glfw" -- Maybe compile GLFW in the future
 group ""
 
 ---group "ThunderLib"
@@ -24,6 +24,7 @@ include "ThunderLib/Build-ThunderLib.lua"
 
 include "Games/Build-Games.lua"
 
+-- Workaround bug related to modules with the same name
 require("vstudio")
 premake.override(premake.vstudio.vc2010.elements, "clCompile", function(base, prj)
     local m = premake.vstudio.vc2010
