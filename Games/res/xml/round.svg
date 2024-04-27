@@ -1,0 +1,4 @@
+<!-- sample triangle -->
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0l100 0l0 50C100 50 20 50 0 0z" />
+</svg>
