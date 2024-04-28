@@ -31,6 +31,7 @@ namespace ThunderLib
     void App::Run()
     {
         Timer timer;
+        // FIXME dt goes haywire when we are debugging due to halting the application execution
         float dt = 0.0f;
         while (running_)
         {   
