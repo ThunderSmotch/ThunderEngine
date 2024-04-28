@@ -1,4 +1,4 @@
-import Game.ButtonGame;
+import Game.Animation;
 
 // TODO Ideas
 // Set Camera to be in pixels ? Or to be in whichever format I prefer! 
