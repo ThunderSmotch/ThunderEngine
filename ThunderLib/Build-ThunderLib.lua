@@ -26,7 +26,8 @@ project "ThunderLib"
 	"glfw3",
 	"glad",
 	"miniaudio",
-	"stb"
+	"stb",
+	"glm"
    }
 
    targetdir ("../bin/" .. OutputDir .. "/%{prj.name}")

@@ -3,6 +3,7 @@ export module ThunderLib.Base;
 import std;
 
 // Frequently used types and functions from ThunderLib
+export import ThunderLib.GLM;
 
 export {
 	using byte = unsigned char;

@@ -15,6 +15,7 @@ group "Dependencies"
    include "vendor/glad"
    include "vendor/miniaudio"
    include "vendor/stb"
+   include "vendor/glm"
    --include "vendor/glfw" -- Maybe compile GLFW in the future
 group ""
 
