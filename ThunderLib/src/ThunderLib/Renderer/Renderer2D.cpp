@@ -347,6 +347,7 @@ namespace ThunderLib
             data.quad_vertex_buffer->SetData(data.quad_vertex_buffer_base, data_size);
 
             // Bind textures
+            data.quad_shader->Bind();
             for (u32 i = 0; i < data.texture_slot_index; i++)
                 data.texture_slots[i]->Bind(i);
             RendererAPI::DrawIndexed(data.quad_vertex_array, data.quad_index_count);
