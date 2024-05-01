@@ -29,23 +29,39 @@ ThunderLib::Ref<ThunderLib::KeyInput> input;
 bool pause = true;
 f32 time = 0.0f;
 
-struct CircleProps
+enum class AnimatableType
 {
-	bool hidden = false;
-	f32 x, y;
-	f32 radius;
-	f32 r, g, b, a;
+	NONE = 0,
+	RECT,
+	CIRCLE,
+	SPRITE,
+	LINE,
+	SVG,
+
+	LENGTH,
 };
 
-std::vector<CircleProps> circles;          // Current ones being changed
-std::vector<CircleProps> prev_circles;     // Previous state of each circle
-std::vector<CircleProps> initial_circles;  // Initial state of circles (needed to reset/loop animation)
+// TODO Delete CircleProps for this
+struct Animatable
+{
+	AnimatableType type = AnimatableType::NONE;
+	bool hidden = false;
+	Vec3 position = { 0.0f, 0.0f, 0.0f };
+	Vec2 size = { 1.0f, 1.0f };
+	f32  rotation = 0.0f;
+	Vec4 color = { 1.0f, 0.0f, 0.0f, 1.0f };
+};
+
+std::vector<Animatable> anim_obj;          // Current ones being changed
+std::vector<Animatable> prev_anim_obj;     // Previous state of each circle
+std::vector<Animatable> initial_anim_obj;  // Initial state of circles (needed to reset/loop animation)
 
 enum class AnimationType
 {
 	Wait = 0,
 	MoveTo,
 	Scale,
+	Rotate,
 	Length
 };
 
@@ -61,6 +77,11 @@ struct MoveToData
 	f32 final_y;
 };
 
+struct RotateData
+{
+	f32 angle; // in degrees
+};
+
 struct Animation
 {
 	AnimationType type = AnimationType::Wait;
@@ -74,44 +95,52 @@ struct Animation
 	{
 		ScaleData scale;
 		MoveToData move_to;
+		RotateData rotate;
 	} data;
 };
 
-void InitCircles()
+void InitObjects()
 {
-	initial_circles.push_back({
-		false,
-		0.5f, 0.75,
-		0.5f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	});
+	Animatable object;
+	object.type = AnimatableType::RECT;
+	object.size = { 0.5f, 0.5f };
 
-	initial_circles.push_back({
-		false,
-		0.5f, 0.25,
-		0.5f,
-		1.0f, 0.0f, 0.0f, 1.0f
-	});
+	object.position = { 0.5f, 0.75f, 0.0f };
+	object.color = { 0.0f, 0.0f, 0.0f, 1.0f };
+	initial_anim_obj.push_back(object);
 
-	initial_circles.push_back({
-		false,
-		0.25f, 0.5f,
-		0.5f,
-		0.0f, 1.0f, 1.0f, 1.0f
-	});
+	object.position = { 0.5f, 0.25f, 0.0f };
+	object.color = { 1.0f, 0.0f, 0.0f, 1.0f };
+	initial_anim_obj.push_back(object);
 
-	initial_circles.push_back({
-		false,
-		0.75f, 0.5f,
-		0.5f,
-		1.0f, 0.0f, 1.0f, 1.0f
-	});
+	object.position = { 0.25f, 0.5f, 0.0f };
+	object.color = { 0.0f, 1.0f, 1.0f, 1.0f };
+	object.type = AnimatableType::CIRCLE;
+	initial_anim_obj.push_back(object);
 
-	circles = initial_circles;
-	prev_circles = initial_circles;
+	object.position = { 0.75f, 0.5f, 0.0f };
+	object.color = { 1.0f, 0.0f, 1.0f, 1.0f };
+	object.type = AnimatableType::CIRCLE;
+	initial_anim_obj.push_back(object);
+
+	anim_obj = initial_anim_obj;
+	prev_anim_obj = initial_anim_obj;
 }
 
 std::vector<Animation> animations;
+
+void Rotate(std::vector<u8> ids, f32 start, f32 end, RotateData rotate, EasingType easing = EasingType::Linear)
+{
+	auto anim = Animation();
+	anim.type = AnimationType::Rotate;
+	anim.actors = ids;
+	anim.start_time = start;
+	anim.end_time = end;
+	anim.data.rotate = rotate;
+	anim.easing = easing;
+
+	animations.push_back(anim);
+}
 
 void Scale(std::vector<u8> ids, f32 start, f32 end, ScaleData scale, EasingType easing = EasingType::Linear)
 {
@@ -151,16 +180,18 @@ void Script()
 	MoveTo({ 0 }, 10.0f, 12.0f, { 0.0f, 0.0f }, EasingType::InOutCubic);
 	MoveTo({ 0 }, 12.0f, 14.0f, { 0.5f, 0.5f }, EasingType::InOutCubic);
 	Scale({ 0 }, 13.5f, 16.0f, { 0.5f, 10.0f });
+	Rotate({ 0 }, 12.0f, 16.0f, { 8*360.0f }, EasingType::InOutCubic);
 }
 
 void AnimationInit(Animation& anim)
 {
 	switch (anim.type)
 	{
+	case AnimationType::Rotate:
 	case AnimationType::MoveTo:
 		for (auto i : anim.actors)
 		{
-			prev_circles[i] = circles[i];
+			prev_anim_obj[i] = anim_obj[i];
 		}
 		break;
 	default:
@@ -204,7 +235,8 @@ void Animate(f32 time, Animation& anim)
 	{
 		for (auto i : anim.actors)
 		{
-			circles[i].radius = anim.data.scale.initial * (1 - progress) + anim.data.scale.final * progress;
+			float s = anim.data.scale.initial * (1 - progress) + anim.data.scale.final * progress;
+			anim_obj[i].size = { s, s };
 		}
 		break;
 	}
@@ -212,11 +244,17 @@ void Animate(f32 time, Animation& anim)
 	{
 		for (auto i : anim.actors)
 		{
-			circles[i].x = prev_circles[i].x * (1 - progress) + anim.data.move_to.final_x * progress;
-			circles[i].y = prev_circles[i].y * (1 - progress) + anim.data.move_to.final_y * progress;
+			Vec3 dest = { anim.data.move_to.final_x, anim.data.move_to.final_y, anim_obj[i].position.z };
+			anim_obj[i].position = prev_anim_obj[i].position * (1 - progress) + dest * progress;
 		}
 		break;
 	}
+	case AnimationType::Rotate:
+		for (auto i : anim.actors)
+		{
+			anim_obj[i].rotation = prev_anim_obj[i].rotation + anim.data.rotate.angle * progress;
+		}
+		break;
 	default:
 		break;
 	}
@@ -238,8 +276,8 @@ void ResetAnimation()
 {
 	time = 0.0f;
 	pause = true;
-	circles = initial_circles;
-	prev_circles = initial_circles;
+	anim_obj = initial_anim_obj;
+	prev_anim_obj = initial_anim_obj;
 
 	for (auto& anim : animations)
 	{
@@ -271,11 +309,23 @@ void Render(float dt)
 	ThunderLib::OrthographicCamera camera(0.0f, 1.0f, 0.0f, 1.0f);
 	ThunderLib::Renderer2D::StartScene(camera);
 
-	for (auto& circle : circles)
+	for (auto& animatable : anim_obj)
 	{
-		if (circle.hidden == false)
+		if (animatable.hidden)
 		{
-			ThunderLib::Renderer2D::DrawCircle({ circle.x, circle.y, 0.0f }, circle.radius, { circle.r, circle.g, circle.b, circle.a }, 1.0f, 0.01f);
+			continue;
+		}
+
+		switch (animatable.type)
+		{
+		case AnimatableType::RECT:
+			ThunderLib::Renderer2D::DrawQuad(animatable.position, animatable.rotation, animatable.size, animatable.color);
+			break;
+		case AnimatableType::CIRCLE:
+			ThunderLib::Renderer2D::DrawCircle(animatable.position, animatable.size.x, animatable.color, 1.0f, 0.01f);
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -306,7 +356,7 @@ export int Main()
 {
 	ThunderLib::App app("Animation", 800, 800);
 	ThunderLib::Renderer::Init();
-	InitCircles();
+	InitObjects();
 	Script();
 
 	input = ThunderLib::KeyInput::Create({ 
