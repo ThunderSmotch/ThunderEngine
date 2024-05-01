@@ -33,14 +33,12 @@ export f32 ease(f32 t, EasingType type)
 	{
 	case EasingType::Linear:
 		return t;
-		break;
 	case EasingType::InOutCubic:
 		return easeInOutCubic(t);
-		break;
 	case EasingType::InOutBack:
 		return easeInOutBack(t);
 	default:
-		break;
+		return t;
 	}
 
 }
