@@ -1,7 +1,6 @@
-module;
-#include <glm/glm.hpp>
 module Asteroids.ProjectileSystem;
 
+import std;
 import ThunderLib;
 import Asteroids.AsteroidSystem;
 import Asteroids.ParticleSystem;
@@ -11,7 +10,7 @@ extern int the_canvas_height;
 
 struct Projectile {
 	bool active        = false;
-	glm::vec2 position = glm::vec2(0);
+	Vec2 position = Vec2(0);
 	float direction    = 0.0f;
 	float lifetime     = 5.0f;
 	float speed        = 800.0f;
@@ -83,8 +82,8 @@ void ProjectileSystem::Simulate(float dt)
 
 			for (int j = 0; j < ast.number_of_points; j++)
 			{
-				glm::vec2 ip = ast.position + ast.points[j];
-				glm::vec2 fp = ast.position + ast.points[(j + 1) % ast.number_of_points];
+				Vec2 ip = ast.position + ast.points[j];
+				Vec2 fp = ast.position + ast.points[(j + 1) % ast.number_of_points];
 
 				// Using the cross product to check if point is to the right of the line
 				// If it is then break as it cannot be colliding as asteroids/polygons are drawn in counterclockwise order.
@@ -115,8 +114,8 @@ void ProjectileSystem::Render(float dt)
 	{
 		if (!projectiles_[i].active) continue;
 		
-		glm::vec2 trail = 30.0f * glm::vec2(sin(projectiles_[i].direction), cos(projectiles_[i].direction));
-		glm::vec4 color = projectiles_[i].friendly ? glm::vec4(1.0f, 1.0f, 0.0f, 1.0f) : glm::vec4(1.0f, 0.0f, 0.1f, 1.0f);
+		Vec2 trail = 30.0f * Vec2(sin(projectiles_[i].direction), cos(projectiles_[i].direction));
+		Vec4 color = projectiles_[i].friendly ? Vec4(1.0f, 1.0f, 0.0f, 1.0f) : Vec4(1.0f, 0.0f, 0.1f, 1.0f);
 
 		ThunderLib::Renderer2D::DrawLine(projectiles_[i].position, projectiles_[i].position - trail, color);
 
@@ -126,7 +125,7 @@ void ProjectileSystem::Render(float dt)
 	}
 }
 
-void ProjectileSystem::SpawnProjectile(glm::vec2 position, float direction, bool friendly, float lifetime)
+void ProjectileSystem::SpawnProjectile(Vec2 position, float direction, bool friendly, float lifetime)
 {
 	// @Incomplete Need to do some head tail chasing or expand the buffer here
 	if (count_ == MAX_PROJECTILES) 

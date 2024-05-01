@@ -1,5 +1,3 @@
-module;
-#include <glm/glm.hpp>
 export module Animation.LineTest;
 
 import std;
@@ -15,12 +13,12 @@ export{
 	private:
 		float _width = 10.0f;
 		bool _closed = false;
-		std::vector<glm::vec2> _points;
+		std::vector<Vec2> _points;
 
 	public:
-		void AddPoint(glm::vec2 point) { _points.push_back(point); }
-		glm::vec2 GetPoint(int index);
-		void SetPoint(glm::vec2 point, int index);
+		void AddPoint(Vec2 point) { _points.push_back(point); }
+		Vec2 GetPoint(int index);
+		void SetPoint(Vec2 point, int index);
 		void SetWidth(float width) { _width = width; }
 		void ClosePath();
 		void Render(float end_percentage = 1.0f, float start_percentage = 0.0f) const;

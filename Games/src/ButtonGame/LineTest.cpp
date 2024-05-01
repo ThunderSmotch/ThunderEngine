@@ -1,5 +1,4 @@
 module;
-#include <glm/glm.hpp>
 #include "imgui/imgui.h"
 module Animation.LineTest;
 
@@ -7,16 +6,16 @@ import std;
 
 using namespace ThunderLib;
 
-glm::vec2 PolyLine::GetPoint(int index)
+Vec2 PolyLine::GetPoint(int index)
 {
 	if (index < 0 || index >= _points.size())
-		return glm::vec2();
+		return Vec2();
 
 	return _points[index];
 }
 
 
-void PolyLine::SetPoint(glm::vec2 point, int index)
+void PolyLine::SetPoint(Vec2 point, int index)
 {
 	if (index < 0 || index >= _points.size())
 		return;
@@ -33,14 +32,14 @@ void PolyLine::ClosePath()
 }
 
 // Draw feathered line segment (6 tris per segment)
-void DrawLineSegment(const glm::vec2 start, const glm::vec2 end, const glm::vec2 normal, float width, float aa_width = 1.0f)
+void DrawLineSegment(const Vec2 start, const Vec2 end, const Vec2 normal, float width, float aa_width = 1.0f)
 {
 	if (width < 4.0f)
 	{
 		aa_width = width/4;
 	}
 
-	glm::vec2 width_normal = normal * (width / 2);
+	Vec2 width_normal = normal * (width / 2);
 
 	// Draw first segment
 	Renderer2D::DrawTriangle(start - width_normal, end - width_normal, end + width_normal, Color::Black);
@@ -49,65 +48,65 @@ void DrawLineSegment(const glm::vec2 start, const glm::vec2 end, const glm::vec2
 	// TODO  Feathering -> This should really be optimized
 	Renderer2D::DrawTriangle(
 		start - width_normal, Color::Black,
-		start - width_normal - normal * aa_width, glm::vec4(0.0f),
+		start - width_normal - normal * aa_width, Vec4(0.0f),
 		end - width_normal, Color::Black
 	);
 	Renderer2D::DrawTriangle(
-		start - width_normal - normal * aa_width, glm::vec4(0.0f),
-		end - width_normal - normal * aa_width, glm::vec4(0.0f),
+		start - width_normal - normal * aa_width, Vec4(0.0f),
+		end - width_normal - normal * aa_width, Vec4(0.0f),
 		end - width_normal, Color::Black
 	);
 
 	Renderer2D::DrawTriangle(
 		start + width_normal, Color::Black,
 		end + width_normal, Color::Black,
-		end + width_normal + normal * aa_width, glm::vec4(0.0f)
+		end + width_normal + normal * aa_width, Vec4(0.0f)
 	);
 	Renderer2D::DrawTriangle(start + width_normal, Color::Black,
-		end + width_normal + normal * aa_width, glm::vec4(0.0f),
-		start + width_normal + normal * aa_width, glm::vec4(0.0f)
+		end + width_normal + normal * aa_width, Vec4(0.0f),
+		start + width_normal + normal * aa_width, Vec4(0.0f)
 	);
 }
 
 // Intersects lines A and B
-std::pair<bool, glm::vec2> intersect(glm::vec2 a1, glm::vec2 a2, glm::vec2 b1, glm::vec2 b2)
+std::pair<bool, Vec2> intersect(Vec2 a1, Vec2 a2, Vec2 b1, Vec2 b2)
 {
 	float denominator = (a1.x - a2.x) * (b1.y - b2.y) - (a1.y - a2.y) * (b1.x - b2.x);
 
 	if (abs(denominator) < 0.001f)
 	{
-		return std::make_pair<bool, glm::vec2>(false, glm::vec2());
+		return std::make_pair<bool, Vec2>(false, Vec2());
 	}
 
 	float nx = (a1.x * a2.y - a1.y * a2.x) * (b1.x - b2.x) - (a1.x - a2.x) * (b1.x * b2.y - b1.y * b2.x);
 	float ny = (a1.x * a2.y - a1.y * a2.x) * (b1.y - b2.y) - (a1.y - a2.y) * (b1.x * b2.y - b1.y * b2.x);
 	
-	return std::make_pair<bool, glm::vec2>(true, glm::vec2(nx/denominator, ny/denominator));
+	return std::make_pair<bool, Vec2>(true, Vec2(nx/denominator, ny/denominator));
 }
 
 // Draws bevel at the joint of segments
-void DrawBevel(const glm::vec2 intersection, const glm::vec2 previous_direction, const glm::vec2 direction, float width, float aa_width = 1.0f)
+void DrawBevel(const Vec2 intersection, const Vec2 previous_direction, const Vec2 direction, float width, float aa_width = 1.0f)
 {
 	if (width < 4.0f)
 	{
 		aa_width = width / 4;
 	}
 
-	auto previous_normal = glm::vec2({ -previous_direction.y, previous_direction.x });
-	auto normal = glm::vec2({ -direction.y, direction.x });
+	auto previous_normal = Vec2({ -previous_direction.y, previous_direction.x });
+	auto normal = Vec2({ -direction.y, direction.x });
 
-	glm::vec2 previous_width_normal = previous_normal * (width / 2);
-	glm::vec2 width_normal = normal * (width / 2);
+	Vec2 previous_width_normal = previous_normal * (width / 2);
+	Vec2 width_normal = normal * (width / 2);
 	
-	glm::vec2 bevel_normal = glm::normalize(previous_direction - direction);
+	Vec2 bevel_normal = normalize(previous_direction - direction);
 
 	// If positive then, when facing direction, the bevel should be on the right side of the line, aka negative normal.
 	float cross_product = previous_direction.x * direction.y - previous_direction.y * direction.x;
 	float sign = (cross_product > 0.0f ? 1.0f : -1.0f);
 
 	// Miter intersection point
-	glm::vec2 outer_previous = intersection - sign * previous_width_normal;
-	glm::vec2 outer = intersection - sign * width_normal;
+	Vec2 outer_previous = intersection - sign * previous_width_normal;
+	Vec2 outer = intersection - sign * width_normal;
 
 	auto [intersected, miter_intersection] = intersect(
 		outer_previous,
@@ -132,32 +131,32 @@ void DrawBevel(const glm::vec2 intersection, const glm::vec2 previous_direction,
 
 		Renderer2D::DrawTriangle(outer_previous, Color::Black,
 			miter_intersection, Color::Black,
-			miter_intersection - sign * previous_normal * aa_width, glm::vec4(0.0f)
+			miter_intersection - sign * previous_normal * aa_width, Vec4(0.0f)
 			);
 		Renderer2D::DrawTriangle(outer_previous, Color::Black,
-			miter_intersection - sign * previous_normal * aa_width, glm::vec4(0.0f),
-			outer_previous - sign * previous_normal * aa_width, glm::vec4(0.0f)
+			miter_intersection - sign * previous_normal * aa_width, Vec4(0.0f),
+			outer_previous - sign * previous_normal * aa_width, Vec4(0.0f)
 		);
 
 		Renderer2D::DrawTriangle(
 			outer, Color::Black,
 			miter_intersection, Color::Black,
-			miter_intersection - sign * normal * aa_width, glm::vec4(0.0f)
+			miter_intersection - sign * normal * aa_width, Vec4(0.0f)
 		);
 		Renderer2D::DrawTriangle(outer, Color::Black,
-			miter_intersection - sign * normal * aa_width, glm::vec4(0.0f),
-			outer - sign * normal * aa_width, glm::vec4(0.0f)
+			miter_intersection - sign * normal * aa_width, Vec4(0.0f),
+			outer - sign * normal * aa_width, Vec4(0.0f)
 		);
 
 		Renderer2D::DrawTriangle(
 			miter_intersection, Color::Black,
-			miter_intersection - sign * previous_normal * aa_width, glm::vec4(0.0f),
-			miter_intersection - sign * (previous_normal  + normal) * aa_width, glm::vec4(0.0f)
+			miter_intersection - sign * previous_normal * aa_width, Vec4(0.0f),
+			miter_intersection - sign * (previous_normal  + normal) * aa_width, Vec4(0.0f)
 		);
 		Renderer2D::DrawTriangle(
 			miter_intersection, Color::Black,
-			miter_intersection - sign * normal * aa_width, glm::vec4(0.0f),
-			miter_intersection - sign * (previous_normal + normal) * aa_width, glm::vec4(0.0f)
+			miter_intersection - sign * normal * aa_width, Vec4(0.0f),
+			miter_intersection - sign * (previous_normal + normal) * aa_width, Vec4(0.0f)
 		);
 	}
 	else // Bevel feathering
@@ -165,12 +164,12 @@ void DrawBevel(const glm::vec2 intersection, const glm::vec2 previous_direction,
 		// TODO The below works but triangles are either drawn CCW or CW depending on sign (this may have implications with Face Culling in the future!)
 		Renderer2D::DrawTriangle(
 			outer_previous, Color::Black,
-			outer_previous + bevel_normal * aa_width, glm::vec4(0.0f),
+			outer_previous + bevel_normal * aa_width, Vec4(0.0f),
 			outer, Color::Black
 		);
 		Renderer2D::DrawTriangle(
-			outer_previous + bevel_normal * aa_width, glm::vec4(0.0f),
-			outer + bevel_normal * aa_width, glm::vec4(0.0f),
+			outer_previous + bevel_normal * aa_width, Vec4(0.0f),
+			outer + bevel_normal * aa_width, Vec4(0.0f),
 			outer, Color::Black
 		);
 	}
@@ -194,8 +193,8 @@ void PolyLine::Render(float end_percentage, float start_percentage) const
 	// TODO Start cap
 
 	// Middle section
-	glm::vec2 start = _points[start_incomplete_segments];
-	glm::vec2 end = _points[start_incomplete_segments + 1];
+	Vec2 start = _points[start_incomplete_segments];
+	Vec2 end = _points[start_incomplete_segments + 1];
 
 	// FIXME end and start depend on previous end and start
 	if (segments == 0)
@@ -204,11 +203,11 @@ void PolyLine::Render(float end_percentage, float start_percentage) const
 	}
 	start = start + (_points[start_incomplete_segments + 1] - start) * start_segment_percentage;
 
-	glm::vec2 direction = glm::normalize(end - start);
-	glm::vec2 normal = { -direction.y, direction.x };
+	Vec2 direction = normalize(end - start);
+	Vec2 normal = { -direction.y, direction.x };
 
 	DrawLineSegment(start, end, normal, _width);
-	glm::vec previous_direction = direction;
+	Vec2 previous_direction = direction;
 
 	int segments_to_draw = segments + (end_segment_percentage > 0.0f ? 1 : 0) - 1;
 	
@@ -222,7 +221,7 @@ void PolyLine::Render(float end_percentage, float start_percentage) const
 			end = start + (end - start) * end_segment_percentage;
 		}
 
-		direction = glm::normalize(end - start);
+		direction = normalize(end - start);
 		normal = { -direction.y, direction.x };
 
 		DrawLineSegment(start, end, normal, _width);
@@ -236,7 +235,7 @@ void PolyLine::Render(float end_percentage, float start_percentage) const
 	{
 		start = _points[start_incomplete_segments];
 		end = _points[start_incomplete_segments + 1];
-		direction = glm::normalize(end - start);
+		direction = normalize(end - start);
 		DrawBevel(start, previous_direction, direction, _width);
 	}
 
@@ -323,18 +322,18 @@ LineTest::LineTest()
 	Path path;
 	path.BeginSubpath();
 	path.AddPathElement(std::make_unique<CubicBezier>(
-		glm::vec2(-300.0, 300.0),
-		glm::vec2(-300.0, 200.0),
-		glm::vec2(-200.0, 300.0),
-		glm::vec2(-200.0, 200.0)
+		Vec2(-300.0, 300.0),
+		Vec2(-300.0, 200.0),
+		Vec2(-200.0, 300.0),
+		Vec2(-200.0, 200.0)
 	));
 	path.AddPathElement(std::make_unique<Line>(
-		glm::vec2(-200.0, 200.0),
-			glm::vec2(-200.0, 100.0)
+		Vec2(-200.0, 200.0),
+			Vec2(-200.0, 100.0)
 	));
 	path.AddPathElement(std::make_unique<Line>(
-		glm::vec2(-200.0, 100.0),
-		glm::vec2(-300.0, 300.0)
+		Vec2(-200.0, 100.0),
+		Vec2(-300.0, 300.0)
 	));
 	path.SetClosed();
 
@@ -463,13 +462,13 @@ void LineTest::ProcessInput(ThunderLib::MouseInput& mouse)
 	if (mouse.GetIsKeyDown(MouseKeyCode::MOUSE_LEFT))
 	{
 		angle += 0.01f;
-		glm::vec2 origin = L.GetPoint(1);
+		Vec2 origin = L.GetPoint(1);
 		L.SetPoint({ origin.x + 100.0f*sin(angle), origin.y + 100.0*cos(angle)}, 2);
 	}
 	else if (mouse.GetIsKeyDown(MouseKeyCode::MOUSE_RIGHT))
 	{
 		angle -= 0.01f;
-		glm::vec2 origin = L.GetPoint(1);
+		Vec2 origin = L.GetPoint(1);
 		L.SetPoint({ origin.x + 100.0f * sin(angle), origin.y + 100.0 * cos(angle) }, 2);
 	}
 }
