@@ -26,6 +26,8 @@ Specific animations:
 */
 
 ThunderLib::Ref<ThunderLib::KeyInput> input;
+ThunderLib::Ref<ThunderLib::Texture2D> tex_container;
+ThunderLib::Ref<ThunderLib::Texture2D> tex_awesome_face;
 bool pause = true;
 f32 time = 0.0f;
 
@@ -41,7 +43,6 @@ enum class AnimatableType
 	LENGTH,
 };
 
-// TODO Delete CircleProps for this
 struct Animatable
 {
 	AnimatableType type = AnimatableType::NONE;
@@ -50,6 +51,7 @@ struct Animatable
 	Vec2 size = { 1.0f, 1.0f };
 	f32  rotation = 0.0f;
 	Vec4 color = { 1.0f, 0.0f, 0.0f, 1.0f };
+	ThunderLib::Ref<ThunderLib::Texture2D> texture = nullptr;
 };
 
 std::vector<Animatable> anim_obj;          // Current ones being changed
@@ -102,25 +104,27 @@ struct Animation
 void InitObjects()
 {
 	Animatable object;
-	object.type = AnimatableType::RECT;
+	object.type = AnimatableType::SPRITE;
 	object.size = { 0.5f, 0.5f };
 
 	object.position = { 0.5f, 0.75f, 0.0f };
-	object.color = { 0.0f, 0.0f, 0.0f, 1.0f };
+	object.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	object.texture = tex_awesome_face;
 	initial_anim_obj.push_back(object);
 
+	object.type = AnimatableType::SPRITE;
 	object.position = { 0.5f, 0.25f, 0.0f };
 	object.color = { 1.0f, 0.0f, 0.0f, 1.0f };
 	initial_anim_obj.push_back(object);
 
 	object.position = { 0.25f, 0.5f, 0.0f };
 	object.color = { 0.0f, 1.0f, 1.0f, 1.0f };
-	object.type = AnimatableType::CIRCLE;
+	object.type = AnimatableType::SPRITE;
 	initial_anim_obj.push_back(object);
 
 	object.position = { 0.75f, 0.5f, 0.0f };
 	object.color = { 1.0f, 0.0f, 1.0f, 1.0f };
-	object.type = AnimatableType::CIRCLE;
+	object.type = AnimatableType::SPRITE;
 	initial_anim_obj.push_back(object);
 
 	anim_obj = initial_anim_obj;
@@ -179,7 +183,7 @@ void Script()
 	MoveTo({ 0 }, 8.0f, 10.0f, { 1.0f, 0.0f }, EasingType::InOutCubic);
 	MoveTo({ 0 }, 10.0f, 12.0f, { 0.0f, 0.0f }, EasingType::InOutCubic);
 	MoveTo({ 0 }, 12.0f, 14.0f, { 0.5f, 0.5f }, EasingType::InOutCubic);
-	Scale({ 0 }, 13.5f, 16.0f, { 0.5f, 10.0f });
+	Scale({ 0 }, 13.5f, 16.0f, { 0.5f, 20.0f });
 	Rotate({ 0 }, 12.0f, 16.0f, { 8*360.0f }, EasingType::InOutCubic);
 }
 
@@ -321,6 +325,9 @@ void Render(float dt)
 		case AnimatableType::RECT:
 			ThunderLib::Renderer2D::DrawQuad(animatable.position, animatable.rotation, animatable.size, animatable.color);
 			break;
+		case AnimatableType::SPRITE:
+			ThunderLib::Renderer2D::DrawQuad(animatable.position, animatable.rotation, animatable.size, animatable.texture, animatable.color);
+			break;
 		case AnimatableType::CIRCLE:
 			ThunderLib::Renderer2D::DrawCircle(animatable.position, animatable.size.x, animatable.color, 1.0f, 0.01f);
 			break;
@@ -355,6 +362,10 @@ void ProcessInput(f32 dt)
 export int Main()
 {
 	ThunderLib::App app("Animation", 800, 800);
+
+	tex_container = ThunderLib::Texture2D::Create("res/textures/container.jpg");
+	tex_awesome_face = ThunderLib::Texture2D::Create("res/textures/awesomeface.png");
+
 	ThunderLib::Renderer::Init();
 	InitObjects();
 	Script();
